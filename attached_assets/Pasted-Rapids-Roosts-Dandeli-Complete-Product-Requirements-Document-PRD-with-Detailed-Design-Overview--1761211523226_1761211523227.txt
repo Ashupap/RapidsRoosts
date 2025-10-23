@@ -1,0 +1,110 @@
+Rapids Roosts Dandeli - Complete Product Requirements Document (PRD) with Detailed Design
+Overview
+A modern, engaging, partially automated tour booking web app featuring an immersive nature-inspired UI enhanced with parallax animations. It delivers seamless booking, customer status tracking, and admin manual confirmation with a focus on cost-effective communication using email for customers and WhatsApp notifications for admins.
+
+Color Palette & Typography
+Element	Color Code
+Primary (Forest Green)	#2F5D62
+Accent (River Blue)	#3A95A9
+Secondary (Earthy Brown)	#7A5C3A
+Background (Off-White)	#F7F7F7
+Text (Dark Charcoal)	#333333
+Highlight (Vibrant Teal)	#1ABC9C
+Fonts:
+
+Primary Typeface: Montserrat (Headings & CTAs)
+
+Body Typeface: Open Sans (Readable, approachable)
+
+Page-wise Design Details with Parallax Animation
+1. Home Page
+Hero Section: Fullscreen looping drone video banner with parallax layers (forest canopy, river, mist). Headline overlay with typed-effect tagline: "Explore the Wild Heart of Karnataka."
+
+Search & Booking CTA: Prominent booking quick search (date, activity, guests) with gentle floating animation.
+
+Adventure Highlights: Horizontally scrolling parallax cards detailing rafting, safari, etc., with icon hover zoom+shadow.
+
+Footer: Social media, contact, quick links with fade-in on scroll.
+
+Parallax Effects: Multi-depth scene scroll for immersive UX, smooth horizontal scroll on adventure cards.
+
+2. Booking Page
+Multi-Step Responsive Form:
+Step indicators with progress bar and glowing forest-green accents.
+Input fields with river-blue focus rings and validation tooltips.
+
+Sidebar Booking Summary: Parallax offset as the user scrolls form.
+
+Sticky Dynamic "Book Now" Button: Pulsates when form valid.
+
+Animations:
+Slide transitions between steps, input focus glows, content fades.
+
+3. Booking Acknowledgement Page
+Centered Confirmation Card: Booking ID displayed with "Pending Confirmation" badge (earthy brown).
+
+Background: Layered subtle ripple effect simulating water, parallax scroll effect with slow-moving wave layers.
+
+Prompt to Check Status: Button with gradient teal-blue hover.
+
+Animations:
+Badge pulse every 3 seconds, water ripple continuous animation.
+
+4. Booking Status Page
+Search Box: Centered input for Booking ID with instructions.
+
+Status Result Card: Dynamic display with color-coded icons—yellow pulse (pending), green shine (confirmed), red shake (rejected).
+
+Additional info area: Booking details fade in after status loads.
+
+Parallax Background: Forest and mountains layered with scroll effect.
+
+5. Admin Notification (WhatsApp)
+Message template with key details and emoji status indicators. Confirm/Reject buttons (green/red).
+
+Clear and concise formatting for easy quick response.
+
+UI/UX Enhancements with Parallax
+Subtle background layers move slower than foreground.
+
+Scroll-triggered animations to guide focus.
+
+Combining parallax with opacity and scale changes to highlight CTAs and status badges.
+
+Responsiveness ensured by lighter animations on mobile.
+
+Layered SVGs for smooth performance.
+
+User Journey & Functional Flow
+Step	Description
+Booking Initiation	User inputs booking details via multi-step form on booking page.
+Data Submission	Data sent to backend and workflow automation (n8n webhook).
+Customer Acknowledgment	Immediate email sent to user with Booking ID and pending status.
+Admin Notification	Booking details sent via WhatsApp message to admin with action options.
+Manual Booking Confirmation	Admin responds (manually via WhatsApp or admin panel). Booking updated.
+Status Tracking	User checks booking status anytime on web using Booking ID.
+Booking Confirmation	On confirmation, system sends final email, optional WhatsApp message.
+Technology Stack
+Aspect	Technology
+Frontend	Next.js 14, React, TypeScript, Framer Motion, Chakra UI/MUI
+Form Handling	React Hook Form, Yup
+Backend/API	Node.js (Express/NestJS), REST API + n8n workflow
+Data Storage	Google Sheets (MVP), PostgreSQL (Production)
+Workflow Automation	n8n (Webhook triggers, Email, WhatsApp API integrations)
+Messaging	Gmail SMTP (Email to customer), Meta Cloud API (WhatsApp)
+Payment Gateway	Razorpay/Stripe (future integration)
+Admin Interface	React Admin or Next.js Admin Routes
+Hosting	Vercel (Frontend), Render/AWS/GCP/Docker (Backend & n8n)
+Analytics	Google Analytics 4, Plausible
+Accessibility
+High contrast UI elements.
+
+Clear focus outlines.
+
+ARIA labels and keyboard navigation supported.
+
+Reduced motion fallback for sensitive users.
+
+Summary
+The Rapids Roosts Dandeli Web App is a modern, visually appealing platform designed to create an immersive nature adventure booking experience enriched with elegant parallax animation effects. The booking process is partially automated for a smooth operational workflow that combines cost-efficiency with usability. Users enjoy immediate acknowledgments, seamless status tracking, and an engaging UI while admins get efficient notification and action flows.
+

@@ -1,7 +1,8 @@
-import { type User, type InsertUser, type Booking, type InsertBooking } from "@shared/schema";
+import { type User, type InsertUser, type Booking, type InsertBooking, bookings, users } from "@shared/schema";
 import { randomUUID } from "crypto";
 import { nanoid } from "nanoid";
-import { appendBooking, getBookingByBookingId } from "./integrations/sheets";
+import { db } from "./db";
+import { eq } from "drizzle-orm";
 
 export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
@@ -9,31 +10,25 @@ export interface IStorage {
   createUser(user: InsertUser): Promise<User>;
   createBooking(booking: InsertBooking): Promise<Booking>;
   getBookingByBookingId(bookingId: string): Promise<Booking | null>;
+  getAllBookings(): Promise<Booking[]>;
+  updateBookingStatus(bookingId: string, status: string): Promise<Booking | null>;
 }
 
-export class MemStorage implements IStorage {
-  private users: Map<string, User>;
-  private bookings: Map<string, Booking>;
-
-  constructor() {
-    this.users = new Map();
-    this.bookings = new Map();
-  }
-
+export class PostgresStorage implements IStorage {
   async getUser(id: string): Promise<User | undefined> {
-    return this.users.get(id);
+    const result = await db.select().from(users).where(eq(users.id, id));
+    return result[0];
   }
 
   async getUserByUsername(username: string): Promise<User | undefined> {
-    return Array.from(this.users.values()).find(
-      (user) => user.username === username,
-    );
+    const result = await db.select().from(users).where(eq(users.username, username));
+    return result[0];
   }
 
   async createUser(insertUser: InsertUser): Promise<User> {
     const id = randomUUID();
     const user: User = { ...insertUser, id };
-    this.users.set(id, user);
+    await db.insert(users).values(user);
     return user;
   }
 
@@ -48,45 +43,40 @@ export class MemStorage implements IStorage {
       bookingId,
       status: "pending",
       createdAt,
+      specialRequests: insertBooking.specialRequests || null,
     };
 
-    this.bookings.set(bookingId, booking);
-
-    // Also save to Google Sheets
     try {
-      await appendBooking({
-        ...booking,
-        specialRequests: booking.specialRequests || '',
-      });
+      await db.insert(bookings).values(booking);
+      return booking;
     } catch (error) {
-      console.error('Failed to save booking to Google Sheets:', error);
-      // Continue even if Sheets save fails
+      console.error('Database error creating booking:', error);
+      throw new Error('Failed to create booking in database');
     }
-
-    return booking;
   }
 
   async getBookingByBookingId(bookingId: string): Promise<Booking | null> {
-    // First try memory storage
-    const memBooking = this.bookings.get(bookingId);
-    if (memBooking) {
-      return memBooking;
-    }
+    const result = await db.select().from(bookings).where(eq(bookings.bookingId, bookingId));
+    return result[0] || null;
+  }
 
-    // Then try Google Sheets
+  async getAllBookings(): Promise<Booking[]> {
+    return await db.select().from(bookings);
+  }
+
+  async updateBookingStatus(bookingId: string, status: string): Promise<Booking | null> {
     try {
-      const sheetBooking = await getBookingByBookingId(bookingId);
-      if (sheetBooking) {
-        // Cache in memory for future requests
-        this.bookings.set(bookingId, sheetBooking);
-        return sheetBooking;
-      }
+      const result = await db
+        .update(bookings)
+        .set({ status })
+        .where(eq(bookings.bookingId, bookingId))
+        .returning();
+      return result[0] || null;
     } catch (error) {
-      console.error('Failed to get booking from Google Sheets:', error);
+      console.error('Database error updating booking status:', error);
+      throw new Error('Failed to update booking status in database');
     }
-
-    return null;
   }
 }
 
-export const storage = new MemStorage();
+export const storage = new PostgresStorage();

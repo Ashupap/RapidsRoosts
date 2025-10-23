@@ -112,9 +112,26 @@ Typography:
 - Booking modification and cancellation
 - PostgreSQL migration for production scalability
 
-## Notes
-- All bookings start with "pending" status
-- Email confirmations are sent asynchronously (fire-and-forget)
+## Implementation Notes
+
+### Data Integrity
+- All dates are validated to ensure ISO format (YYYY-MM-DD) before submission
+- Date inputs include onChange validators to prevent format corruption
 - Booking IDs are generated using nanoid for uniqueness
-- The in-memory cache provides fast lookups during the same session
-- Google Sheets provides persistence across sessions (when GOOGLE_SHEET_ID is set)
+
+### Persistence Strategy
+- In-memory cache provides fast lookups during the same session
+- Google Sheets provides durable persistence across server restarts
+- Spreadsheet ID automatically persisted to `.sheet_id` file
+- Optional: Set GOOGLE_SHEET_ID environment variable to override
+
+### Email Notifications
+- Confirmations sent asynchronously (fire-and-forget pattern)
+- Errors logged but don't block booking creation
+- All bookings start with "pending" status
+
+### Production Deployment
+1. Set GOOGLE_SHEET_ID in production environment secrets
+2. Monitor Google Sheets/Gmail API quotas in logs
+3. Spreadsheet ID from `.sheet_id` file ensures data continuity
+4. All connector credentials managed securely by Replit

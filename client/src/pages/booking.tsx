@@ -280,6 +280,15 @@ export default function Booking() {
                                     <Input
                                       type="date"
                                       {...field}
+                                      onChange={(e) => {
+                                        // Ensure value is in ISO format (YYYY-MM-DD)
+                                        const value = e.target.value;
+                                        if (value && /^\d{4}-\d{2}-\d{2}$/.test(value)) {
+                                          field.onChange(value);
+                                        } else if (!value) {
+                                          field.onChange(value);
+                                        }
+                                      }}
                                       min={new Date().toISOString().split("T")[0]}
                                       data-testid="input-check-in-date"
                                     />
@@ -291,20 +300,33 @@ export default function Booking() {
                             <FormField
                               control={form.control}
                               name="checkOutDate"
-                              render={({ field }) => (
-                                <FormItem>
-                                  <FormLabel>Check-out Date *</FormLabel>
-                                  <FormControl>
-                                    <Input
-                                      type="date"
-                                      {...field}
-                                      min={form.watch("checkInDate") || new Date().toISOString().split("T")[0]}
-                                      data-testid="input-check-out-date"
-                                    />
-                                  </FormControl>
-                                  <FormMessage />
-                                </FormItem>
-                              )}
+                              render={({ field }) => {
+                                const checkInDate = form.watch("checkInDate");
+                                const minDate = checkInDate || new Date().toISOString().split("T")[0];
+                                return (
+                                  <FormItem>
+                                    <FormLabel>Check-out Date *</FormLabel>
+                                    <FormControl>
+                                      <Input
+                                        type="date"
+                                        {...field}
+                                        onChange={(e) => {
+                                          // Ensure value is in ISO format (YYYY-MM-DD)
+                                          const value = e.target.value;
+                                          if (value && /^\d{4}-\d{2}-\d{2}$/.test(value)) {
+                                            field.onChange(value);
+                                          } else if (!value) {
+                                            field.onChange(value);
+                                          }
+                                        }}
+                                        min={minDate}
+                                        data-testid="input-check-out-date"
+                                      />
+                                    </FormControl>
+                                    <FormMessage />
+                                  </FormItem>
+                                );
+                              }}
                             />
                           </div>
                           <FormField

@@ -7,6 +7,8 @@ import Home from "@/pages/home";
 import Booking from "@/pages/booking";
 import Acknowledgement from "@/pages/acknowledgement";
 import Status from "@/pages/status";
+import AdminLogin from "@/pages/admin-login";
+import AdminDashboard from "@/pages/admin-dashboard";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -16,6 +18,8 @@ function Router() {
       <Route path="/booking" component={Booking} />
       <Route path="/acknowledgement" component={Acknowledgement} />
       <Route path="/status" component={Status} />
+      <Route path="/admin/login" component={AdminLogin} />
+      <Route path="/admin/dashboard" component={AdminDashboard} />
       <Route component={NotFound} />
     </Switch>
   );

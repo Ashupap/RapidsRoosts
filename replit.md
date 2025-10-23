@@ -105,12 +105,39 @@ Typography:
 5. Gets confirmation email with booking details
 6. Can track status anytime using Booking ID
 
-## Future Enhancements (Not in MVP)
-- Admin dashboard for managing bookings
+## Admin Features (Phase 2 - Completed)
+
+### Admin Authentication
+- **Login System**: Session-based authentication using Passport.js
+- **Password Security**: Bcrypt hashing with 10 salt rounds
+- **Session Storage**: PostgreSQL-backed sessions via connect-pg-simple
+- **Default Credentials**: username: `admin`, password: `admin123` (CHANGE IN PRODUCTION!)
+- **Routes**: 
+  - `/admin/login` - Admin login page
+  - `/admin/dashboard` - Admin dashboard (protected)
+
+### Admin Dashboard
+- **View All Bookings**: Table view with pagination and search
+- **Search & Filter**: Search by booking ID, name, or email; filter by status
+- **Booking Management**:
+  - Confirm bookings (changes status to "confirmed")
+  - Reject bookings (changes status to "rejected")
+  - View all booking details
+- **Statistics**: Real-time counts for total, pending, confirmed, and rejected bookings
+- **Email Notifications**: Automatic status update emails sent to customers via Gmail
+
+### API Endpoints (Admin)
+- `POST /api/admin/login` - Authenticate admin
+- `POST /api/admin/logout` - Logout admin
+- `GET /api/admin/check` - Check auth status
+- `GET /api/admin/bookings` - Get all bookings (protected)
+- `PATCH /api/admin/bookings/:bookingId/status` - Update booking status (protected)
+
+## Future Enhancements (Phase 3)
 - WhatsApp notifications for admins
 - Payment gateway integration (Razorpay)
 - Booking modification and cancellation
-- PostgreSQL migration for production scalability
+- Refund processing
 
 ## Implementation Notes
 

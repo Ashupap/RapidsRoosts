@@ -3,6 +3,7 @@ import { randomUUID } from "crypto";
 import { nanoid } from "nanoid";
 import { db } from "./db";
 import { eq } from "drizzle-orm";
+import bcrypt from "bcrypt";
 
 export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
@@ -27,8 +28,24 @@ export class PostgresStorage implements IStorage {
 
   async createUser(insertUser: InsertUser): Promise<User> {
     const id = randomUUID();
-    const user: User = { ...insertUser, id };
+    // Hash the password before storing
+    const hashedPassword = await bcrypt.hash(insertUser.password, 10);
+    const user: User = { ...insertUser, id, password: hashedPassword };
     await db.insert(users).values(user);
+    return user;
+  }
+
+  async verifyPassword(username: string, password: string): Promise<User | null> {
+    const user = await this.getUserByUsername(username);
+    if (!user) {
+      return null;
+    }
+    
+    const isValid = await bcrypt.compare(password, user.password);
+    if (!isValid) {
+      return null;
+    }
+    
     return user;
   }
 

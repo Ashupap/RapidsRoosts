@@ -134,10 +134,28 @@ Typography:
 - `PATCH /api/admin/bookings/:bookingId/status` - Update booking status (protected)
 
 ## Future Enhancements (Phase 3)
-- WhatsApp notifications for admins
-- Payment gateway integration (Razorpay)
-- Booking modification and cancellation
-- Refund processing
+
+### WhatsApp Notifications (Pending Setup)
+- **Integration Required**: Twilio connector for WhatsApp Business API
+- **Purpose**: Send real-time alerts to admin when new bookings arrive
+- **Setup Steps**: 
+  1. Set up Twilio connector in Replit
+  2. Configure WhatsApp Business API with Twilio
+  3. Add TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_PHONE_NUMBER as secrets
+  4. Implement notification service in server/integrations/whatsapp.ts
+- **Note**: Dismissed for now - can be added later when Twilio is configured
+
+### Payment Gateway Integration (Razorpay)
+- Add payment collection during booking process
+- Store payment status in database
+- Handle payment callbacks and confirmations
+- Support deposits and full payments
+
+### Enhanced Booking Management
+- Allow customers to cancel bookings online
+- Allow customers to modify booking dates/details
+- Admin interface for processing refunds
+- Cancellation policies and automated refund calculations
 
 ## Implementation Notes
 

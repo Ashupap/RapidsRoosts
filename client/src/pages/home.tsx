@@ -2,10 +2,11 @@ import { Link } from "wouter";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Calendar, Users, ChevronRight, Waves, Mountain, Compass, Send } from "lucide-react";
-import { useRef } from "react";
-import heroImage from "@assets/generated_images/Dandeli_forest_river_hero_background_8f5b5671.png";
-import raftingImage from "@assets/generated_images/White_water_rafting_adventure_d3da1bc1.png";
+import { Calendar, Users, ChevronRight, Waves, Mountain, Compass, Send, MapPin } from "lucide-react";
+import { useRef, useState, useEffect } from "react";
+import raftingFallback from "@assets/stock_images/aerial_view_of_river_19896f5a.jpg";
+import safariImageFallback from "@assets/stock_images/lush_green_forest_ju_ca3bd63f.jpg";
+import campFallback from "@assets/stock_images/camping_tents_in_for_1bdeb780.jpg";
 import safariImage from "@assets/generated_images/Jungle_safari_wildlife_adventure_3300876a.png";
 import trekkingImage from "@assets/generated_images/Forest_trekking_adventure_trail_14dd1cd1.png";
 import kayakingImage from "@assets/generated_images/Peaceful_kayaking_river_adventure_e3974c90.png";
@@ -15,7 +16,7 @@ const activities = [
     id: "rafting",
     title: "White Water Rafting",
     description: "Experience the thrill of navigating through rushing rapids and pristine waters",
-    image: raftingImage,
+    image: raftingFallback,
     icon: Waves,
     duration: "2-3 hours",
     difficulty: "Moderate to Advanced",
@@ -49,30 +50,80 @@ const activities = [
   },
 ];
 
+const heroVideos = [
+  {
+    src: "/videos/water-rafting.mp4",
+    fallback: raftingFallback,
+    title: "Water Rafting",
+  },
+  {
+    src: "/videos/jungle-safari.mp4",
+    fallback: safariImageFallback,
+    title: "Jungle Safari",
+  },
+  {
+    src: "/videos/forest-camp.mp4",
+    fallback: campFallback,
+    title: "Forest Camp",
+  },
+];
+
 export default function Home() {
   const heroRef = useRef<HTMLDivElement>(null);
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  const [videoError, setVideoError] = useState(false);
+  
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"],
   });
 
-  const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.8, 0.3]);
+  const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.9, 0.5]);
+
+  // Auto-rotate videos every 12 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentVideoIndex((prev) => (prev + 1) % heroVideos.length);
+      setVideoError(false); // Reset error state when switching videos
+    }, 12000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero Section */}
+      {/* Hero Section with Video Background */}
       <section ref={heroRef} className="relative h-screen overflow-hidden">
-        {/* Background Image with Parallax */}
+        {/* Video/Image Background with Parallax */}
         <motion.div
           style={{ y: heroY, opacity: heroOpacity }}
           className="absolute inset-0 z-0"
         >
-          <div
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url(${heroImage})` }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
+          {!videoError ? (
+            <video
+              key={currentVideoIndex}
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="absolute inset-0 w-full h-full object-cover"
+              onError={() => setVideoError(true)}
+              data-testid="video-hero-background"
+            >
+              <source src={heroVideos[currentVideoIndex].src} type="video/mp4" />
+            </video>
+          ) : (
+            <div
+              key={currentVideoIndex}
+              className="absolute inset-0 bg-cover bg-center"
+              style={{ backgroundImage: `url(${heroVideos[currentVideoIndex].fallback})` }}
+              data-testid="image-hero-fallback"
+            />
+          )}
+          
+          {/* Dark overlay for better text readability */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70" />
         </motion.div>
 
         {/* Hero Content */}
@@ -81,53 +132,108 @@ export default function Home() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
+            className="max-w-5xl"
           >
-            <h1 className="font-heading text-5xl font-bold tracking-tight text-white sm:text-6xl md:text-7xl lg:text-8xl">
-              Explore the Wild Heart
-              <br />
-              <span className="text-primary-foreground">of Karnataka</span>
+            <h1 className="font-heading text-5xl font-bold tracking-tight text-white sm:text-6xl md:text-7xl lg:text-8xl drop-shadow-2xl">
+              Welcome to Rapids Roosts
             </h1>
-            <p className="mt-6 text-lg text-white/90 sm:text-xl md:text-2xl max-w-3xl mx-auto">
-              Discover unforgettable adventures at Rapids Roosts Dandeli
+            <p className="mt-6 text-xl text-white/95 sm:text-2xl md:text-3xl font-light drop-shadow-lg">
+              You're one step closer to a great vacation!
             </p>
           </motion.div>
 
-          {/* Quick Booking CTA */}
+          {/* Quick Booking Bar */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="mt-12 w-full max-w-4xl"
+            className="mt-12 w-full max-w-5xl"
           >
-            <Card className="backdrop-blur-md bg-white/10 border-white/20 shadow-2xl hover-elevate">
-              <CardContent className="p-8">
-                <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-                  <div className="flex-1 space-y-2">
-                    <div className="flex items-center gap-2 text-white/80 text-sm">
-                      <Calendar className="h-4 w-4" />
-                      <span>Plan Your Adventure</span>
+            <Card className="backdrop-blur-lg bg-white/95 dark:bg-black/90 border-white/30 shadow-2xl">
+              <CardContent className="p-6 sm:p-8">
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
+                  {/* Location Input */}
+                  <div className="flex-1 flex items-center gap-3 p-4 rounded-lg bg-background/50 hover-elevate transition-all">
+                    <MapPin className="h-5 w-5 text-primary shrink-0" />
+                    <div className="flex-1 text-left">
+                      <label className="text-xs text-muted-foreground block mb-1">Location</label>
+                      <input
+                        type="text"
+                        placeholder="Dandeli, Karnataka"
+                        className="w-full bg-transparent border-none outline-none text-foreground placeholder:text-muted-foreground"
+                        data-testid="input-location"
+                      />
                     </div>
-                    <h3 className="font-heading text-2xl font-semibold text-white">
-                      Start Your Journey Today
-                    </h3>
-                    <p className="text-white/70 text-sm">
-                      Book your perfect adventure with seamless online booking
-                    </p>
                   </div>
+
+                  {/* Date Picker */}
+                  <div className="flex-1 flex items-center gap-3 p-4 rounded-lg bg-background/50 hover-elevate transition-all">
+                    <Calendar className="h-5 w-5 text-primary shrink-0" />
+                    <div className="flex-1 text-left">
+                      <label className="text-xs text-muted-foreground block mb-1">Check In/Out</label>
+                      <input
+                        type="text"
+                        placeholder="Select dates"
+                        className="w-full bg-transparent border-none outline-none text-foreground placeholder:text-muted-foreground"
+                        data-testid="input-dates"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Guests Picker */}
+                  <div className="flex-1 flex items-center gap-3 p-4 rounded-lg bg-background/50 hover-elevate transition-all">
+                    <Users className="h-5 w-5 text-primary shrink-0" />
+                    <div className="flex-1 text-left">
+                      <label className="text-xs text-muted-foreground block mb-1">Guests</label>
+                      <input
+                        type="text"
+                        placeholder="Select guests"
+                        className="w-full bg-transparent border-none outline-none text-foreground placeholder:text-muted-foreground"
+                        data-testid="input-guests"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Book Now Button */}
                   <Link href="/booking">
                     <Button
                       size="lg"
-                      variant="default"
-                      className="w-full sm:w-auto group"
+                      className="w-full sm:w-auto px-8 h-14 text-base font-semibold"
                       data-testid="button-book-now-hero"
                     >
-                      Book Now
-                      <ChevronRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                      BOOK NOW
                     </Button>
                   </Link>
                 </div>
               </CardContent>
             </Card>
+          </motion.div>
+
+          {/* Stats Bar */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+            className="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-8 sm:gap-12"
+          >
+            {[
+              { icon: Waves, label: "500+ Adventures", value: "500+" },
+              { icon: Mountain, label: "76,561 Destinations", value: "50+" },
+              { icon: Users, label: "717,036 Happy Guests", value: "10k+" },
+              { icon: Compass, label: "Customer Care 24/7", value: "24/7" },
+            ].map((stat, index) => {
+              const Icon = stat.icon;
+              return (
+                <div
+                  key={index}
+                  className="flex flex-col items-center gap-2 text-white"
+                  data-testid={`stat-${index}`}
+                >
+                  <Icon className="h-8 w-8 sm:h-10 sm:w-10 mb-2 drop-shadow-lg" />
+                  <p className="text-xs sm:text-sm text-white/80 text-center">{stat.label}</p>
+                </div>
+              );
+            })}
           </motion.div>
 
           {/* Scroll Indicator */}

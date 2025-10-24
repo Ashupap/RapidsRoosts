@@ -4,12 +4,14 @@
 A modern, immersive tour booking web application featuring parallax animations, multi-step booking forms, and automated email notifications for Rapids Roosts Dandeli adventure tours in Karnataka, India.
 
 ## Features
-- **Immersive Home Page**: Fullscreen parallax hero section with nature-inspired design and horizontally scrolling adventure cards
+- **Video Hero Section**: Fullscreen video background hero with support for water rafting, jungle safari, and forest camp footage. Includes automatic fallback to high-quality images if videos are unavailable
+- **Immersive Home Page**: Parallax animations, quick booking bar inspired by modern tourism platforms, and horizontally scrolling adventure cards
 - **Multi-Step Booking Form**: Progressive booking flow with real-time validation and dynamic summary sidebar
 - **Booking Acknowledgement**: Beautiful confirmation page with animated water ripple effects
 - **Status Tracking**: Color-coded booking status lookup with detailed information display
-- **Google Sheets Integration**: Persistent data storage for all bookings
+- **PostgreSQL Database**: Production-ready data persistence for all bookings with Drizzle ORM
 - **Gmail Notifications**: Automated email confirmations sent to customers upon booking
+- **Admin Dashboard**: Secure admin panel for managing bookings with bcrypt authentication
 
 ## Technology Stack
 - **Frontend**: React, TypeScript, Tailwind CSS, Framer Motion (parallax animations)
@@ -52,20 +54,24 @@ npm run dev
 ├── client/
 │   ├── src/
 │   │   ├── pages/          # Page components
-│   │   │   ├── home.tsx    # Landing page with parallax hero
+│   │   │   ├── home.tsx    # Landing page with video hero
 │   │   │   ├── booking.tsx # Multi-step booking form
 │   │   │   ├── acknowledgement.tsx  # Confirmation page
-│   │   │   └── status.tsx  # Booking status tracker
+│   │   │   ├── status.tsx  # Booking status tracker
+│   │   │   ├── admin-login.tsx     # Admin authentication
+│   │   │   └── admin-dashboard.tsx # Admin booking management
 │   │   ├── components/     # Reusable UI components
 │   │   └── lib/            # Utilities and configurations
 ├── server/
 │   ├── integrations/
-│   │   ├── gmail.ts        # Email notification service
-│   │   └── sheets.ts       # Google Sheets data persistence
+│   │   └── gmail.ts        # Email notification service
 │   ├── routes.ts           # API endpoints
-│   └── storage.ts          # Data storage interface
+│   ├── storage.ts          # PostgreSQL storage layer
+│   └── db.ts               # Database connection
 ├── shared/
 │   └── schema.ts           # Shared data models and validation
+├── public/
+│   └── videos/             # Video assets for hero background
 └── design_guidelines.md    # Design system documentation
 ```
 
@@ -159,16 +165,24 @@ Typography:
 
 ## Implementation Notes
 
+### Video Hero Section
+- Place video files in `public/videos/` directory:
+  - `water-rafting.mp4` - Water rafting adventure footage
+  - `jungle-safari.mp4` - Jungle safari and wildlife footage
+  - `forest-camp.mp4` - Forest camping and nature footage
+- Recommended specs: MP4, 1920x1080, H.264 codec, <10MB, 10-30 seconds
+- Automatic fallback to stock images if videos are unavailable
+- Supports autoplay, loop, and muted playback for best UX
+
 ### Data Integrity
 - All dates are validated to ensure ISO format (YYYY-MM-DD) before submission
 - Date inputs include onChange validators to prevent format corruption
 - Booking IDs are generated using nanoid for uniqueness
 
-### Persistence Strategy
-- In-memory cache provides fast lookups during the same session
-- Google Sheets provides durable persistence across server restarts
-- Spreadsheet ID automatically persisted to `.sheet_id` file
-- Optional: Set GOOGLE_SHEET_ID environment variable to override
+### Database
+- PostgreSQL database with Drizzle ORM for production scalability
+- Session storage in PostgreSQL via connect-pg-simple
+- Password hashing with bcrypt (10 salt rounds)
 
 ### Email Notifications
 - Confirmations sent asynchronously (fire-and-forget pattern)

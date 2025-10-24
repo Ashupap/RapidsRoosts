@@ -1,12 +1,17 @@
 import { Link } from "wouter";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, Users, ChevronRight, ChevronLeft, Waves, Mountain, Compass, Send, MapPin, Mail, Phone, Search } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
-import raftingFallback from "@assets/stock_images/aerial_view_of_river_19896f5a.jpg";
-import safariImageFallback from "@assets/stock_images/lush_green_forest_ju_ca3bd63f.jpg";
-import campFallback from "@assets/stock_images/camping_tents_in_for_1bdeb780.jpg";
+import raftingHero1 from "@assets/stock_images/vibrant_water_raftin_9419a08c.jpg";
+import raftingHero2 from "@assets/stock_images/vibrant_water_raftin_5f8fedad.jpg";
+import raftingHero3 from "@assets/stock_images/vibrant_water_raftin_24bbd1b7.jpg";
+import safariImage1 from "@assets/stock_images/jungle_safari_wildli_f86a9bfa.jpg";
+import safariImage2 from "@assets/stock_images/jungle_safari_wildli_5c354858.jpg";
+import campImage1 from "@assets/stock_images/forest_camping_tents_2caeb335.jpg";
+import campImage2 from "@assets/stock_images/forest_camping_tents_a8893aea.jpg";
+import logo from "@assets/logo_1761304770834.jpg";
 import safariImage from "@assets/generated_images/Jungle_safari_wildlife_adventure_3300876a.png";
 import trekkingImage from "@assets/generated_images/Forest_trekking_adventure_trail_14dd1cd1.png";
 import kayakingImage from "@assets/generated_images/Peaceful_kayaking_river_adventure_e3974c90.png";
@@ -16,7 +21,7 @@ const activities = [
     id: "rafting",
     title: "White Water Rafting",
     description: "Experience the thrill of navigating through rushing rapids and pristine waters",
-    image: raftingFallback,
+    image: raftingHero2,
     icon: Waves,
     duration: "2-3 hours",
     difficulty: "Moderate to Advanced",
@@ -53,24 +58,24 @@ const activities = [
 const heroDestinations = [
   {
     src: "/videos/water-rafting.mp4",
-    fallback: raftingFallback,
-    subtitle: "Explore Beautiful",
-    title: "DANDELI",
-    description: "Water Rafting Adventures",
+    fallback: raftingHero1,
+    subtitle: "Experience The Thrill",
+    title: "WHITE WATER RAFTING",
+    description: "Navigate the rapids of Kali River",
   },
   {
     src: "/videos/jungle-safari.mp4",
-    fallback: safariImageFallback,
+    fallback: safariImage1,
     subtitle: "Discover Wild",
-    title: "WILDLIFE",
-    description: "Jungle Safari Experience",
+    title: "JUNGLE SAFARI",
+    description: "Explore exotic wildlife in nature",
   },
   {
     src: "/videos/forest-camp.mp4",
-    fallback: campFallback,
-    subtitle: "Experience Nature",
-    title: "FOREST CAMP",
-    description: "Nature Retreat",
+    fallback: campImage1,
+    subtitle: "Reconnect With Nature",
+    title: "FOREST CAMPING",
+    description: "Immerse in wilderness retreat",
   },
 ];
 
@@ -111,42 +116,53 @@ export default function Home() {
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
       <section ref={heroRef} className="relative h-screen overflow-hidden">
-        {/* Video/Image Background */}
+        {/* Video/Image Background with Smooth Crossfade */}
         <motion.div
           style={{ y: heroY, opacity: heroOpacity }}
           className="absolute inset-0 z-0"
         >
-          {!videoError ? (
-            <video
-              key={currentIndex}
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="absolute inset-0 w-full h-full object-cover"
-              onError={() => setVideoError(true)}
-              data-testid="video-hero-background"
-            >
-              <source src={heroDestinations[currentIndex].src} type="video/mp4" />
-            </video>
-          ) : (
-            <div
-              key={currentIndex}
-              className="absolute inset-0 bg-cover bg-center"
-              style={{ backgroundImage: `url(${heroDestinations[currentIndex].fallback})` }}
-              data-testid="image-hero-fallback"
-            />
-          )}
+          <AnimatePresence>
+            {!videoError ? (
+              <motion.video
+                key={`video-${currentIndex}`}
+                autoPlay
+                loop
+                muted
+                playsInline
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 1.2, ease: "easeInOut" }}
+                className="absolute inset-0 w-full h-full object-cover"
+                onError={() => setVideoError(true)}
+                data-testid="video-hero-background"
+              >
+                <source src={heroDestinations[currentIndex].src} type="video/mp4" />
+              </motion.video>
+            ) : (
+              <motion.div
+                key={`image-${currentIndex}`}
+                initial={{ opacity: 0, scale: 1.05 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 1.2, ease: "easeInOut" }}
+                className="absolute inset-0 bg-cover bg-center"
+                style={{ backgroundImage: `url(${heroDestinations[currentIndex].fallback})` }}
+                data-testid="image-hero-fallback"
+              />
+            )}
+          </AnimatePresence>
           
-          {/* Dark overlay */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
+          {/* Dark overlay with gradient */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/80 pointer-events-none" />
         </motion.div>
 
         {/* Top Navigation Header */}
         <div className="relative z-20 flex items-center justify-between px-8 py-6">
-          <div className="flex items-center">
-            <h1 className="font-heading text-3xl font-bold text-white tracking-wider">
-              RAPIDS ROOSTS
+          <div className="flex items-center gap-4">
+            <img src={logo} alt="Rapids Roosts Dandeli" className="h-16 w-16 rounded-full object-cover shadow-lg" data-testid="img-logo" />
+            <h1 className="font-heading text-2xl md:text-3xl font-bold text-white tracking-wider">
+              RAPIDS & ROOSTS
             </h1>
           </div>
 

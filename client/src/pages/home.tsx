@@ -2,7 +2,7 @@ import { Link } from "wouter";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Calendar, Users, ChevronRight, Waves, Mountain, Compass, Send, MapPin } from "lucide-react";
+import { Calendar, Users, ChevronRight, ChevronLeft, Waves, Mountain, Compass, Send, MapPin, Mail, Phone, Search } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
 import raftingFallback from "@assets/stock_images/aerial_view_of_river_19896f5a.jpg";
 import safariImageFallback from "@assets/stock_images/lush_green_forest_ju_ca3bd63f.jpg";
@@ -50,27 +50,33 @@ const activities = [
   },
 ];
 
-const heroVideos = [
+const heroDestinations = [
   {
     src: "/videos/water-rafting.mp4",
     fallback: raftingFallback,
-    title: "Water Rafting",
+    subtitle: "Explore Beautiful",
+    title: "DANDELI",
+    description: "Water Rafting Adventures",
   },
   {
     src: "/videos/jungle-safari.mp4",
     fallback: safariImageFallback,
-    title: "Jungle Safari",
+    subtitle: "Discover Wild",
+    title: "WILDLIFE",
+    description: "Jungle Safari Experience",
   },
   {
     src: "/videos/forest-camp.mp4",
     fallback: campFallback,
-    title: "Forest Camp",
+    subtitle: "Experience Nature",
+    title: "FOREST CAMP",
+    description: "Nature Retreat",
   },
 ];
 
 export default function Home() {
   const heroRef = useRef<HTMLDivElement>(null);
-  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [videoError, setVideoError] = useState(false);
   
   const { scrollYProgress } = useScroll({
@@ -81,28 +87,38 @@ export default function Home() {
   const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.9, 0.5]);
 
-  // Auto-rotate videos every 12 seconds
+  // Auto-rotate every 12 seconds
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentVideoIndex((prev) => (prev + 1) % heroVideos.length);
-      setVideoError(false); // Reset error state when switching videos
+      setCurrentIndex((prev) => (prev + 1) % heroDestinations.length);
+      setVideoError(false);
     }, 12000);
 
     return () => clearInterval(interval);
   }, []);
 
+  const goToPrevious = () => {
+    setCurrentIndex((prev) => (prev - 1 + heroDestinations.length) % heroDestinations.length);
+    setVideoError(false);
+  };
+
+  const goToNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % heroDestinations.length);
+    setVideoError(false);
+  };
+
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero Section with Video Background */}
+      {/* Hero Section */}
       <section ref={heroRef} className="relative h-screen overflow-hidden">
-        {/* Video/Image Background with Parallax */}
+        {/* Video/Image Background */}
         <motion.div
           style={{ y: heroY, opacity: heroOpacity }}
           className="absolute inset-0 z-0"
         >
           {!videoError ? (
             <video
-              key={currentVideoIndex}
+              key={currentIndex}
               autoPlay
               loop
               muted
@@ -111,142 +127,170 @@ export default function Home() {
               onError={() => setVideoError(true)}
               data-testid="video-hero-background"
             >
-              <source src={heroVideos[currentVideoIndex].src} type="video/mp4" />
+              <source src={heroDestinations[currentIndex].src} type="video/mp4" />
             </video>
           ) : (
             <div
-              key={currentVideoIndex}
+              key={currentIndex}
               className="absolute inset-0 bg-cover bg-center"
-              style={{ backgroundImage: `url(${heroVideos[currentVideoIndex].fallback})` }}
+              style={{ backgroundImage: `url(${heroDestinations[currentIndex].fallback})` }}
               data-testid="image-hero-fallback"
             />
           )}
           
-          {/* Dark overlay for better text readability */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70" />
+          {/* Dark overlay */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
         </motion.div>
 
-        {/* Hero Content */}
-        <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="max-w-5xl"
-          >
-            <h1 className="font-heading text-5xl font-bold tracking-tight text-white sm:text-6xl md:text-7xl lg:text-8xl drop-shadow-2xl">
-              Welcome to Rapids Roosts
+        {/* Top Navigation Header */}
+        <div className="relative z-20 flex items-center justify-between px-8 py-6">
+          <div className="flex items-center">
+            <h1 className="font-heading text-3xl font-bold text-white tracking-wider">
+              RAPIDS ROOSTS
             </h1>
-            <p className="mt-6 text-xl text-white/95 sm:text-2xl md:text-3xl font-light drop-shadow-lg">
-              You're one step closer to a great vacation!
-            </p>
-          </motion.div>
+          </div>
 
-          {/* Quick Booking Bar */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            className="mt-12 w-full max-w-5xl"
-          >
-            <Card className="backdrop-blur-lg bg-white/95 dark:bg-black/90 border-white/30 shadow-2xl">
-              <CardContent className="p-6 sm:p-8">
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
-                  {/* Location Input */}
-                  <div className="flex-1 flex items-center gap-3 p-4 rounded-lg bg-background/50 hover-elevate transition-all">
-                    <MapPin className="h-5 w-5 text-primary shrink-0" />
-                    <div className="flex-1 text-left">
-                      <label className="text-xs text-muted-foreground block mb-1">Location</label>
-                      <input
-                        type="text"
-                        placeholder="Dandeli, Karnataka"
-                        className="w-full bg-transparent border-none outline-none text-foreground placeholder:text-muted-foreground"
-                        data-testid="input-location"
-                      />
-                    </div>
-                  </div>
+          <nav className="hidden lg:flex items-center gap-8">
+            <Link href="/" className="text-white text-sm font-medium hover:text-white/80 transition-colors">
+              DESTINATION
+            </Link>
+            <Link href="/booking" className="text-white text-sm font-medium hover:text-white/80 transition-colors">
+              OUR ACTIVITY
+            </Link>
+            <Link href="/status" className="text-white text-sm font-medium hover:text-white/80 transition-colors">
+              CHECK STATUS
+            </Link>
+            <Link href="/admin/login" className="text-white text-sm font-medium hover:text-white/80 transition-colors">
+              ADMIN
+            </Link>
+          </nav>
 
-                  {/* Date Picker */}
-                  <div className="flex-1 flex items-center gap-3 p-4 rounded-lg bg-background/50 hover-elevate transition-all">
-                    <Calendar className="h-5 w-5 text-primary shrink-0" />
-                    <div className="flex-1 text-left">
-                      <label className="text-xs text-muted-foreground block mb-1">Check In/Out</label>
-                      <input
-                        type="text"
-                        placeholder="Select dates"
-                        className="w-full bg-transparent border-none outline-none text-foreground placeholder:text-muted-foreground"
-                        data-testid="input-dates"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Guests Picker */}
-                  <div className="flex-1 flex items-center gap-3 p-4 rounded-lg bg-background/50 hover-elevate transition-all">
-                    <Users className="h-5 w-5 text-primary shrink-0" />
-                    <div className="flex-1 text-left">
-                      <label className="text-xs text-muted-foreground block mb-1">Guests</label>
-                      <input
-                        type="text"
-                        placeholder="Select guests"
-                        className="w-full bg-transparent border-none outline-none text-foreground placeholder:text-muted-foreground"
-                        data-testid="input-guests"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Book Now Button */}
-                  <Link href="/booking">
-                    <Button
-                      size="lg"
-                      className="w-full sm:w-auto px-8 h-14 text-base font-semibold"
-                      data-testid="button-book-now-hero"
-                    >
-                      BOOK NOW
-                    </Button>
-                  </Link>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          {/* Stats Bar */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-            className="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-8 sm:gap-12"
-          >
-            {[
-              { icon: Waves, label: "500+ Adventures", value: "500+" },
-              { icon: Mountain, label: "76,561 Destinations", value: "50+" },
-              { icon: Users, label: "717,036 Happy Guests", value: "10k+" },
-              { icon: Compass, label: "Customer Care 24/7", value: "24/7" },
-            ].map((stat, index) => {
-              const Icon = stat.icon;
-              return (
-                <div
-                  key={index}
-                  className="flex flex-col items-center gap-2 text-white"
-                  data-testid={`stat-${index}`}
-                >
-                  <Icon className="h-8 w-8 sm:h-10 sm:w-10 mb-2 drop-shadow-lg" />
-                  <p className="text-xs sm:text-sm text-white/80 text-center">{stat.label}</p>
-                </div>
-              );
-            })}
-          </motion.div>
-
-          {/* Scroll Indicator */}
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="absolute bottom-8 left-1/2 -translate-x-1/2"
-          >
-            <div className="flex flex-col items-center gap-2 text-white/60">
-              <span className="text-sm">Scroll to explore</span>
-              <ChevronRight className="h-5 w-5 rotate-90" />
+          <div className="hidden md:flex items-center gap-6 text-white text-sm">
+            <div className="flex items-center gap-2">
+              <Mail className="h-4 w-4" />
+              <span>info@rapidsroosts.com</span>
             </div>
-          </motion.div>
+            <div className="flex items-center gap-2">
+              <Phone className="h-4 w-4" />
+              <span>+91 XXXXXXXXXX</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Main Hero Content */}
+        <div className="relative z-10 flex h-full items-center justify-center px-6 pb-32">
+          {/* Previous Arrow */}
+          <button
+            onClick={goToPrevious}
+            className="absolute left-8 top-1/2 -translate-y-1/2 w-14 h-14 rounded-full border-2 border-white/40 backdrop-blur-sm bg-white/10 flex items-center justify-center hover-elevate active-elevate-2 transition-all group z-30"
+            data-testid="button-previous-destination"
+          >
+            <ChevronLeft className="h-6 w-6 text-white group-hover:scale-110 transition-transform" />
+          </button>
+
+          {/* Center Content */}
+          <div className="text-center">
+            <motion.div
+              key={currentIndex}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="space-y-4"
+            >
+              <p className="text-white/90 text-2xl md:text-3xl lg:text-4xl font-light italic tracking-wide">
+                {heroDestinations[currentIndex].subtitle}
+              </p>
+              <h2 className="font-heading text-7xl md:text-8xl lg:text-9xl font-black text-white tracking-tight leading-none drop-shadow-2xl">
+                {heroDestinations[currentIndex].title}
+              </h2>
+            </motion.div>
+
+            {/* Pagination Dots */}
+            <div className="flex items-center justify-center gap-6 mt-12">
+              {heroDestinations.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => {
+                    setCurrentIndex(index);
+                    setVideoError(false);
+                  }}
+                  className={`text-sm font-medium transition-all ${
+                    index === currentIndex
+                      ? 'text-white scale-110'
+                      : 'text-white/50 hover:text-white/80'
+                  }`}
+                  data-testid={`button-pagination-${index}`}
+                >
+                  0{index + 1}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Next Arrow */}
+          <button
+            onClick={goToNext}
+            className="absolute right-8 top-1/2 -translate-y-1/2 w-14 h-14 rounded-full border-2 border-white/40 backdrop-blur-sm bg-white/10 flex items-center justify-center hover-elevate active-elevate-2 transition-all group z-30"
+            data-testid="button-next-destination"
+          >
+            <ChevronRight className="h-6 w-6 text-white group-hover:scale-110 transition-transform" />
+          </button>
+        </div>
+
+        {/* Bottom Search Bar */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 w-full max-w-4xl px-6">
+          <Card className="bg-white/95 dark:bg-black/90 backdrop-blur-lg shadow-2xl">
+            <CardContent className="p-6">
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+                {/* Destination */}
+                <div className="flex items-center gap-3 p-3 rounded-lg hover-elevate transition-all cursor-pointer">
+                  <MapPin className="h-5 w-5 text-primary shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs text-muted-foreground mb-1">Destination</p>
+                    <p className="text-sm font-medium text-foreground truncate">Dandeli</p>
+                  </div>
+                </div>
+
+                {/* Kind of Trip */}
+                <div className="flex items-center gap-3 p-3 rounded-lg hover-elevate transition-all cursor-pointer">
+                  <Compass className="h-5 w-5 text-primary shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs text-muted-foreground mb-1">Kind Of Trip</p>
+                    <p className="text-sm font-medium text-foreground truncate">Adventure</p>
+                  </div>
+                </div>
+
+                {/* Activities */}
+                <div className="flex items-center gap-3 p-3 rounded-lg hover-elevate transition-all cursor-pointer">
+                  <Waves className="h-5 w-5 text-primary shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs text-muted-foreground mb-1">Activities & Themes</p>
+                    <p className="text-sm font-medium text-foreground truncate">Rafting, Safari</p>
+                  </div>
+                </div>
+
+                {/* Average Price */}
+                <div className="flex items-center gap-3 p-3 rounded-lg hover-elevate transition-all cursor-pointer">
+                  <Calendar className="h-5 w-5 text-primary shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs text-muted-foreground mb-1">Average Price</p>
+                    <p className="text-sm font-medium text-foreground truncate">₹2,500 - ₹5,000</p>
+                  </div>
+                </div>
+
+                {/* Search Button */}
+                <Link href="/booking" className="col-span-2 md:col-span-1">
+                  <Button
+                    className="w-full h-full min-h-[60px] text-base font-semibold"
+                    data-testid="button-search-hero"
+                  >
+                    <Search className="h-5 w-5 mr-2" />
+                    Search
+                  </Button>
+                </Link>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </section>
 

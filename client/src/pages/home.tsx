@@ -217,10 +217,10 @@ export default function Home() {
               transition={{ duration: 0.8 }}
               className="space-y-4"
             >
-              <p className="text-white/90 text-2xl md:text-3xl lg:text-4xl font-light italic tracking-wide">
+              <p className="text-white/90 text-2xl md:text-3xl lg:text-4xl font-light italic tracking-wide" data-testid="text-hero-subtitle">
                 {heroDestinations[currentIndex].subtitle}
               </p>
-              <h2 className="font-heading text-7xl md:text-8xl lg:text-9xl font-black text-white tracking-tight leading-none drop-shadow-2xl">
+              <h2 className="font-heading text-7xl md:text-8xl lg:text-9xl font-black text-white tracking-tight leading-none drop-shadow-2xl" data-testid="text-hero-title">
                 {heroDestinations[currentIndex].title}
               </h2>
             </motion.div>

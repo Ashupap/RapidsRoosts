@@ -20,38 +20,42 @@ const activities = [
   {
     id: "rafting",
     title: "White Water Rafting",
-    description: "Experience the thrill of navigating through rushing rapids and pristine waters",
+    description: "Navigate through Grade 2-3 rapids on the Kali River. Options: 9 km (Long Rafting - 3 hours) or 1 km (Short Rafting - 1 hour)",
     image: raftingHero2,
     icon: Waves,
-    duration: "2-3 hours",
+    duration: "1-3 hours",
     difficulty: "Moderate to Advanced",
+    price: "₹600 - ₹1,500",
   },
   {
     id: "safari",
     title: "Jungle Safari",
-    description: "Explore wildlife in their natural habitat with expert guides",
+    description: "Explore 834 sq km wildlife sanctuary home to tigers, leopards, sloth bears, and exotic birds. Guided jeep safari through pristine forests",
     image: safariImage,
     icon: Compass,
-    duration: "3-4 hours",
+    duration: "2-3 hours",
     difficulty: "Easy",
+    price: "₹600/person",
   },
   {
     id: "trekking",
     title: "Forest Trekking",
-    description: "Discover hidden trails and breathtaking vistas in the Western Ghats",
+    description: "Discover hidden trails through Western Ghats with breathtaking vistas and rich biodiversity",
     image: trekkingImage,
     icon: Mountain,
     duration: "4-6 hours",
     difficulty: "Moderate",
+    price: "Included in package",
   },
   {
     id: "kayaking",
-    title: "Kayaking Adventure",
-    description: "Paddle through serene waters surrounded by lush tropical forests",
+    title: "Kayaking",
+    description: "Paddle through serene Kali River waters, perfect for beginners and experienced kayakers alike",
     image: kayakingImage,
     icon: Send,
     duration: "2-3 hours",
     difficulty: "Easy to Moderate",
+    price: "Included in package",
   },
 ];
 
@@ -310,6 +314,100 @@ export default function Home() {
         </div>
       </section>
 
+      {/* About Dandeli Section */}
+      <section className="py-20 px-6 bg-card">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <h2 className="font-heading text-4xl font-bold tracking-tight text-foreground mb-6">
+                Nature & Adventure at its Best!
+              </h2>
+              <p className="text-lg text-muted-foreground mb-4">
+                Nature is at its bountiful best at <span className="font-semibold text-foreground">Dandeli</span> (North Karnataka), 
+                making it an ideal holiday destination. This destination, located on the banks of the Kali River, 
+                offers unparalleled scenic beauty complemented by exotic wildlife in its tropical forests.
+              </p>
+              <p className="text-lg text-muted-foreground mb-6">
+                Easily accessible, Dandeli is the perfect destination for nature lovers and adventure-seekers alike. 
+                Experience the ultimate adventure holiday surrounded by the Western Ghats' magnificent landscapes.
+              </p>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="flex items-center gap-3">
+                  <div className="p-3 rounded-lg bg-primary/10">
+                    <Waves className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-foreground">Water Sports</p>
+                    <p className="text-sm text-muted-foreground">Rafting & Kayaking</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="p-3 rounded-lg bg-primary/10">
+                    <Mountain className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-foreground">Adventure</p>
+                    <p className="text-sm text-muted-foreground">Trekking & Safari</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="p-3 rounded-lg bg-primary/10">
+                    <Compass className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-foreground">Wilderness</p>
+                    <p className="text-sm text-muted-foreground">834 sq km Sanctuary</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="p-3 rounded-lg bg-primary/10">
+                    <Send className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-foreground">Eco Tourism</p>
+                    <p className="text-sm text-muted-foreground">Nature Retreats</p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="grid grid-cols-2 gap-4"
+            >
+              <img
+                src={raftingHero3}
+                alt="Water Rafting in Dandeli"
+                className="rounded-lg object-cover w-full h-64"
+              />
+              <img
+                src={safariImage2}
+                alt="Jungle Safari in Dandeli"
+                className="rounded-lg object-cover w-full h-64 mt-8"
+              />
+              <img
+                src={campImage2}
+                alt="Camping in Dandeli"
+                className="rounded-lg object-cover w-full h-64"
+              />
+              <img
+                src={safariImage}
+                alt="Wildlife in Dandeli"
+                className="rounded-lg object-cover w-full h-64 mt-8"
+              />
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
       {/* Adventure Highlights Section */}
       <section className="py-20 px-6">
         <div className="max-w-7xl mx-auto">
@@ -367,7 +465,7 @@ export default function Home() {
                         <p className="text-muted-foreground mb-4">
                           {activity.description}
                         </p>
-                        <div className="flex items-center justify-between text-sm">
+                        <div className="flex items-center justify-between text-sm mb-3">
                           <div className="flex items-center gap-2 text-muted-foreground">
                             <Calendar className="h-4 w-4" />
                             <span>{activity.duration}</span>
@@ -376,6 +474,9 @@ export default function Home() {
                             <Users className="h-4 w-4" />
                             <span>{activity.difficulty}</span>
                           </div>
+                        </div>
+                        <div className="text-sm font-semibold text-primary">
+                          {activity.price}
                         </div>
                       </CardContent>
                     </Card>
@@ -403,14 +504,278 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Packages Section */}
+      <section className="py-20 px-6 bg-card">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <h2 className="font-heading text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+              Adventure Packages
+            </h2>
+            <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
+              Choose from our carefully curated packages designed for couples, families, and student groups
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Couple Package */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              <Card className="hover-elevate active-elevate-2 transition-all duration-300">
+                <CardContent className="p-8">
+                  <div className="text-center mb-6">
+                    <h3 className="font-heading text-2xl font-bold mb-2">Couple Package</h3>
+                    <p className="text-3xl font-bold text-primary">From ₹2,200<span className="text-sm font-normal text-muted-foreground">/person</span></p>
+                  </div>
+                  <div className="space-y-3 mb-6">
+                    <div className="flex items-center gap-2">
+                      <div className="h-1.5 w-1.5 rounded-full bg-primary" />
+                      <span className="text-sm">23 Hours Stay</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="h-1.5 w-1.5 rounded-full bg-primary" />
+                      <span className="text-sm">7 Adventure Activities</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="h-1.5 w-1.5 rounded-full bg-primary" />
+                      <span className="text-sm">3 Meals & Tea</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="h-1.5 w-1.5 rounded-full bg-primary" />
+                      <span className="text-sm">5 Sightseeing Points</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="h-1.5 w-1.5 rounded-full bg-primary" />
+                      <span className="text-sm">Swimming Pool Access</span>
+                    </div>
+                  </div>
+                  <Link href="/booking" className="w-full">
+                    <Button className="w-full" data-testid="button-book-couple">
+                      Book Now
+                    </Button>
+                  </Link>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Family Package */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
+              <Card className="hover-elevate active-elevate-2 transition-all duration-300 border-primary border-2">
+                <CardContent className="p-8">
+                  <div className="text-center mb-6">
+                    <div className="inline-block px-3 py-1 bg-primary text-primary-foreground text-xs font-semibold rounded-full mb-2">
+                      MOST POPULAR
+                    </div>
+                    <h3 className="font-heading text-2xl font-bold mb-2">Family Package</h3>
+                    <p className="text-3xl font-bold text-primary">From ₹2,000<span className="text-sm font-normal text-muted-foreground">/person</span></p>
+                  </div>
+                  <div className="space-y-3 mb-6">
+                    <div className="flex items-center gap-2">
+                      <div className="h-1.5 w-1.5 rounded-full bg-primary" />
+                      <span className="text-sm">23 Hours Stay</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="h-1.5 w-1.5 rounded-full bg-primary" />
+                      <span className="text-sm">7 Adventure Activities</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="h-1.5 w-1.5 rounded-full bg-primary" />
+                      <span className="text-sm">3 Buffet Meals & Tea</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="h-1.5 w-1.5 rounded-full bg-primary" />
+                      <span className="text-sm">5 Sightseeing Points</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="h-1.5 w-1.5 rounded-full bg-primary" />
+                      <span className="text-sm">Campfire & Rain Dance</span>
+                    </div>
+                  </div>
+                  <Link href="/booking" className="w-full">
+                    <Button className="w-full" data-testid="button-book-family">
+                      Book Now
+                    </Button>
+                  </Link>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Student Package */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              <Card className="hover-elevate active-elevate-2 transition-all duration-300">
+                <CardContent className="p-8">
+                  <div className="text-center mb-6">
+                    <h3 className="font-heading text-2xl font-bold mb-2">Student Package</h3>
+                    <p className="text-3xl font-bold text-primary">From ₹1,800<span className="text-sm font-normal text-muted-foreground">/person</span></p>
+                  </div>
+                  <div className="space-y-3 mb-6">
+                    <div className="flex items-center gap-2">
+                      <div className="h-1.5 w-1.5 rounded-full bg-primary" />
+                      <span className="text-sm">23 Hours Stay</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="h-1.5 w-1.5 rounded-full bg-primary" />
+                      <span className="text-sm">7 Adventure Activities</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="h-1.5 w-1.5 rounded-full bg-primary" />
+                      <span className="text-sm">3 Meals & Tea</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="h-1.5 w-1.5 rounded-full bg-primary" />
+                      <span className="text-sm">5 Sightseeing Points</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="h-1.5 w-1.5 rounded-full bg-primary" />
+                      <span className="text-sm">Group Activities</span>
+                    </div>
+                  </div>
+                  <Link href="/booking" className="w-full">
+                    <Button className="w-full" data-testid="button-book-student">
+                      Book Now
+                    </Button>
+                  </Link>
+                </CardContent>
+              </Card>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Sightseeing Section */}
+      <section className="py-20 px-6">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <h2 className="font-heading text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+              Top Attractions
+            </h2>
+            <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
+              Explore the natural wonders and scenic beauty around Dandeli
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+            {[
+              { name: "Supa Dam", icon: "🏞️" },
+              { name: "Syntheri Rocks", icon: "⛰️" },
+              { name: "Kavala Caves", icon: "🕳️" },
+              { name: "Backwater", icon: "💧" },
+              { name: "Crocodile Park", icon: "🐊" },
+              { name: "Moulangi Eco Park", icon: "🌳" },
+            ].map((attraction, index) => (
+              <motion.div
+                key={attraction.name}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.05 }}
+              >
+                <Card className="hover-elevate active-elevate-2 transition-all duration-300 cursor-pointer text-center">
+                  <CardContent className="p-6">
+                    <div className="text-4xl mb-3">{attraction.icon}</div>
+                    <p className="font-semibold text-sm">{attraction.name}</p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-20 px-6 bg-card">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <h2 className="font-heading text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+              What Our Guests Say
+            </h2>
+            <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
+              Real experiences from adventure seekers who visited Dandeli
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              {
+                name: "Sayba Qureshi",
+                review: "The adventurous activities in the Dandeli Forest were fantastic! We really enjoyed Dandeli's natural beauty and wildlife. Must visit place for nature lovers.",
+              },
+              {
+                name: "Melvin Costa",
+                review: "Wonderful time spent at the stunning jungle resorts. The personnel really made us feel at home, and the views were breathtaking. Ideal location for unwinding.",
+              },
+              {
+                name: "Deeksha Thorwat",
+                review: "Loved our time at one of the resorts with swimming pool. After a day of rafting, relaxing by the pool was exactly what we needed. Highly recommend.",
+              },
+              {
+                name: "Ali Ansari",
+                review: "We had exactly what we needed throughout our stay. Great amenities, serene surroundings, and the ideal balance of luxury and nature.",
+              },
+            ].map((testimonial, index) => (
+              <motion.div
+                key={testimonial.name}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                <Card className="h-full">
+                  <CardContent className="p-6">
+                    <p className="text-muted-foreground mb-4 italic">
+                      "{testimonial.review}"
+                    </p>
+                    <p className="font-semibold text-foreground">— {testimonial.name}</p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Footer */}
       <footer className="bg-card border-t border-card-border py-12 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             <div>
-              <h3 className="font-heading text-lg font-semibold mb-4">Rapids Roosts Dandeli</h3>
+              <div className="flex items-center gap-3 mb-4">
+                <img src={logo} alt="Rapids Roosts" className="h-12 w-12 rounded-full object-cover" />
+                <h3 className="font-heading text-lg font-semibold">Rapids & Roosts</h3>
+              </div>
               <p className="text-muted-foreground text-sm">
-                Your gateway to unforgettable adventures in Karnataka's wilderness
+                Your gateway to unforgettable adventures in Karnataka's wilderness. Experience the thrill of Dandeli!
               </p>
             </div>
             <div>
@@ -423,38 +788,58 @@ export default function Home() {
                 </li>
                 <li>
                   <Link href="/booking" className="hover:text-foreground transition-colors">
-                    Book Now
+                    Book Adventure
                   </Link>
                 </li>
                 <li>
                   <Link href="/status" className="hover:text-foreground transition-colors">
-                    Check Status
+                    Track Booking
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/admin/login" className="hover:text-foreground transition-colors">
+                    Admin Login
                   </Link>
                 </li>
               </ul>
             </div>
             <div>
-              <h4 className="font-heading font-semibold mb-4">Contact</h4>
+              <h4 className="font-heading font-semibold mb-4">Contact Us</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li>Dandeli, Karnataka</li>
-                <li>info@rapidsroosts.com</li>
-                <li>+91 XXXXXXXXXX</li>
+                <li className="flex items-center gap-2">
+                  <MapPin className="h-4 w-4" />
+                  <span>Dandeli, Karnataka, India - 581325</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <Mail className="h-4 w-4" />
+                  <span>info@rapidsroosts.com</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <Phone className="h-4 w-4" />
+                  <span>+91 94839 40400</span>
+                </li>
               </ul>
             </div>
             <div>
-              <h4 className="font-heading font-semibold mb-4">Follow Us</h4>
-              <div className="flex gap-4">
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Facebook
-                </a>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Instagram
-                </a>
-              </div>
+              <h4 className="font-heading font-semibold mb-4">Activities</h4>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li>White Water Rafting</li>
+                <li>Jungle Safari</li>
+                <li>Kayaking</li>
+                <li>Forest Trekking</li>
+                <li>Camping</li>
+                <li>Bird Watching</li>
+              </ul>
             </div>
           </div>
-          <div className="mt-8 pt-8 border-t border-card-border text-center text-sm text-muted-foreground">
-            <p>&copy; {new Date().getFullYear()} Rapids Roosts Dandeli. All rights reserved.</p>
+          <div className="mt-8 pt-8 border-t border-card-border">
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
+              <p>&copy; {new Date().getFullYear()} Rapids & Roosts Dandeli. All rights reserved.</p>
+              <div className="flex gap-4">
+                <a href="#" className="hover:text-foreground transition-colors">Privacy Policy</a>
+                <a href="#" className="hover:text-foreground transition-colors">Terms & Conditions</a>
+              </div>
+            </div>
           </div>
         </div>
       </footer>

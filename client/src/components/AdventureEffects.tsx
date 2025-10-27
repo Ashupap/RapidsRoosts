@@ -1,7 +1,19 @@
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Flame, Droplet } from "lucide-react";
 
 export function CampfireEffect() {
+  const prefersReducedMotion = useReducedMotion();
+  
+  if (prefersReducedMotion) {
+    return (
+      <div className="flex items-end justify-center gap-1" aria-hidden="true">
+        <Flame className="h-8 w-8 fill-current text-campfire-glow" />
+        <Flame className="h-10 w-10 fill-current text-campfire-glow" />
+        <Flame className="h-8 w-8 fill-current text-campfire-glow" />
+      </div>
+    );
+  }
+  
   return (
     <div className="flex items-end justify-center gap-1">
       {/* Flame 1 */}
@@ -95,6 +107,12 @@ export function WaterRippleButton({ children, onClick, className = "", ...props 
 }
 
 export function WaterDroplets() {
+  const prefersReducedMotion = useReducedMotion();
+  
+  if (prefersReducedMotion) {
+    return null;
+  }
+  
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
       {[...Array(5)].map((_, i) => (
@@ -121,11 +139,17 @@ export function WaterDroplets() {
 }
 
 export function WildlifeSilhouette({ type = "bird" }: { type?: "bird" | "deer" | "elephant" }) {
+  const prefersReducedMotion = useReducedMotion();
+  
   const silhouettes = {
     bird: "M12 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm8 7c-.55 0-1 .45-1 1 0 1.1-.9 2-2 2s-2-.9-2-2c0-.55-.45-1-1-1s-1 .45-1 1c0 2.21 1.79 4 4 4s4-1.79 4-4c0-.55-.45-1-1-1z",
     deer: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z",
     elephant: "M19 6h-2c0-2.76-2.24-5-5-5S7 3.24 7 6H5c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z",
   };
+  
+  if (prefersReducedMotion) {
+    return null;
+  }
 
   return (
     <motion.div
@@ -151,6 +175,12 @@ export function WildlifeSilhouette({ type = "bird" }: { type?: "bird" | "deer" |
 }
 
 export function FloatingLeaves() {
+  const prefersReducedMotion = useReducedMotion();
+  
+  if (prefersReducedMotion) {
+    return null;
+  }
+  
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
       {[...Array(8)].map((_, i) => (

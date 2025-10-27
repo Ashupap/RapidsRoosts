@@ -1,5 +1,5 @@
 import { useRef, ReactNode } from "react";
-import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
+import { motion, useScroll, useTransform, MotionValue, useReducedMotion } from "framer-motion";
 
 interface ParallaxSectionProps {
   children: ReactNode;
@@ -15,13 +15,14 @@ export function ParallaxSection({
   offset = ["start end", "end start"],
 }: ParallaxSectionProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const prefersReducedMotion = useReducedMotion();
 
   const { scrollYProgress } = useScroll({
     target: ref,
     offset,
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], [0, speed]);
+  const y = useTransform(scrollYProgress, [0, 1], [0, prefersReducedMotion ? 0 : speed]);
 
   return (
     <div ref={ref} className={className}>
@@ -46,21 +47,22 @@ export function ParallaxImage({
   containerClassName = "",
 }: ParallaxImageProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const prefersReducedMotion = useReducedMotion();
 
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], [0, speed]);
+  const y = useTransform(scrollYProgress, [0, 1], [0, prefersReducedMotion ? 0 : speed]);
   const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.6, 1, 1, 0.6]);
 
   return (
-    <div ref={ref} className={`overflow-hidden ${containerClassName}`}>
+    <div ref={ref} className={`relative overflow-hidden ${containerClassName}`}>
       <motion.img
         src={src}
         alt={alt}
-        style={{ y, opacity }}
+        style={{ y: prefersReducedMotion ? 0 : y, opacity: prefersReducedMotion ? 1 : opacity }}
         className={`w-full h-full object-cover ${className}`}
       />
     </div>
@@ -81,14 +83,15 @@ export function ParallaxText({
   fadeEffect = false,
 }: ParallaxTextProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const prefersReducedMotion = useReducedMotion();
 
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], [0, speed]);
-  const opacity = fadeEffect
+  const y = useTransform(scrollYProgress, [0, 1], [0, prefersReducedMotion ? 0 : speed]);
+  const opacity = fadeEffect && !prefersReducedMotion
     ? useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0])
     : undefined;
 
@@ -115,13 +118,14 @@ export function ParallaxLayer({
   className = "",
 }: ParallaxLayerProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const prefersReducedMotion = useReducedMotion();
 
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], [0, speed]);
+  const y = useTransform(scrollYProgress, [0, 1], [0, prefersReducedMotion ? 0 : speed]);
 
   return (
     <div ref={ref} style={{ zIndex }} className={`relative ${className}`}>
@@ -132,11 +136,12 @@ export function ParallaxLayer({
 
 export function useParallaxValue(speed: number): MotionValue<number> {
   const ref = useRef<HTMLDivElement>(null);
+  const prefersReducedMotion = useReducedMotion();
 
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
   });
 
-  return useTransform(scrollYProgress, [0, 1], [0, speed]);
+  return useTransform(scrollYProgress, [0, 1], [0, prefersReducedMotion ? 0 : speed]);
 }

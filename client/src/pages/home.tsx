@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, Users, ChevronRight, ChevronLeft, Waves, Mountain, Compass, Send, MapPin, Search, Mail, Phone } from "lucide-react";
@@ -102,6 +102,8 @@ const heroDestinations = [
 ];
 
 export default function Home() {
+  const prefersReducedMotion = useReducedMotion();
+  
   useSEO({
     title: 'Home - Adventure Tourism in Dandeli',
     description: 'Experience the ultimate adventure in Dandeli, Karnataka. Book white water rafting, jungle safaris, forest trekking, and kayaking packages. Rapids & Roosts offers premium adventure tourism in the Western Ghats.',
@@ -120,18 +122,20 @@ export default function Home() {
     offset: ["start start", "end start"],
   });
 
-  const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.9, 0.5]);
+  const heroY = useTransform(scrollYProgress, [0, 1], [prefersReducedMotion ? "0%" : "0%", prefersReducedMotion ? "0%" : "30%"]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, prefersReducedMotion ? 1 : 0.9, prefersReducedMotion ? 1 : 0.5]);
 
-  // Auto-rotate every 12 seconds
+  // Auto-rotate every 12 seconds (disabled if user prefers reduced motion)
   useEffect(() => {
+    if (prefersReducedMotion) return;
+    
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % heroDestinations.length);
       setVideoError(false);
     }, 12000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [prefersReducedMotion]);
 
   const goToPrevious = () => {
     setCurrentIndex((prev) => (prev - 1 + heroDestinations.length) % heroDestinations.length);

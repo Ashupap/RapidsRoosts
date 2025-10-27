@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { Menu, X, Phone, Mail } from "lucide-react";
 import logo from "@assets/logo_1761304770834.jpg";
 
@@ -23,12 +23,12 @@ export default function Navigation({ transparent = false, currentPath = "/" }: N
 
   const linkClasses = (href: string) => {
     const isActive = currentPath === href;
-    const baseClasses = "text-sm font-medium transition-colors";
+    const baseClasses = "text-sm font-normal transition-colors tracking-wide";
     
     if (transparent) {
-      return `${baseClasses} ${isActive ? 'text-white' : 'text-white/80 hover:text-white'}`;
+      return `${baseClasses} ${isActive ? 'text-white font-medium' : 'text-white/75 hover:text-white'}`;
     }
-    return `${baseClasses} ${isActive ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'}`;
+    return `${baseClasses} ${isActive ? 'text-foreground font-medium' : 'text-muted-foreground hover:text-foreground'}`;
   };
 
   return (
@@ -40,13 +40,13 @@ export default function Navigation({ transparent = false, currentPath = "/" }: N
             <img 
               src={logo} 
               alt="Rapids Roosts Dandeli" 
-              className="h-14 w-14 rounded-full object-cover shadow-lg" 
+              className="h-12 w-12 rounded-full object-cover shadow-md" 
             />
             <div>
-              <h1 className={`font-heading text-xl md:text-2xl font-bold tracking-wider ${transparent ? 'text-white' : 'text-foreground'}`}>
-                RAPIDS & ROOSTS
+              <h1 className={`font-heading text-lg md:text-xl font-medium tracking-wide ${transparent ? 'text-white' : 'text-foreground'}`}>
+                Rapids & Roosts
               </h1>
-              <p className={`text-xs ${transparent ? 'text-white/70' : 'text-muted-foreground'}`}>
+              <p className={`text-[10px] md:text-xs uppercase tracking-wider ${transparent ? 'text-white/60' : 'text-muted-foreground'}`}>
                 Adventure Tourism
               </p>
             </div>
@@ -91,6 +91,7 @@ export default function Navigation({ transparent = false, currentPath = "/" }: N
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+              <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
               <nav className="flex flex-col gap-6 mt-8">
                 {/* Logo in Mobile Menu */}
                 <div className="flex items-center gap-3 pb-6 border-b">

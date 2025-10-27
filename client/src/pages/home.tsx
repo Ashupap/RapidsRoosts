@@ -182,8 +182,8 @@ export default function Home() {
             )}
           </AnimatePresence>
           
-          {/* Dark overlay with gradient */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/80 pointer-events-none" />
+          {/* Clean overlay - Rhodes style */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/70 pointer-events-none" />
         </motion.div>
 
         {/* Top Navigation Header */}
@@ -193,13 +193,13 @@ export default function Home() {
 
         {/* Main Hero Content */}
         <div className="relative z-10 flex h-full items-center justify-center px-6 pb-32">
-          {/* Previous Arrow */}
+          {/* Previous Arrow - Rhodes minimalist style */}
           <button
             onClick={goToPrevious}
-            className="absolute left-8 top-1/2 -translate-y-1/2 w-14 h-14 rounded-full border-2 border-white/40 backdrop-blur-sm bg-white/10 flex items-center justify-center hover-elevate active-elevate-2 transition-all group z-30"
+            className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 w-12 h-12 md:w-14 md:h-14 rounded-full border border-white/30 backdrop-blur-md bg-white/5 flex items-center justify-center hover:bg-white/15 hover:border-white/50 transition-all group z-30"
             data-testid="button-previous-destination"
           >
-            <ChevronLeft className="h-6 w-6 text-white group-hover:scale-110 transition-transform" />
+            <ChevronLeft className="h-5 w-5 md:h-6 md:w-6 text-white transition-transform" />
           </button>
 
           {/* Center Content */}
@@ -211,16 +211,19 @@ export default function Home() {
               transition={{ duration: 0.8 }}
               className="space-y-4"
             >
-              <p className="text-white/90 text-2xl md:text-3xl lg:text-4xl font-light italic tracking-wide" data-testid="text-hero-subtitle">
+              <p className="text-white/80 text-sm md:text-base lg:text-lg font-normal tracking-[0.3em] uppercase mb-4" data-testid="text-hero-subtitle">
                 {heroDestinations[currentIndex].subtitle}
               </p>
-              <h2 className="font-heading text-7xl md:text-8xl lg:text-9xl font-black text-white tracking-tight leading-none drop-shadow-2xl" data-testid="text-hero-title">
+              <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl font-medium text-white tracking-tight leading-tight" data-testid="text-hero-title">
                 {heroDestinations[currentIndex].title}
-              </h2>
+              </h1>
+              <p className="text-white/70 text-base md:text-lg lg:text-xl font-light mt-6 max-w-2xl mx-auto">
+                {heroDestinations[currentIndex].description}
+              </p>
             </motion.div>
 
-            {/* Pagination Dots */}
-            <div className="flex items-center justify-center gap-6 mt-12">
+            {/* Pagination Indicators - Rhodes minimalist */}
+            <div className="flex items-center justify-center gap-3 mt-12">
               {heroDestinations.map((_, index) => (
                 <button
                   key={index}
@@ -228,26 +231,25 @@ export default function Home() {
                     setCurrentIndex(index);
                     setVideoError(false);
                   }}
-                  className={`text-sm font-medium transition-all ${
+                  className={`h-1 rounded-full transition-all ${
                     index === currentIndex
-                      ? 'text-white scale-110'
-                      : 'text-white/50 hover:text-white/80'
+                      ? 'w-12 bg-white'
+                      : 'w-8 bg-white/40 hover:bg-white/60'
                   }`}
                   data-testid={`button-pagination-${index}`}
-                >
-                  0{index + 1}
-                </button>
+                  aria-label={`Go to slide ${index + 1}`}
+                />
               ))}
             </div>
           </div>
 
-          {/* Next Arrow */}
+          {/* Next Arrow - Rhodes minimalist style */}
           <button
             onClick={goToNext}
-            className="absolute right-8 top-1/2 -translate-y-1/2 w-14 h-14 rounded-full border-2 border-white/40 backdrop-blur-sm bg-white/10 flex items-center justify-center hover-elevate active-elevate-2 transition-all group z-30"
+            className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 w-12 h-12 md:w-14 md:h-14 rounded-full border border-white/30 backdrop-blur-md bg-white/5 flex items-center justify-center hover:bg-white/15 hover:border-white/50 transition-all group z-30"
             data-testid="button-next-destination"
           >
-            <ChevronRight className="h-6 w-6 text-white group-hover:scale-110 transition-transform" />
+            <ChevronRight className="h-5 w-5 md:h-6 md:w-6 text-white transition-transform" />
           </button>
         </div>
 
@@ -318,15 +320,16 @@ export default function Home() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <h2 className="font-heading text-4xl font-bold tracking-tight text-foreground mb-6">
-                Nature & Adventure at its Best!
+              <p className="text-sm uppercase tracking-[0.2em] text-primary font-medium mb-4">Discover Dandeli</p>
+              <h2 className="font-heading text-4xl md:text-5xl font-medium text-foreground mb-8 leading-tight">
+                Nature & Adventure<br/>at its Best
               </h2>
-              <p className="text-lg text-muted-foreground mb-4">
+              <p className="text-base md:text-lg text-muted-foreground mb-6 leading-relaxed">
                 Nature is at its bountiful best at <span className="font-semibold text-foreground">Dandeli</span> (North Karnataka), 
                 making it an ideal holiday destination. This destination, located on the banks of the Kali River, 
                 offers unparalleled scenic beauty complemented by exotic wildlife in its tropical forests.
               </p>
-              <p className="text-lg text-muted-foreground mb-6">
+              <p className="text-base md:text-lg text-muted-foreground mb-8 leading-relaxed">
                 Easily accessible, Dandeli is the perfect destination for nature lovers and adventure-seekers alike. 
                 Experience the ultimate adventure holiday surrounded by the Western Ghats' magnificent landscapes.
               </p>
@@ -410,12 +413,13 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-center mb-16"
+            className="text-center mb-20"
           >
-            <h2 className="font-heading text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+            <p className="text-sm uppercase tracking-[0.2em] text-primary font-medium mb-4">Experiences</p>
+            <h2 className="font-heading text-4xl md:text-5xl font-medium text-foreground mb-6">
               Our Adventures
             </h2>
-            <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="mt-4 text-base md:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
               Choose from our curated selection of thrilling outdoor activities
             </p>
           </motion.div>
@@ -508,12 +512,13 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-center mb-16"
+            className="text-center mb-20"
           >
-            <h2 className="font-heading text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+            <p className="text-sm uppercase tracking-[0.2em] text-primary font-medium mb-4">Curated Packages</p>
+            <h2 className="font-heading text-4xl md:text-5xl font-medium text-foreground mb-6">
               Adventure Packages
             </h2>
-            <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="mt-4 text-base md:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
               Choose from our carefully curated packages designed for couples, families, and student groups
             </p>
           </motion.div>

@@ -7,6 +7,7 @@ import { useRef, useState, useEffect } from "react";
 import { useSEO, injectStructuredData } from "@/lib/seo";
 import Navigation from "@/components/Navigation";
 import { ParallaxImage, ParallaxText } from "@/components/ParallaxSection";
+import { CampfireEffect, WaterDroplets, WildlifeSilhouette, FloatingLeaves } from "@/components/AdventureEffects";
 import raftingHero1 from "@assets/stock_images/vibrant_water_raftin_9419a08c.jpg";
 import raftingHero2 from "@assets/stock_images/vibrant_water_raftin_5f8fedad.jpg";
 import raftingHero3 from "@assets/stock_images/vibrant_water_raftin_24bbd1b7.jpg";
@@ -356,11 +357,18 @@ export default function Home() {
             <ChevronRight className="h-5 w-5 md:h-6 md:w-6 text-white transition-transform" />
           </button>
         </div>
+        
+        {/* Campfire Effect at Hero Footer */}
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 hidden md:block">
+          <CampfireEffect />
+        </div>
       </section>
 
       {/* About Dandeli Section */}
-      <section className="py-20 px-6 bg-section-teal">
-        <div className="max-w-7xl mx-auto">
+      <section className="py-20 px-6 bg-section-teal relative overflow-hidden">
+        <WaterDroplets />
+        <FloatingLeaves />
+        <div className="max-w-7xl mx-auto relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div
               initial={{ opacity: 0, x: -50 }}
@@ -466,8 +474,10 @@ export default function Home() {
       </section>
 
       {/* Adventure Highlights Section */}
-      <section className="py-20 px-6 bg-section-light">
-        <div className="max-w-7xl mx-auto">
+      <section className="py-20 px-6 bg-section-light relative overflow-hidden">
+        <WildlifeSilhouette type="bird" />
+        <WildlifeSilhouette type="deer" />
+        <div className="max-w-7xl mx-auto relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

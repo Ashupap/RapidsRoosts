@@ -44,7 +44,7 @@ export default function TrekkingDetail() {
               <div className="flex items-center justify-center gap-2 mb-4">
                 <Mountain className="h-8 w-8" />
               </div>
-              <h1 className="font-heading text-5xl md:text-7xl font-bold mb-4">
+              <h1 className="font-heading text-5xl md:text-7xl font-bold mb-4" data-testid="heading-trekking-title">
                 Forest Trekking
               </h1>
               <p className="text-xl md:text-2xl max-w-3xl mx-auto">
@@ -73,28 +73,28 @@ export default function TrekkingDetail() {
               <CardContent className="p-6 text-center">
                 <Clock className="h-8 w-8 mx-auto mb-2 text-primary" />
                 <h3 className="font-semibold mb-1">Duration</h3>
-                <p className="text-sm text-muted-foreground">2-6 hours</p>
+                <p className="text-sm text-muted-foreground" data-testid="text-trekking-duration">2-6 hours</p>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="p-6 text-center">
                 <IndianRupee className="h-8 w-8 mx-auto mb-2 text-primary" />
                 <h3 className="font-semibold mb-1">Price Range</h3>
-                <p className="text-sm text-muted-foreground">₹500-₹1,000</p>
+                <p className="text-sm text-muted-foreground" data-testid="text-trekking-price">₹500-₹1,000</p>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="p-6 text-center">
                 <Mountain className="h-8 w-8 mx-auto mb-2 text-primary" />
                 <h3 className="font-semibold mb-1">Elevation</h3>
-                <p className="text-sm text-muted-foreground">Up to 1,934 ft</p>
+                <p className="text-sm text-muted-foreground" data-testid="text-trekking-elevation">Up to 1,934 ft</p>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="p-6 text-center">
                 <Calendar className="h-8 w-8 mx-auto mb-2 text-primary" />
                 <h3 className="font-semibold mb-1">Best Season</h3>
-                <p className="text-sm text-muted-foreground">Oct - March</p>
+                <p className="text-sm text-muted-foreground" data-testid="text-trekking-season">Oct - March</p>
               </CardContent>
             </Card>
           </div>

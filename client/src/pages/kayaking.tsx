@@ -35,7 +35,7 @@ export default function KayakingDetail() {
               <div className="flex items-center justify-center gap-2 mb-4">
                 <Send className="h-8 w-8" />
               </div>
-              <h1 className="font-heading text-5xl md:text-7xl font-bold mb-4">
+              <h1 className="font-heading text-5xl md:text-7xl font-bold mb-4" data-testid="heading-kayaking-title">
                 Kayaking Adventure
               </h1>
               <p className="text-xl md:text-2xl max-w-3xl mx-auto">
@@ -64,28 +64,28 @@ export default function KayakingDetail() {
               <CardContent className="p-6 text-center">
                 <Clock className="h-8 w-8 mx-auto mb-2 text-primary" />
                 <h3 className="font-semibold mb-1">Duration</h3>
-                <p className="text-sm text-muted-foreground">15-60 minutes</p>
+                <p className="text-sm text-muted-foreground" data-testid="text-kayaking-duration">15-60 minutes</p>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="p-6 text-center">
                 <IndianRupee className="h-8 w-8 mx-auto mb-2 text-primary" />
                 <h3 className="font-semibold mb-1">Price Range</h3>
-                <p className="text-sm text-muted-foreground">₹150-₹300</p>
+                <p className="text-sm text-muted-foreground" data-testid="text-kayaking-price">₹150-₹300</p>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="p-6 text-center">
                 <Users className="h-8 w-8 mx-auto mb-2 text-primary" />
                 <h3 className="font-semibold mb-1">Capacity</h3>
-                <p className="text-sm text-muted-foreground">1-2 person kayaks</p>
+                <p className="text-sm text-muted-foreground" data-testid="text-kayaking-capacity">1-2 person kayaks</p>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="p-6 text-center">
                 <Calendar className="h-8 w-8 mx-auto mb-2 text-primary" />
                 <h3 className="font-semibold mb-1">Best Season</h3>
-                <p className="text-sm text-muted-foreground">Oct - May</p>
+                <p className="text-sm text-muted-foreground" data-testid="text-kayaking-season">Oct - May</p>
               </CardContent>
             </Card>
           </div>

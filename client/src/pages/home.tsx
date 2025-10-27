@@ -711,17 +711,18 @@ export default function Home() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <Card className="overflow-hidden hover-elevate active-elevate-2 transition-all duration-300 cursor-pointer group">
+                <Card className="overflow-hidden hover-elevate active-elevate-2 transition-all duration-300 cursor-pointer group" data-testid={`card-attraction-${index}`}>
                   <div className="relative h-48 overflow-hidden">
                     <motion.img
                       src={attraction.image}
                       alt={attraction.name}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                       whileHover={{ scale: 1.1 }}
+                      data-testid={`img-attraction-${index}`}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                     <div className="absolute bottom-0 left-0 right-0 p-4">
-                      <h3 className="font-heading text-lg font-bold text-white">
+                      <h3 className="font-heading text-lg font-bold text-white" data-testid={`text-attraction-name-${index}`}>
                         {attraction.name}
                       </h3>
                     </div>
@@ -766,6 +767,7 @@ export default function Home() {
                   alt={`Dandeli adventure ${index + 1}`}
                   className="w-full h-full object-cover transition-transform duration-500"
                   whileHover={{ scale: 1.15 }}
+                  data-testid={`img-gallery-${index}`}
                 />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300" />
               </motion.div>

@@ -37,7 +37,7 @@ export default function RaftingDetail() {
               <div className="flex items-center justify-center gap-2 mb-4">
                 <Waves className="h-8 w-8" />
               </div>
-              <h1 className="font-heading text-5xl md:text-7xl font-bold mb-4">
+              <h1 className="font-heading text-5xl md:text-7xl font-bold mb-4" data-testid="heading-rafting-title">
                 White Water Rafting
               </h1>
               <p className="text-xl md:text-2xl max-w-3xl mx-auto">
@@ -67,28 +67,28 @@ export default function RaftingDetail() {
               <CardContent className="p-6 text-center">
                 <Clock className="h-8 w-8 mx-auto mb-2 text-primary" />
                 <h3 className="font-semibold mb-1">Duration</h3>
-                <p className="text-sm text-muted-foreground">30 min - 4 hours</p>
+                <p className="text-sm text-muted-foreground" data-testid="text-rafting-duration">30 min - 4 hours</p>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="p-6 text-center">
                 <IndianRupee className="h-8 w-8 mx-auto mb-2 text-primary" />
                 <h3 className="font-semibold mb-1">Price Range</h3>
-                <p className="text-sm text-muted-foreground">₹500 - ₹1,800</p>
+                <p className="text-sm text-muted-foreground" data-testid="text-rafting-price">₹500 - ₹1,800</p>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="p-6 text-center">
                 <Users className="h-8 w-8 mx-auto mb-2 text-primary" />
                 <h3 className="font-semibold mb-1">Group Size</h3>
-                <p className="text-sm text-muted-foreground">6-8 per raft</p>
+                <p className="text-sm text-muted-foreground" data-testid="text-rafting-groupsize">6-8 per raft</p>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="p-6 text-center">
                 <Calendar className="h-8 w-8 mx-auto mb-2 text-primary" />
                 <h3 className="font-semibold mb-1">Best Season</h3>
-                <p className="text-sm text-muted-foreground">Oct - June</p>
+                <p className="text-sm text-muted-foreground" data-testid="text-rafting-season">Oct - June</p>
               </CardContent>
             </Card>
           </div>
@@ -128,7 +128,7 @@ export default function RaftingDetail() {
               >
                 <h3 className="font-heading text-2xl font-bold mb-4">Rafting Options</h3>
                 <div className="space-y-4">
-                  <Card className="border-l-4 border-l-primary">
+                  <Card className="border-l-4 border-l-primary" data-testid="card-rafting-short">
                     <CardContent className="p-6">
                       <h4 className="font-semibold text-lg mb-2">Short Rafting (1-2 km)</h4>
                       <p className="text-muted-foreground mb-2">Perfect for first-timers and families</p>
@@ -143,7 +143,7 @@ export default function RaftingDetail() {
                     </CardContent>
                   </Card>
 
-                  <Card className="border-l-4 border-l-primary">
+                  <Card className="border-l-4 border-l-primary" data-testid="card-rafting-mid">
                     <CardContent className="p-6">
                       <h4 className="font-semibold text-lg mb-2">Mid Rafting (5-6 km)</h4>
                       <p className="text-muted-foreground mb-2">Great mix of excitement and scenery</p>
@@ -158,7 +158,7 @@ export default function RaftingDetail() {
                     </CardContent>
                   </Card>
 
-                  <Card className="border-l-4 border-l-primary bg-primary/5">
+                  <Card className="border-l-4 border-l-primary bg-primary/5" data-testid="card-rafting-long">
                     <CardContent className="p-6">
                       <div className="flex items-center justify-between mb-2">
                         <h4 className="font-semibold text-lg">Long Rafting (7.5-9.5 km)</h4>

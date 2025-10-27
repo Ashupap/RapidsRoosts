@@ -1,0 +1,334 @@
+import { motion, useScroll, useTransform } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Link } from "wouter";
+import { Calendar, Clock, Users, Shield, MapPin, ChevronRight, Compass, IndianRupee, Binoculars } from "lucide-react";
+import safariImage from "@assets/generated_images/Jungle_safari_wildlife_adventure_3300876a.png";
+import safariImage2 from "@assets/stock_images/jungle_safari_wildli_5c354858.jpg";
+
+export default function SafariDetail() {
+  const { scrollYProgress } = useScroll();
+  const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.9, 0.5]);
+
+  const wildlife = [
+    { name: "Tigers", count: "11-40" },
+    { name: "Black Panthers", count: "Frequent sightings" },
+    { name: "Elephants", count: "Elephant Reserve" },
+    { name: "Sloth Bears", count: "Common" },
+    { name: "Indian Bison", count: "Large herds" },
+    { name: "Leopards", count: "Regular sightings" },
+  ];
+
+  const birds = [
+    "Great Hornbill",
+    "Malabar Pied Hornbill",
+    "Malabar Trogon",
+    "Paradise Flycatcher",
+    "Crested Serpent Eagle",
+    "Kingfishers",
+  ];
+
+  return (
+    <div className="min-h-screen bg-background">
+      {/* Hero Section */}
+      <section className="relative h-[60vh] overflow-hidden">
+        <motion.div
+          style={{ y: heroY, opacity: heroOpacity }}
+          className="absolute inset-0 z-0"
+        >
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url(${safariImage})` }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80" />
+        </motion.div>
+
+        <div className="relative z-10 flex h-full items-center justify-center px-6">
+          <div className="text-center text-white">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              <div className="flex items-center justify-center gap-2 mb-4">
+                <Compass className="h-8 w-8" />
+              </div>
+              <h1 className="font-heading text-5xl md:text-7xl font-bold mb-4">
+                Jungle Safari
+              </h1>
+              <p className="text-xl md:text-2xl max-w-3xl mx-auto">
+                Explore 834 sq km of pristine wilderness in Dandeli Wildlife Sanctuary
+              </p>
+            </motion.div>
+          </div>
+        </div>
+
+        <Link href="/">
+          <Button
+            variant="outline"
+            className="absolute top-6 left-6 z-20 backdrop-blur-sm bg-white/10 border-white/40 text-white hover:bg-white/20"
+            data-testid="button-back-home"
+          >
+            ← Back to Home
+          </Button>
+        </Link>
+      </section>
+
+      {/* Quick Info */}
+      <section className="py-12 px-6 bg-card">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <Card>
+              <CardContent className="p-6 text-center">
+                <Clock className="h-8 w-8 mx-auto mb-2 text-primary" />
+                <h3 className="font-semibold mb-1">Duration</h3>
+                <p className="text-sm text-muted-foreground">2-3 hours</p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-6 text-center">
+                <IndianRupee className="h-8 w-8 mx-auto mb-2 text-primary" />
+                <h3 className="font-semibold mb-1">Safari Cost</h3>
+                <p className="text-sm text-muted-foreground">₹600/person</p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-6 text-center">
+                <Users className="h-8 w-8 mx-auto mb-2 text-primary" />
+                <h3 className="font-semibold mb-1">Jeep Capacity</h3>
+                <p className="text-sm text-muted-foreground">8 persons</p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-6 text-center">
+                <Calendar className="h-8 w-8 mx-auto mb-2 text-primary" />
+                <h3 className="font-semibold mb-1">Best Season</h3>
+                <p className="text-sm text-muted-foreground">Oct - May</p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Main Content */}
+      <section className="py-20 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            {/* Left Column */}
+            <div className="space-y-8">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+              >
+                <h2 className="font-heading text-3xl font-bold mb-4">Wildlife Sanctuary Experience</h2>
+                <p className="text-lg text-muted-foreground mb-4">
+                  Dandeli Wildlife Sanctuary spans 834-866 sq km, making it Karnataka's second-largest sanctuary 
+                  and part of the prestigious Anshi-Dandeli Tiger Reserve. Embark on an unforgettable journey 
+                  through dense forests, home to tigers, black panthers, elephants, and over 200 bird species.
+                </p>
+                <p className="text-lg text-muted-foreground">
+                  Our expert guides navigate open-top jeeps through 10-30 km forest trails, offering the best 
+                  chances to spot wildlife in their natural habitat. Early morning and late afternoon safaris 
+                  provide optimal viewing opportunities when animals are most active.
+                </p>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              >
+                <h3 className="font-heading text-2xl font-bold mb-4">Major Wildlife</h3>
+                <div className="grid grid-cols-2 gap-3">
+                  {wildlife.map((animal, index) => (
+                    <Card key={index}>
+                      <CardContent className="p-4">
+                        <h4 className="font-semibold mb-1">{animal.name}</h4>
+                        <p className="text-xs text-muted-foreground">{animal.count}</p>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+              >
+                <h3 className="font-heading text-2xl font-bold mb-4">Bird Watching Paradise</h3>
+                <p className="text-muted-foreground mb-4">
+                  With 200-300+ bird species, Dandeli is a birdwatcher's dream. The sanctuary is famous for 
+                  its hornbills, especially the spectacular Great Hornbill and Malabar Pied Hornbill.
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {birds.map((bird, index) => (
+                    <span
+                      key={index}
+                      className="px-3 py-1.5 bg-primary/10 text-primary rounded-full text-sm font-medium"
+                    >
+                      {bird}
+                    </span>
+                  ))}
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Right Column */}
+            <div className="space-y-6">
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+              >
+                <img
+                  src={safariImage2}
+                  alt="Dandeli Jungle Safari"
+                  className="rounded-lg w-full h-96 object-cover"
+                />
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              >
+                <Card className="bg-primary text-primary-foreground">
+                  <CardContent className="p-8">
+                    <h3 className="font-heading text-2xl font-bold mb-4">
+                      Ready for Wild Encounters?
+                    </h3>
+                    <p className="mb-6 opacity-90">
+                      Book your jungle safari and explore the incredible biodiversity of Dandeli Wildlife Sanctuary.
+                    </p>
+                    <Link href="/booking">
+                      <Button size="lg" variant="secondary" className="w-full" data-testid="button-book-safari">
+                        Book Your Safari
+                        <ChevronRight className="ml-2 h-5 w-5" />
+                      </Button>
+                    </Link>
+                  </CardContent>
+                </Card>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+              >
+                <Card>
+                  <CardContent className="p-6">
+                    <h4 className="font-semibold mb-4 flex items-center gap-2">
+                      <Binoculars className="h-5 w-5 text-primary" />
+                      Safari Timings
+                    </h4>
+                    <div className="space-y-3">
+                      <div>
+                        <p className="font-medium">Morning Safari</p>
+                        <p className="text-sm text-muted-foreground">6:00 AM - 9:00 AM</p>
+                      </div>
+                      <div className="h-px bg-border" />
+                      <div>
+                        <p className="font-medium">Evening Safari</p>
+                        <p className="text-sm text-muted-foreground">3:00 PM - 6:00 PM</p>
+                      </div>
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-4">
+                      Note: Advance booking recommended during peak season
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+              >
+                <Card>
+                  <CardContent className="p-6">
+                    <h4 className="font-semibold mb-4">What to Bring</h4>
+                    <ul className="space-y-2 text-sm text-muted-foreground">
+                      <li className="flex items-center gap-2">
+                        <div className="h-1.5 w-1.5 rounded-full bg-primary" />
+                        Binoculars for better viewing
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <div className="h-1.5 w-1.5 rounded-full bg-primary" />
+                        Camera with zoom lens
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <div className="h-1.5 w-1.5 rounded-full bg-primary" />
+                        Comfortable shoes
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <div className="h-1.5 w-1.5 rounded-full bg-primary" />
+                        Sunscreen and hat
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <div className="h-1.5 w-1.5 rounded-full bg-primary" />
+                        Mosquito repellent
+                      </li>
+                    </ul>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Safari Tips */}
+      <section className="py-12 px-6 bg-card">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h3 className="font-heading text-3xl font-bold mb-8 text-center">Safari Tips</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <Card>
+                <CardContent className="p-6">
+                  <h4 className="font-semibold mb-2">Dress Code</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Wear green, olive, or brown clothing to blend with nature. Avoid bright colors 
+                    that might disturb wildlife.
+                  </p>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="p-6">
+                  <h4 className="font-semibold mb-2">Best Spotting Times</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Early morning (6-9 AM) and late afternoon (4-6 PM) when animals are most active 
+                    and temperatures are comfortable.
+                  </p>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="p-6">
+                  <h4 className="font-semibold mb-2">Follow Guide Instructions</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Listen to your expert guide, maintain silence when required, and respect the 
+                    natural habitat of wildlife.
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+    </div>
+  );
+}

@@ -15,6 +15,20 @@ import logo from "@assets/logo_1761304770834.jpg";
 import safariImage from "@assets/generated_images/Jungle_safari_wildlife_adventure_3300876a.png";
 import trekkingImage from "@assets/generated_images/Forest_trekking_adventure_trail_14dd1cd1.png";
 import kayakingImage from "@assets/generated_images/Peaceful_kayaking_river_adventure_e3974c90.png";
+import attraction1 from "@assets/stock_images/beautiful_scenic_att_1cdf7d23.jpg";
+import attraction2 from "@assets/stock_images/beautiful_scenic_att_77cd0564.jpg";
+import attraction3 from "@assets/stock_images/beautiful_scenic_att_bdb908e4.jpg";
+import attraction4 from "@assets/stock_images/beautiful_scenic_att_039c94ac.jpg";
+import attraction5 from "@assets/stock_images/beautiful_scenic_att_cd48e758.jpg";
+import attraction6 from "@assets/stock_images/beautiful_scenic_att_54162866.jpg";
+import gallery1 from "@assets/stock_images/adventure_sports_gal_5c0d834f.jpg";
+import gallery2 from "@assets/stock_images/adventure_sports_gal_e8f9751c.jpg";
+import gallery3 from "@assets/stock_images/adventure_sports_gal_5bf20dc4.jpg";
+import gallery4 from "@assets/stock_images/adventure_sports_gal_479a2b17.jpg";
+import gallery5 from "@assets/stock_images/adventure_sports_gal_18a21954.jpg";
+import gallery6 from "@assets/stock_images/adventure_sports_gal_925d082f.jpg";
+import gallery7 from "@assets/stock_images/adventure_sports_gal_01231397.jpg";
+import gallery8 from "@assets/stock_images/adventure_sports_gal_57d199b3.jpg";
 
 const activities = [
   {
@@ -439,10 +453,11 @@ export default function Home() {
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
                   >
-                    <Card
-                      className="w-[320px] sm:w-[380px] overflow-hidden hover-elevate active-elevate-2 transition-all duration-300 hover:shadow-2xl group cursor-pointer"
-                      data-testid={`card-activity-${activity.id}`}
-                    >
+                    <Link href={`/activities/${activity.id}`}>
+                      <Card
+                        className="w-[320px] sm:w-[380px] overflow-hidden hover-elevate active-elevate-2 transition-all duration-300 hover:shadow-2xl group cursor-pointer"
+                        data-testid={`card-activity-${activity.id}`}
+                      >
                       <div className="relative aspect-video overflow-hidden">
                         <img
                           src={activity.image}
@@ -480,6 +495,7 @@ export default function Home() {
                         </div>
                       </CardContent>
                     </Card>
+                    </Link>
                   </motion.div>
                 );
               })}
@@ -679,31 +695,97 @@ export default function Home() {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
             {[
-              { name: "Supa Dam", icon: "🏞️" },
-              { name: "Syntheri Rocks", icon: "⛰️" },
-              { name: "Kavala Caves", icon: "🕳️" },
-              { name: "Backwater", icon: "💧" },
-              { name: "Crocodile Park", icon: "🐊" },
-              { name: "Moulangi Eco Park", icon: "🌳" },
+              { name: "Supa Dam", image: attraction1 },
+              { name: "Syntheri Rocks", image: attraction2 },
+              { name: "Kavala Caves", image: attraction3 },
+              { name: "Backwater", image: attraction4 },
+              { name: "Crocodile Park", image: attraction5 },
+              { name: "Moulangi Eco Park", image: attraction6 },
             ].map((attraction, index) => (
               <motion.div
                 key={attraction.name}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.05 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <Card className="hover-elevate active-elevate-2 transition-all duration-300 cursor-pointer text-center">
-                  <CardContent className="p-6">
-                    <div className="text-4xl mb-3">{attraction.icon}</div>
-                    <p className="font-semibold text-sm">{attraction.name}</p>
-                  </CardContent>
+                <Card className="overflow-hidden hover-elevate active-elevate-2 transition-all duration-300 cursor-pointer group">
+                  <div className="relative h-48 overflow-hidden">
+                    <motion.img
+                      src={attraction.image}
+                      alt={attraction.name}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      whileHover={{ scale: 1.1 }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                    <div className="absolute bottom-0 left-0 right-0 p-4">
+                      <h3 className="font-heading text-lg font-bold text-white">
+                        {attraction.name}
+                      </h3>
+                    </div>
+                  </div>
                 </Card>
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Gallery Section */}
+      <section className="py-20 px-6 bg-card">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <h2 className="font-heading text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+              Adventure Gallery
+            </h2>
+            <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
+              Experience the thrill and beauty of Dandeli through our lens
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[gallery1, gallery2, gallery3, gallery4, gallery5, gallery6, gallery7, gallery8].map((image, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.05 }}
+                className="relative overflow-hidden rounded-lg aspect-square group cursor-pointer"
+              >
+                <motion.img
+                  src={image}
+                  alt={`Dandeli adventure ${index + 1}`}
+                  className="w-full h-full object-cover transition-transform duration-500"
+                  whileHover={{ scale: 1.15 }}
+                />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300" />
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="mt-12 text-center"
+          >
+            <Link href="/booking">
+              <Button size="lg" data-testid="button-book-from-gallery">
+                Start Your Adventure
+                <ChevronRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
+          </motion.div>
         </div>
       </section>
 

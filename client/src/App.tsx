@@ -9,6 +9,10 @@ import Acknowledgement from "@/pages/acknowledgement";
 import Status from "@/pages/status";
 import AdminLogin from "@/pages/admin-login";
 import AdminDashboard from "@/pages/admin-dashboard";
+import Rafting from "@/pages/rafting";
+import Safari from "@/pages/safari";
+import Kayaking from "@/pages/kayaking";
+import Trekking from "@/pages/trekking";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -20,6 +24,10 @@ function Router() {
       <Route path="/status" component={Status} />
       <Route path="/admin/login" component={AdminLogin} />
       <Route path="/admin/dashboard" component={AdminDashboard} />
+      <Route path="/activities/rafting" component={Rafting} />
+      <Route path="/activities/safari" component={Safari} />
+      <Route path="/activities/kayaking" component={Kayaking} />
+      <Route path="/activities/trekking" component={Trekking} />
       <Route component={NotFound} />
     </Switch>
   );

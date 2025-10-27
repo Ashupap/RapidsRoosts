@@ -63,27 +63,27 @@ export default function Activities() {
                   className="h-12 w-12 rounded-full object-cover shadow-md" 
                 />
                 <div>
-                  <h1 className="font-heading text-xl font-bold text-foreground">
-                    RAPIDS & ROOSTS
+                  <h1 className="font-heading text-lg md:text-xl font-medium text-foreground tracking-wide">
+                    Rapids & Roosts
                   </h1>
-                  <p className="text-xs text-muted-foreground">Adventure Tourism</p>
+                  <p className="text-[10px] md:text-xs uppercase tracking-wider text-muted-foreground">Adventure Tourism</p>
                 </div>
               </div>
             </Link>
 
-            <nav className="hidden md:flex items-center gap-6">
+            <nav className="hidden md:flex items-center gap-8">
               <Link href="/">
-                <span className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
+                <span className="text-sm font-normal tracking-wide text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
                   Home
                 </span>
               </Link>
               <Link href="/activities">
-                <span className="text-sm font-medium text-foreground cursor-pointer">
+                <span className="text-sm font-medium tracking-wide text-foreground cursor-pointer">
                   Our Activities
                 </span>
               </Link>
               <Link href="/status">
-                <span className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
+                <span className="text-sm font-normal tracking-wide text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
                   Check Status
                 </span>
               </Link>
@@ -108,15 +108,14 @@ export default function Activities() {
             transition={{ duration: 0.6 }}
             className="text-center max-w-3xl mx-auto"
           >
-            <Badge className="mb-4" variant="secondary">
-              <MapPin className="h-3 w-3 mr-1" />
+            <p className="text-sm uppercase tracking-[0.2em] text-primary font-medium mb-6">
+              <MapPin className="inline h-3 w-3 mr-2" />
               Dandeli, Karnataka
-            </Badge>
-            <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6 leading-tight">
-              Our Adventure
-              <span className="block text-primary">Activities</span>
+            </p>
+            <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-medium text-foreground mb-8 leading-tight">
+              Our Adventure Activities
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+            <p className="text-base md:text-lg text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">
               Experience the thrill of adventure in the heart of Western Ghats. 
               From adrenaline-pumping rafting to serene forest treks, we offer 
               expertly curated experiences for every adventurer.
@@ -237,10 +236,10 @@ export default function Activities() {
                       <CardContent className={`p-8 lg:p-12 flex flex-col justify-center ${!isEven ? 'lg:order-1' : ''}`}>
                         <div className="space-y-6">
                           <div>
-                            <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-3">
+                            <h2 className="font-heading text-3xl md:text-4xl font-medium text-foreground mb-4 leading-tight">
                               {activity.title}
                             </h2>
-                            <p className="text-lg text-muted-foreground leading-relaxed">
+                            <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
                               {activity.description}
                             </p>
                           </div>
@@ -333,10 +332,11 @@ export default function Activities() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="font-heading text-4xl md:text-5xl font-bold mb-6">
+            <p className="text-sm uppercase tracking-[0.2em] text-primary-foreground/80 font-medium mb-6">Start Your Journey</p>
+            <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-medium mb-8 leading-tight">
               Ready for Your Adventure?
             </h2>
-            <p className="text-lg md:text-xl mb-8 text-primary-foreground/90">
+            <p className="text-base md:text-lg mb-10 text-primary-foreground/90 leading-relaxed">
               Book your perfect adventure package today and experience the thrill of Dandeli's wilderness. 
               Our expert team is ready to make your adventure unforgettable.
             </p>

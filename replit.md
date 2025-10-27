@@ -15,11 +15,19 @@ A modern, immersive tour booking web application featuring parallax animations, 
 
 - **Complete Content Sections**:
   - **About Dandeli**: 2-column layout with 4 feature highlights (Water Sports, Adventure, Wilderness, Eco Tourism) and image grid showcasing activities
-  - **Activities Section**: 4 comprehensive activity cards with detailed descriptions and pricing (White Water Rafting ₹600-₹1,500, Jungle Safari ₹600, Kayaking, Forest Trekking)
+  - **Activities Section**: 4 comprehensive activity cards with detailed descriptions and pricing, each linking to dedicated detail pages
   - **Adventure Packages**: 3 packages with full details - Couple (₹2,200/person), Family (₹2,000/person - MOST POPULAR), Student (₹1,800/person)
-  - **Top Attractions**: 6 sightseeing destinations with icon-based cards (Supa Dam, Syntheri Rocks, Kavala Caves, Backwater, Crocodile Park, Moulangi Eco Park)
+  - **Top Attractions**: 6 sightseeing destinations with animated image cards featuring hover scale effects (Supa Dam, Syntheri Rocks, Kavala Caves, Backwater, Crocodile Park, Moulangi Eco Park)
+  - **Adventure Gallery**: 8 high-quality images in responsive grid (4 columns desktop, 2 mobile) with zoom animations and "Start Your Adventure" CTA
   - **Testimonials**: 4 authentic customer reviews from dandeli360.com
   - **Professional Footer**: Logo, Quick Links, Contact Info (+91 94839 40400, Dandeli Karnataka 581325), Activities list
+
+- **Activity Detail Pages**: Comprehensive standalone pages for each activity accessible via /rafting, /safari, /kayaking, /trekking
+  - **White Water Rafting** (/rafting): 3 rafting options (Short 1-2 km - ₹500, Mid 5 km - ₹1,200, Long 9 km - ₹1,800), Grade 2-3 rapids info, equipment details, safety requirements, seasonal guide (Oct-June best, July-Sept monsoon)
+  - **Jungle Safari** (/safari): Wildlife showcase (Tigers, Black Panthers, Elephants, 200+ bird species), safari timings (6:30 AM, 3:00 PM), best season guide, what to bring checklist
+  - **Kayaking** (/kayaking): Flatwater (₹150/hour) and whitewater (₹300/hour) options, equipment provided, safety briefing details, suitable for all skill levels
+  - **Forest Trekking** (/trekking): 6 popular trails (Shiroli Peak 1,934 ft, Kavala Caves, Syntheri Rocks, Magod Falls, Moulangi, Anshi), elevation details, trek duration (2-6 hours), difficulty levels
+  - Each page features: Parallax hero section, quick info cards (duration, price, capacity, season), comprehensive activity descriptions, safety information, seasonal guides, what to bring lists, multiple "Book Now" CTAs, "Back to Home" navigation
 
 ### Backend Features
 - **Multi-Step Booking Form**: Progressive booking flow with real-time validation and dynamic summary sidebar
@@ -70,7 +78,11 @@ npm run dev
 ├── client/
 │   ├── src/
 │   │   ├── pages/          # Page components
-│   │   │   ├── home.tsx    # Landing page with video hero
+│   │   │   ├── home.tsx    # Landing page with hero carousel, activities, attractions, gallery
+│   │   │   ├── rafting.tsx # White Water Rafting detail page
+│   │   │   ├── safari.tsx  # Jungle Safari detail page
+│   │   │   ├── kayaking.tsx # Kayaking detail page
+│   │   │   ├── trekking.tsx # Forest Trekking detail page
 │   │   │   ├── booking.tsx # Multi-step booking form
 │   │   │   ├── acknowledgement.tsx  # Confirmation page
 │   │   │   ├── status.tsx  # Booking status tracker
@@ -86,8 +98,9 @@ npm run dev
 │   └── db.ts               # Database connection
 ├── shared/
 │   └── schema.ts           # Shared data models and validation
-├── public/
-│   └── videos/             # Video assets for hero background
+├── attached_assets/
+│   ├── stock_images/       # Activity images, attractions, gallery photos
+│   └── generated_images/   # AI-generated activity illustrations
 └── design_guidelines.md    # Design system documentation
 ```
 
@@ -120,12 +133,17 @@ Typography:
 - **Rejected**: Booking declined (red with shake animation)
 
 ## Customer Journey
-1. User browses adventures on home page
-2. Clicks "Book Now" to start booking process
-3. Completes 4-step form (Personal Details → Trip Details → Additional Info → Review)
-4. Receives unique Booking ID (format: RRD-XXXXXX)
-5. Gets confirmation email with booking details
-6. Can track status anytime using Booking ID
+1. User browses adventures on home page with hero carousel, activities, attractions, and gallery
+2. Can either:
+   - Click "Learn More" on any activity card to view detailed activity page (rafting/safari/kayaking/trekking)
+   - Click "Book Now" directly to start booking process
+3. From detail pages, users can explore comprehensive activity information and click "Book Now"
+4. Completes 4-step booking form (Personal Details → Trip Details → Additional Info → Review)
+5. Receives unique Booking ID (format: RRD-XXXXXX)
+6. Gets confirmation email with booking details via Gmail
+7. Can track booking status anytime using Booking ID via /status page
+8. Admin reviews and updates booking status (pending → confirmed/rejected)
+9. Customer receives status update email notification
 
 ## Admin Features (Phase 2 - Completed)
 

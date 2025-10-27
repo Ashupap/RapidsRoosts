@@ -15,6 +15,7 @@ import { useLocation } from "wouter";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
+import { useSEO } from "@/lib/seo";
 
 const STEPS = [
   { id: 1, title: "Personal Details", icon: User },
@@ -32,6 +33,12 @@ const ACTIVITIES = [
 ];
 
 export default function Booking() {
+  useSEO({
+    title: 'Book Your Adventure - Dandeli Activity Booking',
+    description: 'Book your adventure tour in Dandeli. Choose from white water rafting, jungle safaris, forest trekking, and kayaking. Instant confirmation with secure online booking.',
+    keywords: 'book Dandeli tour, Dandeli booking, rafting booking Dandeli, safari booking Karnataka, adventure booking Western Ghats',
+  });
+
   const [currentStep, setCurrentStep] = useState(1);
   const [, setLocation] = useLocation();
   const { toast } = useToast();

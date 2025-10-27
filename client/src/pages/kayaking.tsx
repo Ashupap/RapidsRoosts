@@ -4,8 +4,23 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "wouter";
 import { Calendar, Clock, Users, Shield, MapPin, ChevronRight, Send, IndianRupee, Droplets } from "lucide-react";
 import kayakingImage from "@assets/generated_images/Peaceful_kayaking_river_adventure_e3974c90.png";
+import { useSEO, injectStructuredData } from "@/lib/seo";
 
 export default function KayakingDetail() {
+  useSEO({
+    title: 'Kayaking Adventure - Kali River Kayaking in Dandeli',
+    description: 'Paddle through serene Kali River waters and Supa Reservoir on a guided kayaking adventure. Perfect for beginners and experienced paddlers. Flatwater and whitewater options available from ₹150 per hour.',
+    keywords: 'kayaking Dandeli, Kali river kayaking, water sports Dandeli, kayaking Karnataka, backwater kayaking, Supa reservoir kayaking, adventure kayaking India',
+  });
+
+  injectStructuredData('activity', {
+    name: 'Kayaking Adventure',
+    description: 'Paddle through serene Kali River backwaters',
+    image: kayakingImage,
+    url: '/kayaking',
+    price: '150-300',
+  });
+
   const { scrollYProgress } = useScroll();
   const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.9, 0.5]);

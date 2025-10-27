@@ -7,8 +7,15 @@ import { Badge } from "@/components/ui/badge";
 import { CheckCircle2, Mail, Search, Copy, Check } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { useSEO } from "@/lib/seo";
 
 export default function Acknowledgement() {
+  useSEO({
+    title: 'Booking Confirmed - Your Dandeli Adventure is Booked!',
+    description: 'Your Dandeli adventure booking has been received. Check your email for confirmation and booking details. We will confirm your booking within 24 hours.',
+    keywords: 'booking confirmation Dandeli, adventure booked, booking acknowledgement, tour confirmation',
+  });
+
   const [, navigate] = useLocation();
   const { toast } = useToast();
   const [copied, setCopied] = useState(false);

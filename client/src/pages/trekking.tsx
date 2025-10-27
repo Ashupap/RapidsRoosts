@@ -4,8 +4,23 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "wouter";
 import { Calendar, Clock, Users, Shield, MapPin, ChevronRight, Mountain, IndianRupee, Compass } from "lucide-react";
 import trekkingImage from "@assets/generated_images/Forest_trekking_adventure_trail_14dd1cd1.png";
+import { useSEO, injectStructuredData } from "@/lib/seo";
 
 export default function TrekkingDetail() {
+  useSEO({
+    title: 'Forest Trekking - Guided Treks in Western Ghats Dandeli',
+    description: 'Discover hidden forest trails through Western Ghats biodiversity hotspot. Trek to Shiroli Peak, Kavala Caves, Syntheri Rocks, and Magod Falls with expert guides. Multiple difficulty levels available.',
+    keywords: 'forest trekking Dandeli, Western Ghats treks, Shiroli Peak trek, Kavala Caves, Syntheri Rocks, nature trails Dandeli, trekking Karnataka, jungle trek India',
+  });
+
+  injectStructuredData('activity', {
+    name: 'Forest Trekking',
+    description: 'Discover hidden trails through Western Ghats biodiversity',
+    image: trekkingImage,
+    url: '/trekking',
+    price: 'Included in package',
+  });
+
   const { scrollYProgress } = useScroll();
   const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.9, 0.5]);

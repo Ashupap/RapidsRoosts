@@ -6,8 +6,23 @@ import { Calendar, Clock, Users, Shield, MapPin, ChevronRight, Waves, IndianRupe
 import raftingImage from "@assets/stock_images/vibrant_water_raftin_9419a08c.jpg";
 import raftingHero2 from "@assets/stock_images/adventure_sports_gal_5c0d834f.jpg";
 import raftingHero3 from "@assets/stock_images/adventure_sports_gal_5bf20dc4.jpg";
+import { useSEO, injectStructuredData } from "@/lib/seo";
 
 export default function RaftingDetail() {
+  useSEO({
+    title: 'White Water Rafting - Kali River Rafting Adventure in Dandeli',
+    description: 'Experience thrilling white water rafting on the Kali River in Dandeli. Navigate Grade 2-3 rapids with professional guides. Choose from 9 km long rafting or 1 km short rafting routes. Book now from ₹600.',
+    keywords: 'white water rafting Dandeli, Kali river rafting, rafting Karnataka, Dandeli rafting price, river rafting Western Ghats, Grade 2-3 rapids, adventure rafting India',
+  });
+
+  injectStructuredData('activity', {
+    name: 'White Water Rafting',
+    description: 'Navigate Grade 2-3 rapids on the pristine Kali River',
+    image: raftingImage,
+    url: '/rafting',
+    price: '600-1500',
+  });
+
   const { scrollYProgress } = useScroll();
   const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.9, 0.5]);

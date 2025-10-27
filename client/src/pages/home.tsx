@@ -2,8 +2,10 @@ import { Link } from "wouter";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Calendar, Users, ChevronRight, ChevronLeft, Waves, Mountain, Compass, Send, MapPin, Mail, Phone, Search } from "lucide-react";
+import { Calendar, Users, ChevronRight, ChevronLeft, Waves, Mountain, Compass, Send, MapPin, Search, Mail, Phone } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
+import { useSEO, injectStructuredData } from "@/lib/seo";
+import Navigation from "@/components/Navigation";
 import raftingHero1 from "@assets/stock_images/vibrant_water_raftin_9419a08c.jpg";
 import raftingHero2 from "@assets/stock_images/vibrant_water_raftin_5f8fedad.jpg";
 import raftingHero3 from "@assets/stock_images/vibrant_water_raftin_24bbd1b7.jpg";
@@ -98,6 +100,15 @@ const heroDestinations = [
 ];
 
 export default function Home() {
+  useSEO({
+    title: 'Home - Adventure Tourism in Dandeli',
+    description: 'Experience the ultimate adventure in Dandeli, Karnataka. Book white water rafting, jungle safaris, forest trekking, and kayaking packages. Rapids & Roosts offers premium adventure tourism in the Western Ghats.',
+    keywords: 'Dandeli adventure tourism, Dandeli packages, white water rafting Dandeli, jungle safari Karnataka, adventure sports Western Ghats, Dandeli resorts, Kali river rafting, Dandeli tour booking',
+  });
+
+  injectStructuredData('organization');
+  injectStructuredData('localBusiness');
+
   const heroRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [videoError, setVideoError] = useState(false);
@@ -176,39 +187,8 @@ export default function Home() {
         </motion.div>
 
         {/* Top Navigation Header */}
-        <div className="relative z-20 flex items-center justify-between px-8 py-6">
-          <div className="flex items-center gap-4">
-            <img src={logo} alt="Rapids Roosts Dandeli" className="h-16 w-16 rounded-full object-cover shadow-lg" data-testid="img-logo" />
-            <h1 className="font-heading text-2xl md:text-3xl font-bold text-white tracking-wider">
-              RAPIDS & ROOSTS
-            </h1>
-          </div>
-
-          <nav className="hidden lg:flex items-center gap-8">
-            <Link href="/" className="text-white text-sm font-medium hover:text-white/80 transition-colors">
-              DESTINATION
-            </Link>
-            <Link href="/booking" className="text-white text-sm font-medium hover:text-white/80 transition-colors">
-              OUR ACTIVITY
-            </Link>
-            <Link href="/status" className="text-white text-sm font-medium hover:text-white/80 transition-colors">
-              CHECK STATUS
-            </Link>
-            <Link href="/admin/login" className="text-white text-sm font-medium hover:text-white/80 transition-colors">
-              ADMIN
-            </Link>
-          </nav>
-
-          <div className="hidden md:flex items-center gap-6 text-white text-sm">
-            <div className="flex items-center gap-2">
-              <Mail className="h-4 w-4" />
-              <span>info@rapidsroosts.com</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Phone className="h-4 w-4" />
-              <span>+91 XXXXXXXXXX</span>
-            </div>
-          </div>
+        <div className="relative z-20 px-4 md:px-8 py-6">
+          <Navigation transparent currentPath="/" />
         </div>
 
         {/* Main Hero Content */}

@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Search, CheckCircle2, Clock, XCircle, Calendar, Users, Activity, Mail, Phone } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import type { Booking } from "@shared/schema";
+import { useSEO } from "@/lib/seo";
 
 const STATUS_CONFIG = {
   pending: {
@@ -36,6 +37,12 @@ const STATUS_CONFIG = {
 };
 
 export default function Status() {
+  useSEO({
+    title: 'Check Booking Status - Track Your Dandeli Adventure Booking',
+    description: 'Check your Dandeli adventure booking status. Track your rafting, safari, trekking, or kayaking reservation using your booking ID. Get instant updates on confirmation status.',
+    keywords: 'check booking status Dandeli, track booking, booking confirmation Dandeli, adventure booking status, reservation status',
+  });
+
   const [bookingId, setBookingId] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
 

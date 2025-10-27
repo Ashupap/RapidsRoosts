@@ -5,8 +5,23 @@ import { Link } from "wouter";
 import { Calendar, Clock, Users, Shield, MapPin, ChevronRight, Compass, IndianRupee, Binoculars } from "lucide-react";
 import safariImage from "@assets/generated_images/Jungle_safari_wildlife_adventure_3300876a.png";
 import safariImage2 from "@assets/stock_images/jungle_safari_wildli_5c354858.jpg";
+import { useSEO, injectStructuredData } from "@/lib/seo";
 
 export default function SafariDetail() {
+  useSEO({
+    title: 'Jungle Safari - Wildlife Safari in Dandeli Wildlife Sanctuary',
+    description: 'Explore the 834 sq km Dandeli Wildlife Sanctuary on a guided jungle safari. Spot tigers, leopards, elephants, sloth bears, and 200+ bird species. Book your jeep safari from ₹600 per person.',
+    keywords: 'jungle safari Dandeli, Dandeli wildlife sanctuary, tiger safari Karnataka, wildlife tour Dandeli, bird watching Karnataka, jeep safari Western Ghats, Dandeli safari booking',
+  });
+
+  injectStructuredData('activity', {
+    name: 'Jungle Safari',
+    description: 'Explore 834 sq km wildlife sanctuary with expert naturalists',
+    image: safariImage,
+    url: '/safari',
+    price: '600',
+  });
+
   const { scrollYProgress } = useScroll();
   const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.9, 0.5]);

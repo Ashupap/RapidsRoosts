@@ -33,8 +33,8 @@
 
   --sidebar-border: 0 0% 92%;
 
-  /* Primary - Sophisticated Teal (Travel/Adventure) */
-  --sidebar-primary: 182 50% 48%;
+  /* Primary - Vibrant Teal (Travel/Adventure) - Enhanced */
+  --sidebar-primary: 180 65% 42%;
 
   --sidebar-primary-foreground: 0 0% 100%;
 
@@ -42,7 +42,7 @@
 
   --sidebar-accent-foreground: 0 0% 10%;
 
-  --sidebar-ring: 182 50% 48%;
+  --sidebar-ring: 180 65% 42%;
 
   --popover: 0 0% 100%;
 
@@ -50,8 +50,8 @@
 
   --popover-border: 0 0% 92%;
 
-  /* Primary - Sophisticated Teal */
-  --primary: 182 50% 48%;
+  /* Primary - Vibrant Teal - Enhanced for more color */
+  --primary: 180 65% 42%;
 
   --primary-foreground: 0 0% 100%;
 
@@ -65,10 +65,17 @@
 
   --muted-foreground: 0 0% 45%;
 
-  /* Accent - Coral/Sunset */
-  --accent: 14 85% 65%;
+  /* Accent - Vibrant Coral/Sunset - Enhanced */
+  --accent: 14 95% 60%;
 
   --accent-foreground: 0 0% 100%;
+  
+  /* Section Backgrounds - Vibrant Alternating Colors */
+  --section-light: 0 0% 100%;
+  --section-teal-light: 182 75% 96%;
+  --section-coral-light: 14 100% 96%;
+  --section-blue-light: 200 85% 96%;
+  --section-sand: 35 60% 95%;
 
   --destructive: 0 72% 51%;
 
@@ -522,5 +529,26 @@
   *:focus-visible {
     outline: 2px solid hsl(var(--ring));
     outline-offset: 2px;
+  }
+  
+  /* Section Background Utilities - Vibrant Alternating Colors */
+  .bg-section-light {
+    background-color: hsl(var(--section-light));
+  }
+  
+  .bg-section-teal {
+    background-color: hsl(var(--section-teal-light));
+  }
+  
+  .bg-section-coral {
+    background-color: hsl(var(--section-coral-light));
+  }
+  
+  .bg-section-blue {
+    background-color: hsl(var(--section-blue-light));
+  }
+  
+  .bg-section-sand {
+    background-color: hsl(var(--section-sand));
   }
 }

@@ -46,7 +46,7 @@ export default function TrekkingDetail() {
             className="absolute inset-0 bg-cover bg-center"
             style={{ backgroundImage: `url(${trekkingImage})` }}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/70" />
         </motion.div>
 
         <div className="relative z-10 flex h-full items-center justify-center px-6">
@@ -56,13 +56,14 @@ export default function TrekkingDetail() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <div className="flex items-center justify-center gap-2 mb-4">
-                <Mountain className="h-8 w-8" />
+              <div className="flex items-center justify-center gap-2 mb-6">
+                <Mountain className="h-6 w-6" />
               </div>
-              <h1 className="font-heading text-5xl md:text-7xl font-bold mb-4" data-testid="heading-trekking-title">
+              <p className="text-sm uppercase tracking-[0.2em] mb-4 text-white/80">Adventure Activity</p>
+              <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-medium mb-6 leading-tight" data-testid="heading-trekking-title">
                 Forest Trekking
               </h1>
-              <p className="text-xl md:text-2xl max-w-3xl mx-auto">
+              <p className="text-base md:text-lg lg:text-xl max-w-3xl mx-auto text-white/90 leading-relaxed">
                 Discover hidden trails through Western Ghats biodiversity hotspot
               </p>
             </motion.div>

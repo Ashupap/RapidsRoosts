@@ -182,8 +182,9 @@ export default function Home() {
             )}
           </AnimatePresence>
           
-          {/* Clean overlay - Rhodes style */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/70 pointer-events-none" />
+          {/* Enhanced High-Contrast overlay for better text visibility */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/80 pointer-events-none" />
+          <div className="absolute inset-0 bg-black/20 pointer-events-none" />
         </motion.div>
 
         {/* Top Navigation Header */}
@@ -253,55 +254,67 @@ export default function Home() {
           </button>
         </div>
 
-        {/* Bottom Search Bar */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 w-full max-w-4xl px-6">
-          <Card className="bg-white/95 dark:bg-black/90 backdrop-blur-lg shadow-2xl">
-            <CardContent className="p-6">
-              <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+        {/* Enhanced Bottom Booking Bar - Semi-transparent with improved usability */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 w-full max-w-5xl px-6">
+          <Card className="bg-white/80 dark:bg-black/70 backdrop-blur-xl shadow-2xl border-2 border-white/40 dark:border-white/20">
+            <CardContent className="p-5 md:p-7">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
                 {/* Destination */}
-                <div className="flex items-center gap-3 p-3 rounded-lg hover-elevate transition-all cursor-pointer">
+                <div className="flex items-center gap-3 p-4 rounded-xl bg-white/60 dark:bg-black/40 hover:bg-white/80 dark:hover:bg-black/60 transition-all cursor-pointer border border-white/50 dark:border-white/20">
                   <MapPin className="h-5 w-5 text-primary shrink-0" />
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs text-muted-foreground mb-1">Destination</p>
-                    <p className="text-sm font-medium text-foreground truncate">Dandeli</p>
+                    <p className="text-xs text-muted-foreground mb-1 font-medium">Destination</p>
+                    <p className="text-sm font-semibold text-foreground truncate">Dandeli, Karnataka</p>
                   </div>
                 </div>
 
                 {/* Kind of Trip */}
-                <div className="flex items-center gap-3 p-3 rounded-lg hover-elevate transition-all cursor-pointer">
+                <div className="flex items-center gap-3 p-4 rounded-xl bg-white/60 dark:bg-black/40 hover:bg-white/80 dark:hover:bg-black/60 transition-all cursor-pointer border border-white/50 dark:border-white/20">
                   <Compass className="h-5 w-5 text-primary shrink-0" />
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs text-muted-foreground mb-1">Kind Of Trip</p>
-                    <p className="text-sm font-medium text-foreground truncate">Adventure</p>
+                    <p className="text-xs text-muted-foreground mb-1 font-medium">Trip Type</p>
+                    <p className="text-sm font-semibold text-foreground truncate">Adventure & Nature</p>
                   </div>
                 </div>
 
                 {/* Activities */}
-                <div className="flex items-center gap-3 p-3 rounded-lg hover-elevate transition-all cursor-pointer">
+                <div className="flex items-center gap-3 p-4 rounded-xl bg-white/60 dark:bg-black/40 hover:bg-white/80 dark:hover:bg-black/60 transition-all cursor-pointer border border-white/50 dark:border-white/20">
                   <Waves className="h-5 w-5 text-primary shrink-0" />
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs text-muted-foreground mb-1">Activities & Themes</p>
-                    <p className="text-sm font-medium text-foreground truncate">Rafting, Safari</p>
+                    <p className="text-xs text-muted-foreground mb-1 font-medium">Popular Activities</p>
+                    <p className="text-sm font-semibold text-foreground truncate">Rafting, Safari & More</p>
                   </div>
                 </div>
 
-                {/* Average Price */}
-                <div className="flex items-center gap-3 p-3 rounded-lg hover-elevate transition-all cursor-pointer">
+                {/* Duration */}
+                <div className="flex items-center gap-3 p-4 rounded-xl bg-white/60 dark:bg-black/40 hover:bg-white/80 dark:hover:bg-black/60 transition-all cursor-pointer border border-white/50 dark:border-white/20">
                   <Calendar className="h-5 w-5 text-primary shrink-0" />
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs text-muted-foreground mb-1">Average Price</p>
-                    <p className="text-sm font-medium text-foreground truncate">₹2,500 - ₹5,000</p>
+                    <p className="text-xs text-muted-foreground mb-1 font-medium">Duration</p>
+                    <p className="text-sm font-semibold text-foreground truncate">1-3 Days</p>
                   </div>
                 </div>
-
-                {/* Search Button */}
-                <Link href="/booking" className="col-span-2 md:col-span-1">
+              </div>
+              
+              {/* Action Buttons */}
+              <div className="grid grid-cols-2 gap-4">
+                <Link href="/activities" className="w-full">
                   <Button
-                    className="w-full h-full min-h-[60px] text-base font-semibold"
-                    data-testid="button-search-hero"
+                    variant="outline"
+                    className="w-full h-12 text-base font-semibold bg-white/70 dark:bg-black/50 hover:bg-white dark:hover:bg-black/70 border-2"
+                    data-testid="button-explore-activities"
+                  >
+                    <Compass className="h-5 w-5 mr-2" />
+                    Explore Activities
+                  </Button>
+                </Link>
+                <Link href="/booking" className="w-full">
+                  <Button
+                    className="w-full h-12 text-base font-semibold shadow-lg"
+                    data-testid="button-book-now-hero"
                   >
                     <Search className="h-5 w-5 mr-2" />
-                    Search
+                    Book Your Adventure
                   </Button>
                 </Link>
               </div>
@@ -311,7 +324,7 @@ export default function Home() {
       </section>
 
       {/* About Dandeli Section */}
-      <section className="py-20 px-6 bg-card">
+      <section className="py-20 px-6 bg-section-teal">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div
@@ -406,7 +419,7 @@ export default function Home() {
       </section>
 
       {/* Adventure Highlights Section */}
-      <section className="py-20 px-6">
+      <section className="py-20 px-6 bg-section-light">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -505,7 +518,7 @@ export default function Home() {
       </section>
 
       {/* Packages Section */}
-      <section className="py-20 px-6 bg-card">
+      <section className="py-20 px-6 bg-section-coral">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -663,7 +676,7 @@ export default function Home() {
       </section>
 
       {/* Sightseeing Section */}
-      <section className="py-20 px-6">
+      <section className="py-20 px-6 bg-section-sand">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -720,7 +733,7 @@ export default function Home() {
       </section>
 
       {/* Gallery Section */}
-      <section className="py-20 px-6 bg-card">
+      <section className="py-20 px-6 bg-section-blue">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -777,7 +790,7 @@ export default function Home() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-20 px-6 bg-card">
+      <section className="py-20 px-6 bg-section-light">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

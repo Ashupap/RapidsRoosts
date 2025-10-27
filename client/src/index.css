@@ -33,8 +33,9 @@
 
   --sidebar-border: 0 0% 92%;
 
-  /* Primary - Vibrant Teal (Travel/Adventure) - Enhanced */
-  --sidebar-primary: 180 65% 42%;
+  /* ADVENTURE PULSE PALETTE - Main Theme Colors */
+  /* Primary - Teal Rapids (Deep adventure teal) */
+  --sidebar-primary: 182 78% 38%;
 
   --sidebar-primary-foreground: 0 0% 100%;
 
@@ -42,7 +43,7 @@
 
   --sidebar-accent-foreground: 0 0% 10%;
 
-  --sidebar-ring: 180 65% 42%;
+  --sidebar-ring: 182 78% 38%;
 
   --popover: 0 0% 100%;
 
@@ -50,32 +51,40 @@
 
   --popover-border: 0 0% 92%;
 
-  /* Primary - Vibrant Teal - Enhanced for more color */
-  --primary: 180 65% 42%;
+  /* Primary - Teal Rapids (Deep adventure teal) */
+  --primary: 182 78% 38%;
 
   --primary-foreground: 0 0% 100%;
 
-  /* Secondary - Warm Sand */
-  --secondary: 30 25% 92%;
+  /* Secondary - Riverbed Clay (Warm earth tone) */
+  --secondary: 28 52% 44%;
 
-  --secondary-foreground: 0 0% 10%;
+  --secondary-foreground: 0 0% 100%;
 
-  /* Muted - Soft Gray */
-  --muted: 0 0% 96%;
+  /* Muted - Mist Foam (Soft water mist) */
+  --muted: 182 72% 96%;
 
   --muted-foreground: 0 0% 45%;
 
-  /* Accent - Vibrant Coral/Sunset - Enhanced */
-  --accent: 14 95% 60%;
+  /* Accent - Ember Trail (Vibrant campfire orange) */
+  --accent: 17 92% 55%;
 
   --accent-foreground: 0 0% 100%;
   
-  /* Section Backgrounds - Vibrant Alternating Colors */
+  /* Jungle Canopy - Deep forest green */
+  --jungle-canopy: 138 54% 32%;
+  --jungle-canopy-foreground: 0 0% 100%;
+  
+  /* Campfire Glow - Bright warm orange */
+  --campfire-glow: 24 92% 63%;
+  --campfire-glow-foreground: 0 0% 10%;
+  
+  /* Section Backgrounds - Adventure-themed Vibrant Colors */
   --section-light: 0 0% 100%;
-  --section-teal-light: 182 75% 96%;
-  --section-coral-light: 14 100% 96%;
-  --section-blue-light: 200 85% 96%;
-  --section-sand: 35 60% 95%;
+  --section-teal: 182 72% 96%;
+  --section-coral: 17 100% 96%;
+  --section-mint: 138 60% 96%;
+  --section-warm: 24 100% 96%;
 
   --destructive: 0 72% 51%;
 
@@ -174,8 +183,9 @@
 
   --sidebar-border: 220 15% 20%;
 
-  /* Primary - Lighter Teal for dark mode */
-  --sidebar-primary: 182 55% 55%;
+  /* ADVENTURE PULSE PALETTE - Dark Mode */
+  /* Primary - Lighter Teal Rapids for dark mode */
+  --sidebar-primary: 182 68% 58%;
 
   --sidebar-primary-foreground: 220 20% 8%;
 
@@ -183,7 +193,7 @@
 
   --sidebar-accent-foreground: 0 0% 90%;
 
-  --sidebar-ring: 182 55% 55%;
+  --sidebar-ring: 182 68% 58%;
 
   --popover: 220 18% 12%;
 
@@ -191,25 +201,33 @@
 
   --popover-border: 220 15% 20%;
 
-  /* Primary - Lighter Teal */
-  --primary: 182 55% 55%;
+  /* Primary - Lighter Teal Rapids */
+  --primary: 182 68% 58%;
 
   --primary-foreground: 220 20% 8%;
 
-  /* Secondary - Darker Warm tone */
-  --secondary: 30 15% 20%;
+  /* Secondary - Riverbed Clay (lighter for dark mode) */
+  --secondary: 28 48% 52%;
 
-  --secondary-foreground: 0 0% 95%;
+  --secondary-foreground: 220 20% 8%;
 
-  /* Muted - Dark Gray */
+  /* Muted - Mist Foam (darker for dark mode) */
   --muted: 220 15% 18%;
 
   --muted-foreground: 0 0% 60%;
 
-  /* Accent - Softer Coral */
-  --accent: 14 80% 60%;
+  /* Accent - Ember Trail (brighter for dark mode) */
+  --accent: 17 88% 62%;
 
   --accent-foreground: 220 20% 8%;
+  
+  /* Jungle Canopy - Lighter for dark mode */
+  --jungle-canopy: 138 48% 42%;
+  --jungle-canopy-foreground: 220 20% 8%;
+  
+  /* Campfire Glow - Slightly dimmed for dark mode */
+  --campfire-glow: 24 88% 60%;
+  --campfire-glow-foreground: 220 20% 8%;
 
   --destructive: 0 70% 55%;
 
@@ -531,24 +549,151 @@
     outline-offset: 2px;
   }
   
-  /* Section Background Utilities - Vibrant Alternating Colors */
+  /* Section Background Utilities - Adventure-themed Vibrant Colors */
   .bg-section-light {
     background-color: hsl(var(--section-light));
   }
   
   .bg-section-teal {
-    background-color: hsl(var(--section-teal-light));
+    background-color: hsl(var(--section-teal));
   }
   
   .bg-section-coral {
-    background-color: hsl(var(--section-coral-light));
+    background-color: hsl(var(--section-coral));
   }
   
-  .bg-section-blue {
-    background-color: hsl(var(--section-blue-light));
+  .bg-section-mint {
+    background-color: hsl(var(--section-mint));
   }
   
-  .bg-section-sand {
-    background-color: hsl(var(--section-sand));
+  .bg-section-warm {
+    background-color: hsl(var(--section-warm));
+  }
+  
+  /* Adventure Color Utilities */
+  .bg-jungle-canopy {
+    background-color: hsl(var(--jungle-canopy));
+  }
+  
+  .text-jungle-canopy {
+    color: hsl(var(--jungle-canopy));
+  }
+  
+  .bg-campfire-glow {
+    background-color: hsl(var(--campfire-glow));
+  }
+  
+  .text-campfire-glow {
+    color: hsl(var(--campfire-glow));
+  }
+  
+  .border-jungle-canopy {
+    border-color: hsl(var(--jungle-canopy));
+  }
+  
+  .border-campfire-glow {
+    border-color: hsl(var(--campfire-glow));
+  }
+  
+  /* Adventure Animation Effects */
+  @keyframes campfire {
+    0%, 100% {
+      transform: scale(1) translateY(0);
+      opacity: 0.9;
+    }
+    25% {
+      transform: scale(1.05) translateY(-2px);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(0.98) translateY(1px);
+      opacity: 0.85;
+    }
+    75% {
+      transform: scale(1.02) translateY(-1px);
+      opacity: 0.95;
+    }
+  }
+  
+  @keyframes waterDroplet {
+    0% {
+      transform: translateY(-100%) scale(0.8);
+      opacity: 0;
+    }
+    10% {
+      opacity: 0.5;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: translateY(100vh) scale(1);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes ripple {
+    0% {
+      transform: scale(0.8);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(2.4);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  
+  @keyframes slideAcross {
+    0% {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    10%, 90% {
+      opacity: 0.3;
+    }
+    100% {
+      transform: translateX(100vw);
+      opacity: 0;
+    }
+  }
+  
+  .animate-campfire {
+    animation: campfire 3s ease-in-out infinite;
+  }
+  
+  .animate-water-droplet {
+    animation: waterDroplet 4s linear infinite;
+  }
+  
+  .animate-ripple {
+    animation: ripple 1.5s ease-out;
+  }
+  
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+  
+  .animate-slide-across {
+    animation: slideAcross 20s linear infinite;
+  }
+  
+  /* Respect reduced motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-campfire,
+    .animate-water-droplet,
+    .animate-ripple,
+    .animate-float,
+    .animate-slide-across {
+      animation: none;
+    }
   }
 }

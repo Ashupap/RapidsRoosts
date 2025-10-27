@@ -6,6 +6,7 @@ import { Calendar, Users, ChevronRight, ChevronLeft, Waves, Mountain, Compass, S
 import { useRef, useState, useEffect } from "react";
 import { useSEO, injectStructuredData } from "@/lib/seo";
 import Navigation from "@/components/Navigation";
+import { ParallaxImage, ParallaxText } from "@/components/ParallaxSection";
 import raftingHero1 from "@assets/stock_images/vibrant_water_raftin_9419a08c.jpg";
 import raftingHero2 from "@assets/stock_images/vibrant_water_raftin_5f8fedad.jpg";
 import raftingHero3 from "@assets/stock_images/vibrant_water_raftin_24bbd1b7.jpg";
@@ -427,26 +428,38 @@ export default function Home() {
               transition={{ duration: 0.6 }}
               className="grid grid-cols-2 gap-4"
             >
-              <img
+              <ParallaxImage
                 src={raftingHero3}
                 alt="Water Rafting in Dandeli"
-                className="rounded-lg object-cover w-full h-64"
+                speed={-40}
+                containerClassName="rounded-lg h-64"
+                className="rounded-lg"
               />
-              <img
-                src={safariImage2}
-                alt="Jungle Safari in Dandeli"
-                className="rounded-lg object-cover w-full h-64 mt-8"
-              />
-              <img
+              <div className="mt-8">
+                <ParallaxImage
+                  src={safariImage2}
+                  alt="Jungle Safari in Dandeli"
+                  speed={-55}
+                  containerClassName="rounded-lg h-64"
+                  className="rounded-lg"
+                />
+              </div>
+              <ParallaxImage
                 src={campImage2}
                 alt="Camping in Dandeli"
-                className="rounded-lg object-cover w-full h-64"
+                speed={-35}
+                containerClassName="rounded-lg h-64"
+                className="rounded-lg"
               />
-              <img
-                src={safariImage}
-                alt="Wildlife in Dandeli"
-                className="rounded-lg object-cover w-full h-64 mt-8"
-              />
+              <div className="mt-8">
+                <ParallaxImage
+                  src={safariImage}
+                  alt="Wildlife in Dandeli"
+                  speed={-50}
+                  containerClassName="rounded-lg h-64"
+                  className="rounded-lg"
+                />
+              </div>
             </motion.div>
           </div>
         </div>
@@ -490,13 +503,15 @@ export default function Home() {
                         data-testid={`card-activity-${activity.id}`}
                       >
                       <div className="relative aspect-video overflow-hidden">
-                        <img
+                        <ParallaxImage
                           src={activity.image}
                           alt={activity.title}
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                          speed={-30}
+                          containerClassName="absolute inset-0"
+                          className="transition-transform duration-500 group-hover:scale-110"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                        <div className="absolute bottom-4 left-4 right-4">
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none z-10" />
+                        <div className="absolute bottom-4 left-4 right-4 z-20">
                           <div className="flex items-center gap-2 mb-2">
                             <div className="p-2 rounded-lg bg-primary/90 backdrop-blur-sm">
                               <Icon className="h-5 w-5 text-primary-foreground" />

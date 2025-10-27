@@ -24,10 +24,10 @@ function Router() {
       <Route path="/status" component={Status} />
       <Route path="/admin/login" component={AdminLogin} />
       <Route path="/admin/dashboard" component={AdminDashboard} />
-      <Route path="/activities/rafting" component={Rafting} />
-      <Route path="/activities/safari" component={Safari} />
-      <Route path="/activities/kayaking" component={Kayaking} />
-      <Route path="/activities/trekking" component={Trekking} />
+      <Route path="/rafting" component={Rafting} />
+      <Route path="/safari" component={Safari} />
+      <Route path="/kayaking" component={Kayaking} />
+      <Route path="/trekking" component={Trekking} />
       <Route component={NotFound} />
     </Switch>
   );

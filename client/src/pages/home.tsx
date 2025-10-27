@@ -192,8 +192,8 @@ export default function Home() {
           <Navigation transparent currentPath="/" />
         </div>
 
-        {/* Main Hero Content */}
-        <div className="relative z-10 flex h-full items-center justify-center px-6 pb-32">
+        {/* Main Hero Content - Left-aligned to make room for booking card */}
+        <div className="relative z-10 flex h-full items-start lg:items-center px-6 pt-32 lg:pt-0 pb-32">
           {/* Previous Arrow - Rhodes minimalist style */}
           <button
             onClick={goToPrevious}
@@ -203,123 +203,157 @@ export default function Home() {
             <ChevronLeft className="h-5 w-5 md:h-6 md:w-6 text-white transition-transform" />
           </button>
 
-          {/* Center Content */}
-          <div className="text-center">
+          {/* Left Content - Hero Text */}
+          <div className="flex-1 max-w-2xl lg:pr-8">
             <motion.div
               key={currentIndex}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
-              className="space-y-4"
+              className="space-y-6"
             >
-              <p className="text-white/80 text-sm md:text-base lg:text-lg font-normal tracking-[0.3em] uppercase mb-4" data-testid="text-hero-subtitle">
+              <p className="text-white/90 text-sm md:text-base lg:text-lg font-normal tracking-[0.3em] uppercase" data-testid="text-hero-subtitle">
                 {heroDestinations[currentIndex].subtitle}
               </p>
               <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl font-medium text-white tracking-tight leading-tight" data-testid="text-hero-title">
                 {heroDestinations[currentIndex].title}
               </h1>
-              <p className="text-white/70 text-base md:text-lg lg:text-xl font-light mt-6 max-w-2xl mx-auto">
+              <p className="text-white/80 text-base md:text-lg lg:text-xl font-light leading-relaxed max-w-xl">
                 {heroDestinations[currentIndex].description}
               </p>
+              
+              {/* Pagination Indicators */}
+              <div className="flex items-center gap-3 pt-4">
+                {heroDestinations.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => {
+                      setCurrentIndex(index);
+                      setVideoError(false);
+                    }}
+                    className={`h-1 rounded-full transition-all ${
+                      index === currentIndex
+                        ? 'w-12 bg-white'
+                        : 'w-8 bg-white/40 hover:bg-white/60'
+                    }`}
+                    data-testid={`button-pagination-${index}`}
+                    aria-label={`Go to slide ${index + 1}`}
+                  />
+                ))}
+              </div>
             </motion.div>
+          </div>
 
-            {/* Pagination Indicators - Rhodes minimalist */}
-            <div className="flex items-center justify-center gap-3 mt-12">
-              {heroDestinations.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => {
-                    setCurrentIndex(index);
-                    setVideoError(false);
-                  }}
-                  className={`h-1 rounded-full transition-all ${
-                    index === currentIndex
-                      ? 'w-12 bg-white'
-                      : 'w-8 bg-white/40 hover:bg-white/60'
-                  }`}
-                  data-testid={`button-pagination-${index}`}
-                  aria-label={`Go to slide ${index + 1}`}
-                />
-              ))}
-            </div>
+          {/* Right-Aligned Glassmorphic Booking Card - Desktop only */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="hidden lg:block absolute right-8 xl:right-16 top-1/2 -translate-y-1/2 w-full max-w-md z-20"
+          >
+            <Card className="bg-white/90 dark:bg-black/80 backdrop-blur-2xl shadow-2xl border-2 border-white/50 dark:border-white/30 overflow-hidden">
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-accent to-primary"></div>
+              <CardContent className="p-6">
+                <div className="mb-6">
+                  <h3 className="font-heading text-2xl font-semibold text-foreground mb-2">Plan Your Adventure</h3>
+                  <p className="text-sm text-muted-foreground">Discover Dandeli's natural wonders</p>
+                </div>
+
+                <div className="space-y-3 mb-6">
+                  {/* Destination */}
+                  <div className="flex items-center gap-3 p-3 rounded-lg bg-white/70 dark:bg-black/50 border border-white/60 dark:border-white/20">
+                    <MapPin className="h-5 w-5 text-primary shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs text-muted-foreground font-medium">Destination</p>
+                      <p className="text-sm font-semibold text-foreground">Dandeli, Karnataka</p>
+                    </div>
+                  </div>
+
+                  {/* Trip Type */}
+                  <div className="flex items-center gap-3 p-3 rounded-lg bg-white/70 dark:bg-black/50 border border-white/60 dark:border-white/20">
+                    <Compass className="h-5 w-5 text-primary shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs text-muted-foreground font-medium">Trip Type</p>
+                      <p className="text-sm font-semibold text-foreground">Adventure & Nature</p>
+                    </div>
+                  </div>
+
+                  {/* Activities */}
+                  <div className="flex items-center gap-3 p-3 rounded-lg bg-white/70 dark:bg-black/50 border border-white/60 dark:border-white/20">
+                    <Waves className="h-5 w-5 text-primary shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs text-muted-foreground font-medium">Activities</p>
+                      <p className="text-sm font-semibold text-foreground">Rafting, Safari & More</p>
+                    </div>
+                  </div>
+
+                  {/* Duration */}
+                  <div className="flex items-center gap-3 p-3 rounded-lg bg-white/70 dark:bg-black/50 border border-white/60 dark:border-white/20">
+                    <Calendar className="h-5 w-5 text-primary shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs text-muted-foreground font-medium">Duration</p>
+                      <p className="text-sm font-semibold text-foreground">1-3 Days</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="space-y-3">
+                  <Link href="/booking" className="block">
+                    <Button className="w-full h-12 text-base font-semibold shadow-lg" data-testid="button-book-now-hero">
+                      <Search className="h-5 w-5 mr-2" />
+                      Book Your Adventure
+                    </Button>
+                  </Link>
+                  <Link href="/activities" className="block">
+                    <Button
+                      variant="outline"
+                      className="w-full h-12 text-base font-semibold bg-white/70 dark:bg-black/50 hover:bg-white dark:hover:bg-black/70 border-2"
+                      data-testid="button-explore-activities"
+                    >
+                      <Compass className="h-5 w-5 mr-2" />
+                      Explore Activities
+                    </Button>
+                  </Link>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+
+          {/* Mobile Bottom CTA - Compact version for small screens */}
+          <div className="lg:hidden absolute bottom-8 left-1/2 -translate-x-1/2 z-20 w-full max-w-md px-6">
+            <Card className="bg-white/90 dark:bg-black/80 backdrop-blur-xl shadow-2xl border-2 border-white/50 dark:border-white/30">
+              <CardContent className="p-4">
+                <div className="grid grid-cols-2 gap-3">
+                  <Link href="/booking" className="w-full">
+                    <Button className="w-full h-11 font-semibold shadow-lg" data-testid="button-book-now-hero-mobile">
+                      <Search className="h-4 w-4 mr-2" />
+                      Book Now
+                    </Button>
+                  </Link>
+                  <Link href="/activities" className="w-full">
+                    <Button
+                      variant="outline"
+                      className="w-full h-11 font-semibold bg-white/70 dark:bg-black/50 border-2"
+                      data-testid="button-explore-activities-mobile"
+                    >
+                      <Compass className="h-4 w-4 mr-2" />
+                      Explore
+                    </Button>
+                  </Link>
+                </div>
+              </CardContent>
+            </Card>
           </div>
 
           {/* Next Arrow - Rhodes minimalist style */}
           <button
             onClick={goToNext}
-            className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 w-12 h-12 md:w-14 md:h-14 rounded-full border border-white/30 backdrop-blur-md bg-white/5 flex items-center justify-center hover:bg-white/15 hover:border-white/50 transition-all group z-30"
+            className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 w-12 h-12 md:w-14 md:h-14 rounded-full border border-white/30 backdrop-blur-md bg-white/5 flex items-center justify-center hover:bg-white/15 hover:border-white/50 transition-all group z-30 lg:hidden"
             data-testid="button-next-destination"
           >
             <ChevronRight className="h-5 w-5 md:h-6 md:w-6 text-white transition-transform" />
           </button>
-        </div>
-
-        {/* Enhanced Bottom Booking Bar - Semi-transparent with improved usability */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 w-full max-w-5xl px-6">
-          <Card className="bg-white/80 dark:bg-black/70 backdrop-blur-xl shadow-2xl border-2 border-white/40 dark:border-white/20">
-            <CardContent className="p-5 md:p-7">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
-                {/* Destination */}
-                <div className="flex items-center gap-3 p-4 rounded-xl bg-white/60 dark:bg-black/40 hover:bg-white/80 dark:hover:bg-black/60 transition-all cursor-pointer border border-white/50 dark:border-white/20">
-                  <MapPin className="h-5 w-5 text-primary shrink-0" />
-                  <div className="flex-1 min-w-0">
-                    <p className="text-xs text-muted-foreground mb-1 font-medium">Destination</p>
-                    <p className="text-sm font-semibold text-foreground truncate">Dandeli, Karnataka</p>
-                  </div>
-                </div>
-
-                {/* Kind of Trip */}
-                <div className="flex items-center gap-3 p-4 rounded-xl bg-white/60 dark:bg-black/40 hover:bg-white/80 dark:hover:bg-black/60 transition-all cursor-pointer border border-white/50 dark:border-white/20">
-                  <Compass className="h-5 w-5 text-primary shrink-0" />
-                  <div className="flex-1 min-w-0">
-                    <p className="text-xs text-muted-foreground mb-1 font-medium">Trip Type</p>
-                    <p className="text-sm font-semibold text-foreground truncate">Adventure & Nature</p>
-                  </div>
-                </div>
-
-                {/* Activities */}
-                <div className="flex items-center gap-3 p-4 rounded-xl bg-white/60 dark:bg-black/40 hover:bg-white/80 dark:hover:bg-black/60 transition-all cursor-pointer border border-white/50 dark:border-white/20">
-                  <Waves className="h-5 w-5 text-primary shrink-0" />
-                  <div className="flex-1 min-w-0">
-                    <p className="text-xs text-muted-foreground mb-1 font-medium">Popular Activities</p>
-                    <p className="text-sm font-semibold text-foreground truncate">Rafting, Safari & More</p>
-                  </div>
-                </div>
-
-                {/* Duration */}
-                <div className="flex items-center gap-3 p-4 rounded-xl bg-white/60 dark:bg-black/40 hover:bg-white/80 dark:hover:bg-black/60 transition-all cursor-pointer border border-white/50 dark:border-white/20">
-                  <Calendar className="h-5 w-5 text-primary shrink-0" />
-                  <div className="flex-1 min-w-0">
-                    <p className="text-xs text-muted-foreground mb-1 font-medium">Duration</p>
-                    <p className="text-sm font-semibold text-foreground truncate">1-3 Days</p>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Action Buttons */}
-              <div className="grid grid-cols-2 gap-4">
-                <Link href="/activities" className="w-full">
-                  <Button
-                    variant="outline"
-                    className="w-full h-12 text-base font-semibold bg-white/70 dark:bg-black/50 hover:bg-white dark:hover:bg-black/70 border-2"
-                    data-testid="button-explore-activities"
-                  >
-                    <Compass className="h-5 w-5 mr-2" />
-                    Explore Activities
-                  </Button>
-                </Link>
-                <Link href="/booking" className="w-full">
-                  <Button
-                    className="w-full h-12 text-base font-semibold shadow-lg"
-                    data-testid="button-book-now-hero"
-                  >
-                    <Search className="h-5 w-5 mr-2" />
-                    Book Your Adventure
-                  </Button>
-                </Link>
-              </div>
-            </CardContent>
-          </Card>
         </div>
       </section>
 

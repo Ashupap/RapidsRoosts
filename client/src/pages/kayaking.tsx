@@ -1,8 +1,9 @@
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "wouter";
 import { Calendar, Clock, Users, Shield, MapPin, ChevronRight, Send, IndianRupee, Droplets } from "lucide-react";
+import { useState } from "react";
 import kayakingImage from "@assets/generated_images/Peaceful_kayaking_river_adventure_e3974c90.png";
 import { useSEO, injectStructuredData } from "@/lib/seo";
 
@@ -24,20 +25,45 @@ export default function KayakingDetail() {
   const { scrollYProgress } = useScroll();
   const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.9, 0.5]);
+  const [videoError, setVideoError] = useState(false);
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero Section */}
+      {/* Hero Section with Video */}
       <section className="relative h-[60vh] overflow-hidden">
         <motion.div
           style={{ y: heroY, opacity: heroOpacity }}
           className="absolute inset-0 z-0"
         >
-          <div
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url(${kayakingImage})` }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/70" />
+          <AnimatePresence>
+            {!videoError ? (
+              <motion.video
+                key="kayaking-video"
+                autoPlay
+                loop
+                muted
+                playsInline
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 1.2 }}
+                className="absolute inset-0 w-full h-full object-cover"
+                onError={() => setVideoError(true)}
+              >
+                <source src="/videos/kayaking.mp4" type="video/mp4" />
+              </motion.video>
+            ) : (
+              <motion.div
+                key="kayaking-image"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="absolute inset-0 bg-cover bg-center"
+                style={{ backgroundImage: `url(${kayakingImage})` }}
+              />
+            )}
+          </AnimatePresence>
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/80 pointer-events-none" />
+          <div className="absolute inset-0 bg-black/20 pointer-events-none" />
         </motion.div>
 
         <div className="relative z-10 flex h-full items-center justify-center px-6">
@@ -73,7 +99,7 @@ export default function KayakingDetail() {
       </section>
 
       {/* Quick Info */}
-      <section className="py-12 px-6 bg-card">
+      <section className="py-12 px-6 bg-section-teal">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <Card>
@@ -109,7 +135,7 @@ export default function KayakingDetail() {
       </section>
 
       {/* Main Content */}
-      <section className="py-20 px-6">
+      <section className="py-20 px-6 bg-section-light">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Left Column */}

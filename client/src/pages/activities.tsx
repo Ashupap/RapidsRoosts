@@ -138,7 +138,7 @@ export default function Activities() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-12 px-6 bg-card border-y border-border">
+      <section className="py-12 px-6 bg-section-teal border-y border-border">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <motion.div
@@ -185,7 +185,7 @@ export default function Activities() {
       </section>
 
       {/* Activities Grid */}
-      <section id="activities" className="py-20 px-6">
+      <section id="activities" className="py-20 px-6 bg-section-light">
         <div className="max-w-7xl mx-auto">
           <motion.div
             variants={containerVariants}

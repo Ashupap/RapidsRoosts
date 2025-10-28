@@ -33,7 +33,9 @@ export default function Navigation() {
     return `text-sm font-medium transition-all duration-300 relative ${
       isActive
         ? "text-primary"
-        : "text-foreground/70 hover:text-primary"
+        : scrolled 
+          ? "text-foreground/70 hover:text-primary"
+          : "text-white/90 hover:text-white"
     }`;
   };
 
@@ -42,7 +44,7 @@ export default function Navigation() {
       className={`sticky top-0 z-50 w-full transition-all duration-300 ${
         scrolled
           ? "bg-white/95 backdrop-blur-lg shadow-lg border-b border-border/40"
-          : "bg-white/90 backdrop-blur-sm"
+          : "bg-transparent"
       }`}
     >
       <nav className="max-w-7xl mx-auto px-6 py-4">
@@ -64,10 +66,14 @@ export default function Navigation() {
                 <div className="absolute inset-0 rounded-full bg-primary/0 group-hover:bg-primary/10 transition-all duration-300" />
               </div>
               <div>
-                <h1 className="font-heading text-lg md:text-xl font-bold tracking-wide text-foreground group-hover:text-primary transition-colors duration-300">
+                <h1 className={`font-heading text-lg md:text-xl font-bold tracking-wide transition-colors duration-300 ${
+                  scrolled ? "text-foreground group-hover:text-primary" : "text-white group-hover:text-primary"
+                }`}>
                   Rapids & Roosts
                 </h1>
-                <p className="text-[10px] md:text-xs uppercase tracking-wider text-muted-foreground">
+                <p className={`text-[10px] md:text-xs uppercase tracking-wider transition-colors duration-300 ${
+                  scrolled ? "text-muted-foreground" : "text-white/70"
+                }`}>
                   Adventure Tourism
                 </p>
               </div>
@@ -106,7 +112,9 @@ export default function Navigation() {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="hidden xl:flex items-center gap-6 text-sm text-foreground"
+              className={`hidden xl:flex items-center gap-6 text-sm transition-colors duration-300 ${
+                scrolled ? "text-foreground" : "text-white/90"
+              }`}
             >
               <a
                 href="tel:+919483940400"
@@ -132,7 +140,11 @@ export default function Navigation() {
                 <Button
                   variant="outline"
                   size="icon"
-                  className="hover:bg-primary/10 hover:border-primary transition-all duration-300"
+                  className={`transition-all duration-300 ${
+                    scrolled 
+                      ? "hover:bg-primary/10 hover:border-primary border-border" 
+                      : "bg-white/10 border-white/30 text-white hover:bg-white/20 hover:border-white/50"
+                  }`}
                   data-testid="button-menu"
                 >
                   <Menu className="h-5 w-5" />

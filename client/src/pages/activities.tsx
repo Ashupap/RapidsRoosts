@@ -51,11 +51,11 @@ export default function Activities() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       <Navigation />
 
       {/* Hero Section */}
-      <section className="relative py-20 px-6 overflow-hidden bg-gradient-to-br from-primary/10 via-background to-primary/5">
+      <section className="relative -mt-20 pt-32 pb-20 px-6 overflow-hidden bg-gradient-to-br from-primary/10 via-background to-primary/5">
         <div className="absolute inset-0 bg-grid-white/5 bg-grid-16" />
         <div className="max-w-7xl mx-auto relative z-10">
           <motion.div

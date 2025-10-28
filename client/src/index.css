@@ -34,8 +34,8 @@
   --sidebar-border: 0 0% 92%;
 
   /* ADVENTURE PULSE PALETTE - Main Theme Colors (VIBRANT) */
-  /* Primary - Bright Sea Green */
-  --sidebar-primary: 174 72% 48%;
+  /* Primary - Sea Green (#2e8b57) */
+  --sidebar-primary: 146 50% 36%;
 
   --sidebar-primary-foreground: 0 0% 100%;
 
@@ -43,7 +43,7 @@
 
   --sidebar-accent-foreground: 0 0% 10%;
 
-  --sidebar-ring: 174 72% 48%;
+  --sidebar-ring: 146 50% 36%;
 
   --popover: 0 0% 100%;
 
@@ -51,8 +51,8 @@
 
   --popover-border: 0 0% 92%;
 
-  /* Primary - Bright Sea Green (Bright and energetic) */
-  --primary: 174 72% 48%;
+  /* Primary - Sea Green (#2e8b57) */
+  --primary: 146 50% 36%;
 
   --primary-foreground: 0 0% 100%;
 
@@ -91,8 +91,8 @@
   --destructive-foreground: 0 0% 100%;
 
   --input: 0 0% 90%;
-  --ring: 174 72% 48%;
-  --chart-1: 174 72% 48%;
+  --ring: 146 50% 36%;
+  --chart-1: 146 50% 36%;
   --chart-2: 14 85% 65%;
   --chart-3: 45 93% 47%;
   --chart-4: 220 70% 50%;
@@ -185,7 +185,7 @@
 
   /* ADVENTURE PULSE PALETTE - Dark Mode */
   /* Primary - Lighter Sea Green for dark mode */
-  --sidebar-primary: 174 68% 58%;
+  --sidebar-primary: 146 55% 46%;
 
   --sidebar-primary-foreground: 220 20% 8%;
 
@@ -193,7 +193,7 @@
 
   --sidebar-accent-foreground: 0 0% 90%;
 
-  --sidebar-ring: 174 68% 58%;
+  --sidebar-ring: 146 55% 46%;
 
   --popover: 220 18% 12%;
 
@@ -202,7 +202,7 @@
   --popover-border: 220 15% 20%;
 
   /* Primary - Lighter Sea Green */
-  --primary: 174 68% 58%;
+  --primary: 146 55% 46%;
 
   --primary-foreground: 220 20% 8%;
 
@@ -234,8 +234,8 @@
   --destructive-foreground: 0 0% 100%;
 
   --input: 220 15% 22%;
-  --ring: 174 68% 58%;
-  --chart-1: 174 68% 58%;
+  --ring: 146 55% 46%;
+  --chart-1: 146 55% 46%;
   --chart-2: 14 80% 60%;
   --chart-3: 45 90% 55%;
   --chart-4: 220 70% 60%;

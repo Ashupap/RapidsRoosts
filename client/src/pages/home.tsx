@@ -133,11 +133,11 @@ export default function Home() {
     : "Select dates";
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       <Navigation />
       
       {/* Hero Section - Redesigned */}
-      <section ref={heroRef} className="relative min-h-[90vh] overflow-hidden">
+      <section ref={heroRef} className="relative min-h-[90vh] overflow-hidden -mt-20 pt-20">
         {/* Background Image with Parallax */}
         <motion.div
           style={{ y: heroY }}

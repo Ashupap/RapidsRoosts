@@ -47,8 +47,9 @@ export default function Navigation() {
       className={`sticky top-0 z-50 w-full transition-all duration-300 ${
         scrolled
           ? "bg-white/95 backdrop-blur-lg shadow-lg border-b border-border/40"
-          : "bg-transparent"
+          : ""
       }`}
+      style={scrolled ? {} : { backgroundColor: 'transparent' }}
     >
       <nav className="max-w-7xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between">

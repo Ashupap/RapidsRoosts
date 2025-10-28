@@ -7,6 +7,7 @@ import { useState } from "react";
 import kayakingImage from "@assets/generated_images/Peaceful_kayaking_river_adventure_e3974c90.png";
 import { useSEO, injectStructuredData } from "@/lib/seo";
 import Footer from "@/components/Footer";
+import Navigation from "@/components/Navigation";
 
 export default function KayakingDetail() {
   useSEO({
@@ -30,6 +31,8 @@ export default function KayakingDetail() {
 
   return (
     <div className="min-h-screen bg-background">
+      <Navigation />
+      
       {/* Hero Section with Video */}
       <section className="relative h-[60vh] overflow-hidden">
         <motion.div

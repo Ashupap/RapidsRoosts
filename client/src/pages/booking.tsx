@@ -17,6 +17,7 @@ import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { useSEO } from "@/lib/seo";
 import Footer from "@/components/Footer";
+import Navigation from "@/components/Navigation";
 
 const STEPS = [
   { id: 1, title: "Personal Details", icon: User },
@@ -134,6 +135,8 @@ export default function Booking() {
 
   return (
     <div className="min-h-screen bg-background">
+      <Navigation />
+      
       {/* Header with Progress */}
       <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border shadow-sm">
         <div className="max-w-7xl mx-auto px-6 py-4">

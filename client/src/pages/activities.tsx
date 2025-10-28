@@ -16,7 +16,7 @@ import {
 import { getAllActivities } from "@/data/activities";
 import { useSEO, injectStructuredData } from "@/lib/seo";
 import Footer from "@/components/Footer";
-import logo from "@assets/logo_1761304770834.jpg";
+import Navigation from "@/components/Navigation";
 
 export default function Activities() {
   useSEO({
@@ -52,52 +52,7 @@ export default function Activities() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <Link href="/">
-              <div className="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity">
-                <img 
-                  src={logo} 
-                  alt="Rapids Roosts Dandeli" 
-                  className="h-12 w-12 rounded-full object-cover shadow-md" 
-                />
-                <div>
-                  <h1 className="font-heading text-lg md:text-xl font-medium text-foreground tracking-wide">
-                    Rapids & Roosts
-                  </h1>
-                  <p className="text-[10px] md:text-xs uppercase tracking-wider text-muted-foreground">Adventure Tourism</p>
-                </div>
-              </div>
-            </Link>
-
-            <nav className="hidden md:flex items-center gap-8">
-              <Link href="/">
-                <span className="text-sm font-normal tracking-wide text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
-                  Home
-                </span>
-              </Link>
-              <Link href="/activities">
-                <span className="text-sm font-medium tracking-wide text-foreground cursor-pointer">
-                  Our Activities
-                </span>
-              </Link>
-              <Link href="/status">
-                <span className="text-sm font-normal tracking-wide text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
-                  Check Status
-                </span>
-              </Link>
-              <Link href="/booking">
-                <Button size="sm">
-                  Book Now
-                  <ChevronRight className="ml-2 h-4 w-4" />
-                </Button>
-              </Link>
-            </nav>
-          </div>
-        </div>
-      </header>
+      <Navigation />
 
       {/* Hero Section */}
       <section className="relative py-20 px-6 overflow-hidden bg-gradient-to-br from-primary/10 via-background to-primary/5">

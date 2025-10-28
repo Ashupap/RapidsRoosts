@@ -8,6 +8,7 @@ import safariImage from "@assets/generated_images/Jungle_safari_wildlife_adventu
 import safariImage2 from "@assets/stock_images/jungle_safari_wildli_5c354858.jpg";
 import { useSEO, injectStructuredData } from "@/lib/seo";
 import Footer from "@/components/Footer";
+import Navigation from "@/components/Navigation";
 
 export default function SafariDetail() {
   useSEO({
@@ -49,6 +50,8 @@ export default function SafariDetail() {
 
   return (
     <div className="min-h-screen bg-background">
+      <Navigation />
+      
       {/* Hero Section with Video */}
       <section className="relative h-[60vh] overflow-hidden">
         <motion.div

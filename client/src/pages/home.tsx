@@ -152,7 +152,7 @@ export default function Home() {
 
         {/* Top Navigation Header */}
         <div className="relative z-20 px-4 md:px-8 py-6">
-          <Navigation transparent currentPath="/" />
+          <Navigation />
         </div>
 
         {/* Hero Content */}

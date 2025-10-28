@@ -9,6 +9,7 @@ import raftingHero2 from "@assets/stock_images/adventure_sports_gal_5c0d834f.jpg
 import raftingHero3 from "@assets/stock_images/adventure_sports_gal_5bf20dc4.jpg";
 import { useSEO, injectStructuredData } from "@/lib/seo";
 import Footer from "@/components/Footer";
+import Navigation from "@/components/Navigation";
 
 export default function RaftingDetail() {
   useSEO({
@@ -32,6 +33,8 @@ export default function RaftingDetail() {
 
   return (
     <div className="min-h-screen bg-background">
+      <Navigation />
+      
       {/* Hero Section with Video */}
       <section className="relative h-[60vh] overflow-hidden">
         <motion.div

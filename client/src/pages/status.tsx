@@ -9,6 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 import type { Booking } from "@shared/schema";
 import { useSEO } from "@/lib/seo";
 import Footer from "@/components/Footer";
+import Navigation from "@/components/Navigation";
 
 const STATUS_CONFIG = {
   pending: {
@@ -64,6 +65,8 @@ export default function Status() {
 
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
+      <Navigation />
+      
       {/* Parallax Background Layers */}
       <div className="absolute inset-0 opacity-5">
         <motion.div

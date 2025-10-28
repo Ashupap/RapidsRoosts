@@ -7,6 +7,7 @@ import { useState } from "react";
 import trekkingImage from "@assets/generated_images/Forest_trekking_adventure_trail_14dd1cd1.png";
 import { useSEO, injectStructuredData } from "@/lib/seo";
 import Footer from "@/components/Footer";
+import Navigation from "@/components/Navigation";
 
 export default function TrekkingDetail() {
   useSEO({
@@ -39,6 +40,8 @@ export default function TrekkingDetail() {
 
   return (
     <div className="min-h-screen bg-background">
+      <Navigation />
+      
       {/* Hero Section with Video */}
       <section className="relative h-[60vh] overflow-hidden">
         <motion.div

@@ -195,7 +195,7 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="w-full max-w-2xl"
           >
-            <Card className="bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg shadow-2xl overflow-hidden border-0 rounded-none">
+            <Card className="bg-white/50 dark:bg-gray-900/50 backdrop-blur-lg shadow-2xl overflow-hidden border-0 rounded-none">
               <CardContent className="p-0">
                 {/* Tabs for Activity Types */}
                 <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
@@ -395,8 +395,7 @@ export default function Home() {
                       <div>
                         <Button 
                           onClick={handleBookNow}
-                          disabled={!checkInDate || !checkOutDate}
-                          className="w-full h-11 text-base font-bold bg-primary hover:bg-primary/90 text-white shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                          className="w-full h-11 text-base font-bold bg-primary hover:bg-primary/90 text-white shadow-lg"
                           data-testid="button-book-now-hero"
                         >
                           BOOK NOW

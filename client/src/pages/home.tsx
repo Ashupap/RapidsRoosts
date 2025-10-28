@@ -16,6 +16,7 @@ import { CampfireEffect, WaterDroplets, WildlifeSilhouette, FloatingLeaves } fro
 import raftingHero1 from "@assets/stock_images/vibrant_water_raftin_9419a08c.jpg";
 import raftingHero2 from "@assets/stock_images/vibrant_water_raftin_5f8fedad.jpg";
 import raftingHero3 from "@assets/stock_images/vibrant_water_raftin_24bbd1b7.jpg";
+import heroVideo from "@assets/My Video-1-highlight_1761648845088.mp4";
 import safariImage1 from "@assets/stock_images/jungle_safari_wildli_f86a9bfa.jpg";
 import safariImage2 from "@assets/stock_images/jungle_safari_wildli_5c354858.jpg";
 import campImage1 from "@assets/stock_images/forest_camping_tents_2caeb335.jpg";
@@ -93,6 +94,7 @@ export default function Home() {
   const [rooms, setRooms] = useState(1);
   const [datePickerOpen, setDatePickerOpen] = useState(false);
   const [guestPickerOpen, setGuestPickerOpen] = useState(false);
+  const [videoLoaded, setVideoLoaded] = useState(false);
   
   useSEO({
     title: 'Home - Adventure Tourism in Dandeli',
@@ -138,15 +140,33 @@ export default function Home() {
       
       {/* Hero Section - Redesigned */}
       <section ref={heroRef} className="relative min-h-[90vh] overflow-hidden -mt-20 pt-20">
-        {/* Background Image with Parallax */}
+        {/* Background Video with Parallax */}
         <motion.div
           style={{ y: heroY }}
           className="absolute inset-0 z-0"
         >
-          <div 
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url(${raftingHero1})` }}
-          />
+          {/* Video Background */}
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="metadata"
+            poster={raftingHero1}
+            onLoadedData={() => setVideoLoaded(true)}
+            className="absolute inset-0 w-full h-full object-cover"
+          >
+            <source src={heroVideo} type="video/mp4" />
+          </video>
+          
+          {/* Fallback Image - shown until video loads */}
+          {!videoLoaded && (
+            <div 
+              className="absolute inset-0 bg-cover bg-center"
+              style={{ backgroundImage: `url(${raftingHero1})` }}
+            />
+          )}
+          
           {/* Gradient Overlay */}
           <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/60" />
           <div className="absolute inset-0 bg-gradient-to-r from-emerald-900/30 to-teal-900/30" />

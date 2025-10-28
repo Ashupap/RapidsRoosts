@@ -2,7 +2,8 @@ import { Link } from "wouter";
 import { motion, useScroll, useTransform, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Calendar, Users, ChevronRight, ChevronLeft, Waves, Mountain, Compass, Send, MapPin, Search, Mail, Phone } from "lucide-react";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Calendar, Users, ChevronRight, ChevronLeft, Waves, Mountain, Compass, Send, MapPin, Search, Mail, Phone, Hotel, Plane, Car } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
 import { useSEO, injectStructuredData } from "@/lib/seo";
 import Navigation from "@/components/Navigation";
@@ -77,32 +78,9 @@ const activities = [
   },
 ];
 
-const heroDestinations = [
-  {
-    src: "/videos/water-rafting.mp4",
-    fallback: raftingHero1,
-    subtitle: "Experience The Thrill",
-    title: "WHITE WATER RAFTING",
-    description: "Navigate the rapids of Kali River",
-  },
-  {
-    src: "/videos/jungle-safari.mp4",
-    fallback: safariImage1,
-    subtitle: "Discover Wild",
-    title: "JUNGLE SAFARI",
-    description: "Explore exotic wildlife in nature",
-  },
-  {
-    src: "/videos/forest-camp.mp4",
-    fallback: campImage1,
-    subtitle: "Reconnect With Nature",
-    title: "FOREST CAMPING",
-    description: "Immerse in wilderness retreat",
-  },
-];
-
 export default function Home() {
   const prefersReducedMotion = useReducedMotion();
+  const [activeTab, setActiveTab] = useState("rafting");
   
   useSEO({
     title: 'Home - Adventure Tourism in Dandeli',
@@ -114,83 +92,30 @@ export default function Home() {
   injectStructuredData('localBusiness');
 
   const heroRef = useRef<HTMLDivElement>(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [videoError, setVideoError] = useState(false);
   
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"],
   });
 
-  const heroY = useTransform(scrollYProgress, [0, 1], [prefersReducedMotion ? "0%" : "0%", prefersReducedMotion ? "0%" : "30%"]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, prefersReducedMotion ? 1 : 0.9, prefersReducedMotion ? 1 : 0.5]);
-
-  // Auto-rotate every 12 seconds (disabled if user prefers reduced motion)
-  useEffect(() => {
-    if (prefersReducedMotion) return;
-    
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % heroDestinations.length);
-      setVideoError(false);
-    }, 12000);
-
-    return () => clearInterval(interval);
-  }, [prefersReducedMotion]);
-
-  const goToPrevious = () => {
-    setCurrentIndex((prev) => (prev - 1 + heroDestinations.length) % heroDestinations.length);
-    setVideoError(false);
-  };
-
-  const goToNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % heroDestinations.length);
-    setVideoError(false);
-  };
+  const heroY = useTransform(scrollYProgress, [0, 1], [prefersReducedMotion ? "0%" : "0%", prefersReducedMotion ? "0%" : "20%"]);
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero Section */}
-      <section ref={heroRef} className="relative h-screen overflow-hidden">
-        {/* Video/Image Background with Smooth Crossfade */}
+      {/* Hero Section - New Design */}
+      <section ref={heroRef} className="relative min-h-[90vh] overflow-hidden">
+        {/* Background Image with Parallax */}
         <motion.div
-          style={{ y: heroY, opacity: heroOpacity }}
+          style={{ y: heroY }}
           className="absolute inset-0 z-0"
         >
-          <AnimatePresence>
-            {!videoError ? (
-              <motion.video
-                key={`video-${currentIndex}`}
-                autoPlay
-                loop
-                muted
-                playsInline
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 1.2, ease: "easeInOut" }}
-                className="absolute inset-0 w-full h-full object-cover"
-                onError={() => setVideoError(true)}
-                data-testid="video-hero-background"
-              >
-                <source src={heroDestinations[currentIndex].src} type="video/mp4" />
-              </motion.video>
-            ) : (
-              <motion.div
-                key={`image-${currentIndex}`}
-                initial={{ opacity: 0, scale: 1.05 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 1.2, ease: "easeInOut" }}
-                className="absolute inset-0 bg-cover bg-center"
-                style={{ backgroundImage: `url(${heroDestinations[currentIndex].fallback})` }}
-                data-testid="image-hero-fallback"
-              />
-            )}
-          </AnimatePresence>
-          
-          {/* Enhanced High-Contrast overlay for better text visibility */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/80 pointer-events-none" />
-          <div className="absolute inset-0 bg-black/20 pointer-events-none" />
+          <div 
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url(${raftingHero1})` }}
+          />
+          {/* Gradient Overlay - Similar to reference image */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/60" />
+          <div className="absolute inset-0 bg-gradient-to-r from-emerald-900/30 to-teal-900/30" />
         </motion.div>
 
         {/* Top Navigation Header */}
@@ -198,173 +123,190 @@ export default function Home() {
           <Navigation transparent currentPath="/" />
         </div>
 
-        {/* Main Hero Content - Left-aligned to make room for booking card */}
-        <div className="relative z-10 flex h-full items-start lg:items-center px-6 pt-32 lg:pt-0 pb-32">
-          {/* Previous Arrow - Rhodes minimalist style */}
-          <button
-            onClick={goToPrevious}
-            className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 w-12 h-12 md:w-14 md:h-14 rounded-full border border-white/30 backdrop-blur-md bg-white/5 flex items-center justify-center hover:bg-white/15 hover:border-white/50 transition-all group z-30"
-            data-testid="button-previous-destination"
-          >
-            <ChevronLeft className="h-5 w-5 md:h-6 md:w-6 text-white transition-transform" />
-          </button>
-
-          {/* Left Content - Hero Text */}
-          <div className="flex-1 max-w-2xl lg:pr-8">
-            <motion.div
-              key={currentIndex}
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              className="space-y-6"
-            >
-              <p className="text-white/90 text-sm md:text-base lg:text-lg font-normal tracking-[0.3em] uppercase" data-testid="text-hero-subtitle">
-                {heroDestinations[currentIndex].subtitle}
-              </p>
-              <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl font-medium text-white tracking-tight leading-tight" data-testid="text-hero-title">
-                {heroDestinations[currentIndex].title}
-              </h1>
-              <p className="text-white/80 text-base md:text-lg lg:text-xl font-light leading-relaxed max-w-xl">
-                {heroDestinations[currentIndex].description}
-              </p>
-              
-              {/* Pagination Indicators */}
-              <div className="flex items-center gap-3 pt-4">
-                {heroDestinations.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => {
-                      setCurrentIndex(index);
-                      setVideoError(false);
-                    }}
-                    className={`h-1 rounded-full transition-all ${
-                      index === currentIndex
-                        ? 'w-12 bg-white'
-                        : 'w-8 bg-white/40 hover:bg-white/60'
-                    }`}
-                    data-testid={`button-pagination-${index}`}
-                    aria-label={`Go to slide ${index + 1}`}
-                  />
-                ))}
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Right-Aligned Glassmorphic Booking Card - Desktop only */}
+        {/* Hero Content */}
+        <div className="relative z-10 flex flex-col items-center justify-center px-6 pt-20 pb-32">
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="hidden lg:block absolute right-8 xl:right-16 top-1/2 -translate-y-1/2 w-full max-w-md z-20"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center max-w-4xl mx-auto mb-12"
           >
-            <Card className="bg-white/90 dark:bg-black/80 backdrop-blur-2xl shadow-2xl border-2 border-white/50 dark:border-white/30 overflow-hidden">
-              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-accent to-primary"></div>
-              <CardContent className="p-6">
-                <div className="mb-6">
-                  <h3 className="font-heading text-2xl font-semibold text-foreground mb-2">Plan Your Adventure</h3>
-                  <p className="text-sm text-muted-foreground">Discover Dandeli's natural wonders</p>
-                </div>
+            <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 leading-tight" data-testid="text-hero-title">
+              Welcome to Rapids & Roosts
+            </h1>
+            <p className="text-white/90 text-lg md:text-xl lg:text-2xl font-light" data-testid="text-hero-subtitle">
+              You're one step closer to a great vacation!
+            </p>
+          </motion.div>
 
-                <div className="space-y-3 mb-6">
-                  {/* Destination */}
-                  <div className="flex items-center gap-3 p-3 rounded-lg bg-white/70 dark:bg-black/50 border border-white/60 dark:border-white/20">
-                    <MapPin className="h-5 w-5 text-primary shrink-0" />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-xs text-muted-foreground font-medium">Destination</p>
-                      <p className="text-sm font-semibold text-foreground">Dandeli, Karnataka</p>
-                    </div>
-                  </div>
-
-                  {/* Trip Type */}
-                  <div className="flex items-center gap-3 p-3 rounded-lg bg-white/70 dark:bg-black/50 border border-white/60 dark:border-white/20">
-                    <Compass className="h-5 w-5 text-primary shrink-0" />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-xs text-muted-foreground font-medium">Trip Type</p>
-                      <p className="text-sm font-semibold text-foreground">Adventure & Nature</p>
-                    </div>
-                  </div>
-
-                  {/* Activities */}
-                  <div className="flex items-center gap-3 p-3 rounded-lg bg-white/70 dark:bg-black/50 border border-white/60 dark:border-white/20">
-                    <Waves className="h-5 w-5 text-primary shrink-0" />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-xs text-muted-foreground font-medium">Activities</p>
-                      <p className="text-sm font-semibold text-foreground">Rafting, Safari & More</p>
-                    </div>
-                  </div>
-
-                  {/* Duration */}
-                  <div className="flex items-center gap-3 p-3 rounded-lg bg-white/70 dark:bg-black/50 border border-white/60 dark:border-white/20">
-                    <Calendar className="h-5 w-5 text-primary shrink-0" />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-xs text-muted-foreground font-medium">Duration</p>
-                      <p className="text-sm font-semibold text-foreground">1-3 Days</p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Action Buttons */}
-                <div className="space-y-3">
-                  <Link href="/booking" className="block">
-                    <Button className="w-full h-12 text-base font-semibold shadow-lg" data-testid="button-book-now-hero">
-                      <Search className="h-5 w-5 mr-2" />
-                      Book Your Adventure
-                    </Button>
-                  </Link>
-                  <Link href="/activities" className="block">
-                    <Button
-                      variant="outline"
-                      className="w-full h-12 text-base font-semibold bg-white/70 dark:bg-black/50 hover:bg-white dark:hover:bg-black/70 border-2"
-                      data-testid="button-explore-activities"
+          {/* Booking Form Card */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="w-full max-w-5xl"
+          >
+            <Card className="bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg shadow-2xl overflow-hidden border-0">
+              <CardContent className="p-0">
+                {/* Tabs for Activity Types */}
+                <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+                  <TabsList className="w-full grid grid-cols-4 rounded-none h-14 bg-transparent border-b border-gray-200 dark:border-gray-700" data-testid="tabs-activity-selector">
+                    <TabsTrigger 
+                      value="rafting" 
+                      className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-none h-full text-sm md:text-base font-semibold"
+                      data-testid="tab-rafting"
                     >
-                      <Compass className="h-5 w-5 mr-2" />
-                      Explore Activities
-                    </Button>
-                  </Link>
-                </div>
+                      <Waves className="h-4 w-4 md:h-5 md:w-5 mr-2" />
+                      RAFTING
+                    </TabsTrigger>
+                    <TabsTrigger 
+                      value="safari" 
+                      className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-none h-full text-sm md:text-base font-semibold"
+                      data-testid="tab-safari"
+                    >
+                      <Compass className="h-4 w-4 md:h-5 md:w-5 mr-2" />
+                      SAFARI
+                    </TabsTrigger>
+                    <TabsTrigger 
+                      value="trekking" 
+                      className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-none h-full text-sm md:text-base font-semibold"
+                      data-testid="tab-trekking"
+                    >
+                      <Mountain className="h-4 w-4 md:h-5 md:w-5 mr-2" />
+                      TREKKING
+                    </TabsTrigger>
+                    <TabsTrigger 
+                      value="kayaking" 
+                      className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-none h-full text-sm md:text-base font-semibold"
+                      data-testid="tab-kayaking"
+                    >
+                      <Send className="h-4 w-4 md:h-5 md:w-5 mr-2" />
+                      KAYAKING
+                    </TabsTrigger>
+                  </TabsList>
+
+                  {/* Booking Form */}
+                  <div className="p-6">
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+                      {/* Destination */}
+                      <div className="space-y-2">
+                        <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide flex items-center gap-2">
+                          <MapPin className="h-4 w-4 text-primary" />
+                          Destination
+                        </label>
+                        <div className="relative">
+                          <input
+                            type="text"
+                            value="Dandeli, Karnataka"
+                            readOnly
+                            className="w-full h-12 px-4 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-foreground font-semibold focus:outline-none focus:ring-2 focus:ring-primary"
+                            data-testid="input-destination"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Check In/Out Date */}
+                      <div className="space-y-2">
+                        <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide flex items-center gap-2">
+                          <Calendar className="h-4 w-4 text-primary" />
+                          Check In/Check Out Date
+                        </label>
+                        <div className="relative">
+                          <input
+                            type="text"
+                            placeholder="Select dates"
+                            className="w-full h-12 px-4 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-foreground focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer"
+                            data-testid="input-dates"
+                            readOnly
+                          />
+                        </div>
+                      </div>
+
+                      {/* Guests */}
+                      <div className="space-y-2">
+                        <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide flex items-center gap-2">
+                          <Users className="h-4 w-4 text-primary" />
+                          Select Guests, Rooms
+                        </label>
+                        <div className="relative">
+                          <input
+                            type="text"
+                            placeholder="2 Guests, 1 Room"
+                            className="w-full h-12 px-4 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-foreground focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer"
+                            data-testid="input-guests"
+                            readOnly
+                          />
+                        </div>
+                      </div>
+
+                      {/* Book Now Button */}
+                      <div>
+                        <Link href="/booking">
+                          <Button 
+                            className="w-full h-12 text-base font-bold bg-primary hover:bg-primary/90 text-white shadow-lg"
+                            data-testid="button-book-now-hero"
+                          >
+                            BOOK NOW
+                          </Button>
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </Tabs>
               </CardContent>
             </Card>
           </motion.div>
-
-          {/* Mobile Bottom CTA - Compact version for small screens */}
-          <div className="lg:hidden absolute bottom-8 left-1/2 -translate-x-1/2 z-20 w-full max-w-md px-6">
-            <Card className="bg-white/90 dark:bg-black/80 backdrop-blur-xl shadow-2xl border-2 border-white/50 dark:border-white/30">
-              <CardContent className="p-4">
-                <div className="grid grid-cols-2 gap-3">
-                  <Link href="/booking" className="w-full">
-                    <Button className="w-full h-11 font-semibold shadow-lg" data-testid="button-book-now-hero-mobile">
-                      <Search className="h-4 w-4 mr-2" />
-                      Book Now
-                    </Button>
-                  </Link>
-                  <Link href="/activities" className="w-full">
-                    <Button
-                      variant="outline"
-                      className="w-full h-11 font-semibold bg-white/70 dark:bg-black/50 border-2"
-                      data-testid="button-explore-activities-mobile"
-                    >
-                      <Compass className="h-4 w-4 mr-2" />
-                      Explore
-                    </Button>
-                  </Link>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Next Arrow - Rhodes minimalist style */}
-          <button
-            onClick={goToNext}
-            className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 w-12 h-12 md:w-14 md:h-14 rounded-full border border-white/30 backdrop-blur-md bg-white/5 flex items-center justify-center hover:bg-white/15 hover:border-white/50 transition-all group z-30 lg:hidden"
-            data-testid="button-next-destination"
-          >
-            <ChevronRight className="h-5 w-5 md:h-6 md:w-6 text-white transition-transform" />
-          </button>
         </div>
-        
-        {/* Campfire Effect at Hero Footer */}
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 hidden md:block">
-          <CampfireEffect />
+
+        {/* Stats Section */}
+        <div className="absolute bottom-0 left-0 right-0 z-10 bg-gradient-to-t from-black/80 to-transparent py-12">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                className="text-center"
+              >
+                <Waves className="h-10 w-10 text-white/80 mx-auto mb-3" />
+                <p className="text-white font-semibold text-sm md:text-base">Over 500 Adventures</p>
+                <p className="text-white/70 text-xs md:text-sm mt-1">Exciting Activities</p>
+              </motion.div>
+              
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                className="text-center"
+              >
+                <MapPin className="h-10 w-10 text-white/80 mx-auto mb-3" />
+                <p className="text-white font-semibold text-sm md:text-base">More than 76,561 Destinations</p>
+                <p className="text-white/70 text-xs md:text-sm mt-1">Scenic Spots</p>
+              </motion.div>
+              
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.5 }}
+                className="text-center"
+              >
+                <Mountain className="h-10 w-10 text-white/80 mx-auto mb-3" />
+                <p className="text-white font-semibold text-sm md:text-base">717,036 Packages</p>
+                <p className="text-white/70 text-xs md:text-sm mt-1">Curated Tours</p>
+              </motion.div>
+              
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.6 }}
+                className="text-center"
+              >
+                <Users className="h-10 w-10 text-white/80 mx-auto mb-3" />
+                <p className="text-white font-semibold text-sm md:text-base">Customer care in 40 Language</p>
+                <p className="text-white/70 text-xs md:text-sm mt-1">Multilingual Support</p>
+              </motion.div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -500,61 +442,64 @@ export default function Home() {
 
           {/* Horizontal Scrolling Cards */}
           <div className="overflow-x-auto pb-6 -mx-6 px-6 scrollbar-hide">
-            <div className="flex gap-6 w-max">
+            <div className="flex gap-6 min-w-max md:grid md:grid-cols-2 lg:grid-cols-4 md:min-w-0">
               {activities.map((activity, index) => {
                 const Icon = activity.icon;
                 return (
                   <motion.div
                     key={activity.id}
-                    initial={{ opacity: 0, x: 50 }}
-                    whileInView={{ opacity: 1, x: 0 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
+                    className="w-80 md:w-auto"
                   >
-                    <Link href={`/activities/${activity.id}`}>
-                      <Card
-                        className="w-[320px] sm:w-[380px] overflow-hidden hover-elevate active-elevate-2 transition-all duration-300 hover:shadow-2xl group cursor-pointer"
-                        data-testid={`card-activity-${activity.id}`}
-                      >
-                      <div className="relative aspect-video overflow-hidden">
-                        <ParallaxImage
-                          src={activity.image}
-                          alt={activity.title}
-                          speed={-30}
-                          containerClassName="absolute inset-0"
-                          className="transition-transform duration-500 group-hover:scale-110"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none z-10" />
-                        <div className="absolute bottom-4 left-4 right-4 z-20">
-                          <div className="flex items-center gap-2 mb-2">
-                            <div className="p-2 rounded-lg bg-primary/90 backdrop-blur-sm">
-                              <Icon className="h-5 w-5 text-primary-foreground" />
+                    <Link href={`/${activity.id}`}>
+                      <Card className="hover-elevate active-elevate-2 transition-all duration-300 cursor-pointer h-full overflow-hidden group" data-testid={`card-activity-${activity.id}`}>
+                        <div className="relative h-48 overflow-hidden">
+                          <motion.img
+                            src={activity.image}
+                            alt={activity.title}
+                            className="w-full h-full object-cover transition-transform duration-700"
+                            whileHover={{ scale: 1.1 }}
+                            data-testid={`img-activity-${activity.id}`}
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                          <div className="absolute bottom-4 left-4 right-4">
+                            <div className="flex items-center gap-2 mb-2">
+                              <div className="p-2 rounded-lg bg-white/20 backdrop-blur-sm">
+                                <Icon className="h-5 w-5 text-white" />
+                              </div>
+                              <h3 className="font-heading text-xl font-bold text-white" data-testid={`text-activity-title-${activity.id}`}>
+                                {activity.title}
+                              </h3>
                             </div>
                           </div>
-                          <h3 className="font-heading text-2xl font-bold text-white">
-                            {activity.title}
-                          </h3>
                         </div>
-                      </div>
-                      <CardContent className="p-6">
-                        <p className="text-muted-foreground mb-4">
-                          {activity.description}
-                        </p>
-                        <div className="flex items-center justify-between text-sm mb-3">
-                          <div className="flex items-center gap-2 text-muted-foreground">
-                            <Calendar className="h-4 w-4" />
-                            <span>{activity.duration}</span>
+                        <CardContent className="p-6">
+                          <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
+                            {activity.description}
+                          </p>
+                          <div className="space-y-2 mb-4">
+                            <div className="flex items-center justify-between text-sm">
+                              <span className="text-muted-foreground">Duration</span>
+                              <span className="font-semibold text-foreground">{activity.duration}</span>
+                            </div>
+                            <div className="flex items-center justify-between text-sm">
+                              <span className="text-muted-foreground">Difficulty</span>
+                              <span className="font-semibold text-foreground">{activity.difficulty}</span>
+                            </div>
+                            <div className="flex items-center justify-between text-sm">
+                              <span className="text-muted-foreground">Price</span>
+                              <span className="font-bold text-primary">{activity.price}</span>
+                            </div>
                           </div>
-                          <div className="flex items-center gap-2 text-muted-foreground">
-                            <Users className="h-4 w-4" />
-                            <span>{activity.difficulty}</span>
-                          </div>
-                        </div>
-                        <div className="text-sm font-semibold text-primary">
-                          {activity.price}
-                        </div>
-                      </CardContent>
-                    </Card>
+                          <Button className="w-full group-hover:bg-primary/90" data-testid={`button-explore-${activity.id}`}>
+                            Explore More
+                            <ChevronRight className="ml-2 h-4 w-4" />
+                          </Button>
+                        </CardContent>
+                      </Card>
                     </Link>
                   </motion.div>
                 );
@@ -562,16 +507,41 @@ export default function Home() {
             </div>
           </div>
 
-          {/* View All Adventures CTA */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
             className="mt-12 text-center"
           >
+            <Link href="/activities">
+              <Button size="lg" variant="outline" className="group" data-testid="button-view-all-activities">
+                View All Activities
+                <ChevronRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 px-6 bg-primary text-primary-foreground relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary to-accent opacity-90" />
+        <div className="max-w-4xl mx-auto text-center relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight">
+              Ready for Your Next Adventure?
+            </h2>
+            <p className="text-lg md:text-xl mb-8 text-primary-foreground/90">
+              Book your thrilling experience in Dandeli today and create memories that will last a lifetime
+            </p>
             <Link href="/booking">
-              <Button size="lg" data-testid="button-book-adventure">
+              <Button size="lg" variant="secondary" className="text-lg px-8 shadow-xl hover-elevate" data-testid="button-book-cta">
                 Book Your Adventure
                 <ChevronRight className="ml-2 h-5 w-5" />
               </Button>

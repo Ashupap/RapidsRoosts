@@ -1,10 +1,13 @@
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { motion, useScroll, useTransform, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Calendar, Users, ChevronRight, ChevronLeft, Waves, Mountain, Compass, Send, MapPin, Search, Mail, Phone, Hotel, Plane, Car } from "lucide-react";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar as CalendarComponent } from "@/components/ui/calendar";
+import { Calendar, Users, ChevronRight, ChevronLeft, Waves, Mountain, Compass, Send, MapPin, Search, Mail, Phone, Hotel, Plane, Car, CalendarIcon, Minus, Plus } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
+import { format, addDays } from "date-fns";
 import { useSEO, injectStructuredData } from "@/lib/seo";
 import Navigation from "@/components/Navigation";
 import { ParallaxImage, ParallaxText } from "@/components/ParallaxSection";
@@ -80,7 +83,15 @@ const activities = [
 
 export default function Home() {
   const prefersReducedMotion = useReducedMotion();
+  const [, setLocation] = useLocation();
   const [activeTab, setActiveTab] = useState("rafting");
+  const [checkInDate, setCheckInDate] = useState<Date>();
+  const [checkOutDate, setCheckOutDate] = useState<Date>();
+  const [adults, setAdults] = useState(2);
+  const [children, setChildren] = useState(0);
+  const [rooms, setRooms] = useState(1);
+  const [datePickerOpen, setDatePickerOpen] = useState(false);
+  const [guestPickerOpen, setGuestPickerOpen] = useState(false);
   
   useSEO({
     title: 'Home - Adventure Tourism in Dandeli',
@@ -100,9 +111,29 @@ export default function Home() {
 
   const heroY = useTransform(scrollYProgress, [0, 1], [prefersReducedMotion ? "0%" : "0%", prefersReducedMotion ? "0%" : "20%"]);
 
+  const handleBookNow = () => {
+    const bookingData = {
+      activityType: activeTab,
+      checkInDate: checkInDate ? format(checkInDate, "yyyy-MM-dd") : "",
+      checkOutDate: checkOutDate ? format(checkOutDate, "yyyy-MM-dd") : "",
+      numberOfGuests: adults + children,
+      adults,
+      children,
+      rooms,
+    };
+    sessionStorage.setItem("heroBookingData", JSON.stringify(bookingData));
+    setLocation("/booking");
+  };
+
+  const totalGuests = adults + children;
+  const guestsText = `${totalGuests} Guest${totalGuests !== 1 ? 's' : ''}, ${rooms} Room${rooms !== 1 ? 's' : ''}`;
+  const dateRangeText = checkInDate && checkOutDate 
+    ? `${format(checkInDate, "MMM dd")} - ${format(checkOutDate, "MMM dd, yyyy")}`
+    : "Select dates";
+
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero Section - New Design */}
+      {/* Hero Section - Redesigned */}
       <section ref={heroRef} className="relative min-h-[90vh] overflow-hidden">
         {/* Background Image with Parallax */}
         <motion.div
@@ -113,7 +144,7 @@ export default function Home() {
             className="absolute inset-0 bg-cover bg-center"
             style={{ backgroundImage: `url(${raftingHero1})` }}
           />
-          {/* Gradient Overlay - Similar to reference image */}
+          {/* Gradient Overlay */}
           <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/60" />
           <div className="absolute inset-0 bg-gradient-to-r from-emerald-900/30 to-teal-900/30" />
         </motion.div>
@@ -129,22 +160,22 @@ export default function Home() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center max-w-4xl mx-auto mb-12"
+            className="text-center max-w-5xl mx-auto mb-12"
           >
-            <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 leading-tight" data-testid="text-hero-title">
-              Welcome to Rapids & Roosts
+            <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-4 leading-tight tracking-tight" data-testid="text-hero-title">
+              Discover Your Next Adventure in Dandeli
             </h1>
-            <p className="text-white/90 text-lg md:text-xl lg:text-2xl font-light" data-testid="text-hero-subtitle">
-              You're one step closer to a great vacation!
+            <p className="text-white/90 text-lg md:text-xl lg:text-2xl font-medium" data-testid="text-hero-subtitle">
+              Unforgettable Experiences Await in Nature's Paradise
             </p>
           </motion.div>
 
-          {/* Booking Form Card */}
+          {/* Booking Form Card - Narrower Design */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="w-full max-w-5xl"
+            className="w-full max-w-3xl"
           >
             <Card className="bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg shadow-2xl overflow-hidden border-0">
               <CardContent className="p-0">
@@ -153,102 +184,214 @@ export default function Home() {
                   <TabsList className="w-full grid grid-cols-4 rounded-none h-14 bg-transparent border-b border-gray-200 dark:border-gray-700" data-testid="tabs-activity-selector">
                     <TabsTrigger 
                       value="rafting" 
-                      className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-none h-full text-sm md:text-base font-semibold"
+                      className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-none h-full text-xs md:text-sm font-bold uppercase"
                       data-testid="tab-rafting"
                     >
-                      <Waves className="h-4 w-4 md:h-5 md:w-5 mr-2" />
-                      RAFTING
+                      <Waves className="h-4 w-4 md:h-5 md:w-5 md:mr-2" />
+                      <span className="hidden md:inline">Rafting</span>
                     </TabsTrigger>
                     <TabsTrigger 
                       value="safari" 
-                      className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-none h-full text-sm md:text-base font-semibold"
+                      className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-none h-full text-xs md:text-sm font-bold uppercase"
                       data-testid="tab-safari"
                     >
-                      <Compass className="h-4 w-4 md:h-5 md:w-5 mr-2" />
-                      SAFARI
+                      <Compass className="h-4 w-4 md:h-5 md:w-5 md:mr-2" />
+                      <span className="hidden md:inline">Safari</span>
                     </TabsTrigger>
                     <TabsTrigger 
                       value="trekking" 
-                      className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-none h-full text-sm md:text-base font-semibold"
+                      className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-none h-full text-xs md:text-sm font-bold uppercase"
                       data-testid="tab-trekking"
                     >
-                      <Mountain className="h-4 w-4 md:h-5 md:w-5 mr-2" />
-                      TREKKING
+                      <Mountain className="h-4 w-4 md:h-5 md:w-5 md:mr-2" />
+                      <span className="hidden md:inline">Trekking</span>
                     </TabsTrigger>
                     <TabsTrigger 
                       value="kayaking" 
-                      className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-none h-full text-sm md:text-base font-semibold"
+                      className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-none h-full text-xs md:text-sm font-bold uppercase"
                       data-testid="tab-kayaking"
                     >
-                      <Send className="h-4 w-4 md:h-5 md:w-5 mr-2" />
-                      KAYAKING
+                      <Send className="h-4 w-4 md:h-5 md:w-5 md:mr-2" />
+                      <span className="hidden md:inline">Kayaking</span>
                     </TabsTrigger>
                   </TabsList>
 
                   {/* Booking Form */}
                   <div className="p-6">
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
-                      {/* Destination */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      {/* Date Picker */}
                       <div className="space-y-2">
-                        <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide flex items-center gap-2">
-                          <MapPin className="h-4 w-4 text-primary" />
-                          Destination
+                        <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                          Travel Dates
                         </label>
-                        <div className="relative">
-                          <input
-                            type="text"
-                            value="Dandeli, Karnataka"
-                            readOnly
-                            className="w-full h-12 px-4 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-foreground font-semibold focus:outline-none focus:ring-2 focus:ring-primary"
-                            data-testid="input-destination"
-                          />
-                        </div>
+                        <Popover open={datePickerOpen} onOpenChange={setDatePickerOpen}>
+                          <PopoverTrigger asChild>
+                            <button
+                              className="w-full h-12 px-4 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-foreground focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer text-left flex items-center gap-2 hover:border-primary transition-colors"
+                              data-testid="button-date-picker"
+                            >
+                              <CalendarIcon className="h-4 w-4 text-primary shrink-0" />
+                              <span className="text-sm truncate">{dateRangeText}</span>
+                            </button>
+                          </PopoverTrigger>
+                          <PopoverContent className="w-auto p-0" align="start">
+                            <div className="p-4 space-y-4">
+                              <div>
+                                <p className="text-sm font-semibold mb-2">Check-in Date</p>
+                                <CalendarComponent
+                                  mode="single"
+                                  selected={checkInDate}
+                                  onSelect={(date) => {
+                                    setCheckInDate(date);
+                                    if (date && !checkOutDate) {
+                                      setCheckOutDate(addDays(date, 1));
+                                    }
+                                  }}
+                                  disabled={(date) => date < new Date()}
+                                  initialFocus
+                                />
+                              </div>
+                              <div>
+                                <p className="text-sm font-semibold mb-2">Check-out Date</p>
+                                <CalendarComponent
+                                  mode="single"
+                                  selected={checkOutDate}
+                                  onSelect={setCheckOutDate}
+                                  disabled={(date) => !checkInDate || date <= checkInDate}
+                                />
+                              </div>
+                              <Button 
+                                onClick={() => setDatePickerOpen(false)} 
+                                className="w-full"
+                                data-testid="button-date-done"
+                              >
+                                Done
+                              </Button>
+                            </div>
+                          </PopoverContent>
+                        </Popover>
                       </div>
 
-                      {/* Check In/Out Date */}
+                      {/* Guests Picker */}
                       <div className="space-y-2">
-                        <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide flex items-center gap-2">
-                          <Calendar className="h-4 w-4 text-primary" />
-                          Check In/Check Out Date
+                        <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                          Guests & Rooms
                         </label>
-                        <div className="relative">
-                          <input
-                            type="text"
-                            placeholder="Select dates"
-                            className="w-full h-12 px-4 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-foreground focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer"
-                            data-testid="input-dates"
-                            readOnly
-                          />
-                        </div>
-                      </div>
-
-                      {/* Guests */}
-                      <div className="space-y-2">
-                        <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide flex items-center gap-2">
-                          <Users className="h-4 w-4 text-primary" />
-                          Select Guests, Rooms
-                        </label>
-                        <div className="relative">
-                          <input
-                            type="text"
-                            placeholder="2 Guests, 1 Room"
-                            className="w-full h-12 px-4 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-foreground focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer"
-                            data-testid="input-guests"
-                            readOnly
-                          />
-                        </div>
+                        <Popover open={guestPickerOpen} onOpenChange={setGuestPickerOpen}>
+                          <PopoverTrigger asChild>
+                            <button
+                              className="w-full h-12 px-4 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-foreground focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer text-left flex items-center gap-2 hover:border-primary transition-colors"
+                              data-testid="button-guest-picker"
+                            >
+                              <Users className="h-4 w-4 text-primary shrink-0" />
+                              <span className="text-sm truncate">{guestsText}</span>
+                            </button>
+                          </PopoverTrigger>
+                          <PopoverContent className="w-80" align="start">
+                            <div className="space-y-4">
+                              <div className="flex items-center justify-between">
+                                <div>
+                                  <p className="font-semibold">Adults</p>
+                                  <p className="text-xs text-muted-foreground">Age 13+</p>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                  <Button
+                                    variant="outline"
+                                    size="icon"
+                                    onClick={() => setAdults(Math.max(1, adults - 1))}
+                                    disabled={adults <= 1}
+                                    data-testid="button-adults-minus"
+                                  >
+                                    <Minus className="h-4 w-4" />
+                                  </Button>
+                                  <span className="w-8 text-center font-semibold" data-testid="text-adults-count">{adults}</span>
+                                  <Button
+                                    variant="outline"
+                                    size="icon"
+                                    onClick={() => setAdults(adults + 1)}
+                                    data-testid="button-adults-plus"
+                                  >
+                                    <Plus className="h-4 w-4" />
+                                  </Button>
+                                </div>
+                              </div>
+                              <div className="flex items-center justify-between">
+                                <div>
+                                  <p className="font-semibold">Children</p>
+                                  <p className="text-xs text-muted-foreground">Age 0-12</p>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                  <Button
+                                    variant="outline"
+                                    size="icon"
+                                    onClick={() => setChildren(Math.max(0, children - 1))}
+                                    disabled={children <= 0}
+                                    data-testid="button-children-minus"
+                                  >
+                                    <Minus className="h-4 w-4" />
+                                  </Button>
+                                  <span className="w-8 text-center font-semibold" data-testid="text-children-count">{children}</span>
+                                  <Button
+                                    variant="outline"
+                                    size="icon"
+                                    onClick={() => setChildren(children + 1)}
+                                    data-testid="button-children-plus"
+                                  >
+                                    <Plus className="h-4 w-4" />
+                                  </Button>
+                                </div>
+                              </div>
+                              <div className="flex items-center justify-between">
+                                <div>
+                                  <p className="font-semibold">Rooms</p>
+                                  <p className="text-xs text-muted-foreground">Max 4 per room</p>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                  <Button
+                                    variant="outline"
+                                    size="icon"
+                                    onClick={() => setRooms(Math.max(1, rooms - 1))}
+                                    disabled={rooms <= 1}
+                                    data-testid="button-rooms-minus"
+                                  >
+                                    <Minus className="h-4 w-4" />
+                                  </Button>
+                                  <span className="w-8 text-center font-semibold" data-testid="text-rooms-count">{rooms}</span>
+                                  <Button
+                                    variant="outline"
+                                    size="icon"
+                                    onClick={() => setRooms(rooms + 1)}
+                                    data-testid="button-rooms-plus"
+                                  >
+                                    <Plus className="h-4 w-4" />
+                                  </Button>
+                                </div>
+                              </div>
+                              <Button 
+                                onClick={() => setGuestPickerOpen(false)} 
+                                className="w-full"
+                                data-testid="button-guest-done"
+                              >
+                                Done
+                              </Button>
+                            </div>
+                          </PopoverContent>
+                        </Popover>
                       </div>
 
                       {/* Book Now Button */}
-                      <div>
-                        <Link href="/booking">
-                          <Button 
-                            className="w-full h-12 text-base font-bold bg-primary hover:bg-primary/90 text-white shadow-lg"
-                            data-testid="button-book-now-hero"
-                          >
-                            BOOK NOW
-                          </Button>
-                        </Link>
+                      <div className="space-y-2">
+                        <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide opacity-0 pointer-events-none">
+                          Action
+                        </label>
+                        <Button 
+                          onClick={handleBookNow}
+                          disabled={!checkInDate || !checkOutDate}
+                          className="w-full h-12 text-base font-bold bg-primary hover:bg-primary/90 text-white shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                          data-testid="button-book-now-hero"
+                        >
+                          BOOK NOW
+                        </Button>
                       </div>
                     </div>
                   </div>

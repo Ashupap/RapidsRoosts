@@ -43,9 +43,28 @@ export default function Booking() {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
 
-  const form = useForm<InsertBooking>({
-    resolver: zodResolver(insertBookingSchema),
-    defaultValues: {
+  // Get pre-filled data from sessionStorage (from hero form)
+  const getDefaultValues = () => {
+    const heroData = sessionStorage.getItem("heroBookingData");
+    if (heroData) {
+      try {
+        const parsed = JSON.parse(heroData);
+        sessionStorage.removeItem("heroBookingData"); // Clear after reading
+        return {
+          customerName: "",
+          customerEmail: "",
+          customerPhone: "",
+          activityType: parsed.activityType || "",
+          checkInDate: parsed.checkInDate || "",
+          checkOutDate: parsed.checkOutDate || "",
+          numberOfGuests: parsed.numberOfGuests || 1,
+          specialRequests: "",
+        };
+      } catch {
+        // If parsing fails, return default values
+      }
+    }
+    return {
       customerName: "",
       customerEmail: "",
       customerPhone: "",
@@ -54,7 +73,12 @@ export default function Booking() {
       checkOutDate: "",
       numberOfGuests: 1,
       specialRequests: "",
-    },
+    };
+  };
+
+  const form = useForm<InsertBooking>({
+    resolver: zodResolver(insertBookingSchema),
+    defaultValues: getDefaultValues(),
   });
 
   const createBookingMutation = useMutation({

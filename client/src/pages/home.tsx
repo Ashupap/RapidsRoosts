@@ -155,12 +155,12 @@ export default function Home() {
         </div>
 
         {/* Hero Content */}
-        <div className="relative z-10 flex flex-col items-center justify-center px-6 pt-20 pb-32">
+        <div className="relative z-10 flex flex-col items-center justify-center px-6 pt-20 pb-28">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center max-w-5xl mx-auto mb-12"
+            className="text-center max-w-5xl mx-auto mb-8"
           >
             <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-4 leading-tight tracking-tight" data-testid="text-hero-title">
               Discover Your Next Adventure in Dandeli
@@ -181,7 +181,7 @@ export default function Home() {
               <CardContent className="p-0">
                 {/* Tabs for Activity Types */}
                 <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-                  <TabsList className="w-full grid grid-cols-4 rounded-none h-14 bg-transparent border-b border-gray-200 dark:border-gray-700" data-testid="tabs-activity-selector">
+                  <TabsList className="w-full grid grid-cols-4 rounded-none h-12 bg-transparent border-b border-gray-200 dark:border-gray-700" data-testid="tabs-activity-selector">
                     <TabsTrigger 
                       value="rafting" 
                       className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-none h-full text-xs md:text-sm font-bold uppercase"
@@ -217,14 +217,14 @@ export default function Home() {
                   </TabsList>
 
                   {/* Booking Form */}
-                  <div className="p-6">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="p-4">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                       {/* Date Picker */}
                       <div>
                         <Popover open={datePickerOpen} onOpenChange={setDatePickerOpen}>
                           <PopoverTrigger asChild>
                             <button
-                              className="w-full h-12 px-4 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-foreground focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer text-left flex items-center gap-2 hover:border-primary transition-colors"
+                              className="w-full h-11 px-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-foreground focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer text-left flex items-center gap-2 hover:border-primary transition-colors"
                               data-testid="button-date-picker"
                             >
                               <CalendarIcon className="h-4 w-4 text-primary shrink-0" />
@@ -274,7 +274,7 @@ export default function Home() {
                         <Popover open={guestPickerOpen} onOpenChange={setGuestPickerOpen}>
                           <PopoverTrigger asChild>
                             <button
-                              className="w-full h-12 px-4 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-foreground focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer text-left flex items-center gap-2 hover:border-primary transition-colors"
+                              className="w-full h-11 px-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-foreground focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer text-left flex items-center gap-2 hover:border-primary transition-colors"
                               data-testid="button-guest-picker"
                             >
                               <Users className="h-4 w-4 text-primary shrink-0" />
@@ -378,7 +378,7 @@ export default function Home() {
                         <Button 
                           onClick={handleBookNow}
                           disabled={!checkInDate || !checkOutDate}
-                          className="w-full h-12 text-base font-bold bg-primary hover:bg-primary/90 text-white shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                          className="w-full h-11 text-base font-bold bg-primary hover:bg-primary/90 text-white shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                           data-testid="button-book-now-hero"
                         >
                           BOOK NOW

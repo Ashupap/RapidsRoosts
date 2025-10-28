@@ -16,7 +16,7 @@ import { CampfireEffect, WaterDroplets, WildlifeSilhouette, FloatingLeaves } fro
 import raftingHero1 from "@assets/stock_images/vibrant_water_raftin_9419a08c.jpg";
 import raftingHero2 from "@assets/stock_images/vibrant_water_raftin_5f8fedad.jpg";
 import raftingHero3 from "@assets/stock_images/vibrant_water_raftin_24bbd1b7.jpg";
-import heroVideo from "@assets/My Video-1-highlight_1761648845088.mp4";
+import heroVideo from "@assets/hero-video-compressed.mp4";
 import safariImage1 from "@assets/stock_images/jungle_safari_wildli_f86a9bfa.jpg";
 import safariImage2 from "@assets/stock_images/jungle_safari_wildli_5c354858.jpg";
 import campImage1 from "@assets/stock_images/forest_camping_tents_2caeb335.jpg";

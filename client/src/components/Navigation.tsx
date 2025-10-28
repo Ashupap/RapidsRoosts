@@ -38,10 +38,7 @@ export default function Navigation() {
   };
 
   return (
-    <motion.header
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5, type: "spring", stiffness: 100 }}
+    <header
       className={`sticky top-0 z-50 w-full transition-all duration-300 ${
         scrolled
           ? "bg-white/95 backdrop-blur-lg shadow-lg border-b border-border/40"
@@ -212,6 +209,6 @@ export default function Navigation() {
           </div>
         </div>
       </nav>
-    </motion.header>
+    </header>
   );
 }

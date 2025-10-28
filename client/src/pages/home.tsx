@@ -220,10 +220,7 @@ export default function Home() {
                   <div className="p-6">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       {/* Date Picker */}
-                      <div className="space-y-2">
-                        <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
-                          Travel Dates
-                        </label>
+                      <div>
                         <Popover open={datePickerOpen} onOpenChange={setDatePickerOpen}>
                           <PopoverTrigger asChild>
                             <button
@@ -231,7 +228,7 @@ export default function Home() {
                               data-testid="button-date-picker"
                             >
                               <CalendarIcon className="h-4 w-4 text-primary shrink-0" />
-                              <span className="text-sm truncate">{dateRangeText}</span>
+                              <span className="text-sm truncate">{dateRangeText === "Select dates" ? "Check In/Check out Date" : dateRangeText}</span>
                             </button>
                           </PopoverTrigger>
                           <PopoverContent className="w-auto p-0" align="start">
@@ -273,10 +270,7 @@ export default function Home() {
                       </div>
 
                       {/* Guests Picker */}
-                      <div className="space-y-2">
-                        <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
-                          Guests & Rooms
-                        </label>
+                      <div>
                         <Popover open={guestPickerOpen} onOpenChange={setGuestPickerOpen}>
                           <PopoverTrigger asChild>
                             <button
@@ -284,7 +278,7 @@ export default function Home() {
                               data-testid="button-guest-picker"
                             >
                               <Users className="h-4 w-4 text-primary shrink-0" />
-                              <span className="text-sm truncate">{guestsText}</span>
+                              <span className="text-sm truncate">{guestsText === "2 Guests, 1 Room" && !checkInDate ? "Select Guest and Room" : guestsText}</span>
                             </button>
                           </PopoverTrigger>
                           <PopoverContent className="w-80" align="start">
@@ -380,10 +374,7 @@ export default function Home() {
                       </div>
 
                       {/* Book Now Button */}
-                      <div className="space-y-2">
-                        <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide opacity-0 pointer-events-none">
-                          Action
-                        </label>
+                      <div>
                         <Button 
                           onClick={handleBookNow}
                           disabled={!checkInDate || !checkOutDate}

@@ -10,6 +10,7 @@ import { useRef, useState, useEffect } from "react";
 import { format, addDays } from "date-fns";
 import { useSEO, injectStructuredData } from "@/lib/seo";
 import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
 import { ParallaxImage, ParallaxText } from "@/components/ParallaxSection";
 import { CampfireEffect, WaterDroplets, WildlifeSilhouette, FloatingLeaves } from "@/components/AdventureEffects";
 import raftingHero1 from "@assets/stock_images/vibrant_water_raftin_9419a08c.jpg";
@@ -1057,82 +1058,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer - Rhodes Minimalist Design */}
-      <footer className="bg-card border-t border-border py-16 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
-            <div>
-              <div className="flex items-center gap-3 mb-6">
-                <img src={logo} alt="Rapids Roosts" className="h-12 w-12 rounded-full object-cover shadow-md" />
-                <h3 className="font-heading text-lg md:text-xl font-medium tracking-wide">Rapids & Roosts</h3>
-              </div>
-              <p className="text-muted-foreground text-sm leading-relaxed">
-                Your gateway to unforgettable adventures in Karnataka's wilderness. Experience the thrill of Dandeli!
-              </p>
-            </div>
-            <div>
-              <h4 className="font-heading font-medium mb-5 tracking-wide">Quick Links</h4>
-              <ul className="space-y-3 text-sm text-muted-foreground">
-                <li>
-                  <Link href="/" className="hover:text-primary transition-colors">
-                    Home
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/activities" className="hover:text-primary transition-colors">
-                    Our Activities
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/booking" className="hover:text-primary transition-colors">
-                    Book Adventure
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/status" className="hover:text-primary transition-colors">
-                    Track Booking
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-heading font-medium mb-5 tracking-wide">Contact Us</h4>
-              <ul className="space-y-3 text-sm text-muted-foreground">
-                <li className="flex items-start gap-3">
-                  <MapPin className="h-4 w-4 mt-0.5 shrink-0 text-primary" />
-                  <span>Dandeli, Karnataka<br/>India - 581325</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <Mail className="h-4 w-4 shrink-0 text-primary" />
-                  <a href="mailto:info@rapidsroosts.com" className="hover:text-primary transition-colors">info@rapidsroosts.com</a>
-                </li>
-                <li className="flex items-center gap-3">
-                  <Phone className="h-4 w-4 shrink-0 text-primary" />
-                  <a href="tel:+919483940400" className="hover:text-primary transition-colors">+91 94839 40400</a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-heading font-medium mb-5 tracking-wide">Adventures</h4>
-              <ul className="space-y-3 text-sm text-muted-foreground">
-                <li><Link href="/rafting" className="hover:text-primary transition-colors">White Water Rafting</Link></li>
-                <li><Link href="/safari" className="hover:text-primary transition-colors">Jungle Safari</Link></li>
-                <li><Link href="/kayaking" className="hover:text-primary transition-colors">Kayaking</Link></li>
-                <li><Link href="/trekking" className="hover:text-primary transition-colors">Forest Trekking</Link></li>
-              </ul>
-            </div>
-          </div>
-          <div className="pt-8 border-t border-border">
-            <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
-              <p>&copy; {new Date().getFullYear()} Rapids & Roosts Dandeli. All rights reserved.</p>
-              <div className="flex gap-6">
-                <a href="#" className="hover:text-primary transition-colors">Privacy Policy</a>
-                <a href="#" className="hover:text-primary transition-colors">Terms & Conditions</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
 
       <style>{`
         .scrollbar-hide::-webkit-scrollbar {

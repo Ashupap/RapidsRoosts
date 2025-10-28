@@ -8,6 +8,7 @@ import { Search, CheckCircle2, Clock, XCircle, Calendar, Users, Activity, Mail, 
 import { useQuery } from "@tanstack/react-query";
 import type { Booking } from "@shared/schema";
 import { useSEO } from "@/lib/seo";
+import Footer from "@/components/Footer";
 
 const STATUS_CONFIG = {
   pending: {
@@ -307,6 +308,7 @@ export default function Status() {
           </AnimatePresence>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

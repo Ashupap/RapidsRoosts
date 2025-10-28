@@ -6,6 +6,7 @@ import { Calendar, Clock, Users, Shield, MapPin, ChevronRight, Mountain, IndianR
 import { useState } from "react";
 import trekkingImage from "@assets/generated_images/Forest_trekking_adventure_trail_14dd1cd1.png";
 import { useSEO, injectStructuredData } from "@/lib/seo";
+import Footer from "@/components/Footer";
 
 export default function TrekkingDetail() {
   useSEO({
@@ -409,6 +410,7 @@ export default function TrekkingDetail() {
           </motion.div>
         </div>
       </section>
+      <Footer />
     </div>
   );
 }

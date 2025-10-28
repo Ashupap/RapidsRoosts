@@ -7,6 +7,7 @@ import { useState } from "react";
 import safariImage from "@assets/generated_images/Jungle_safari_wildlife_adventure_3300876a.png";
 import safariImage2 from "@assets/stock_images/jungle_safari_wildli_5c354858.jpg";
 import { useSEO, injectStructuredData } from "@/lib/seo";
+import Footer from "@/components/Footer";
 
 export default function SafariDetail() {
   useSEO({
@@ -371,6 +372,7 @@ export default function SafariDetail() {
           </motion.div>
         </div>
       </section>
+      <Footer />
     </div>
   );
 }

@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { getAllActivities } from "@/data/activities";
 import { useSEO, injectStructuredData } from "@/lib/seo";
+import Footer from "@/components/Footer";
 import logo from "@assets/logo_1761304770834.jpg";
 
 export default function Activities() {
@@ -357,17 +358,7 @@ export default function Activities() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-8 px-6 border-t border-border">
-        <div className="max-w-7xl mx-auto text-center">
-          <p className="text-sm text-muted-foreground">
-            © 2024 Rapids & Roosts Dandeli. All rights reserved.
-          </p>
-          <p className="text-xs text-muted-foreground mt-2">
-            Experience the best adventure tourism in Karnataka's Western Ghats
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

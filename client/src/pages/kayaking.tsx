@@ -6,6 +6,7 @@ import { Calendar, Clock, Users, Shield, MapPin, ChevronRight, Send, IndianRupee
 import { useState } from "react";
 import kayakingImage from "@assets/generated_images/Peaceful_kayaking_river_adventure_e3974c90.png";
 import { useSEO, injectStructuredData } from "@/lib/seo";
+import Footer from "@/components/Footer";
 
 export default function KayakingDetail() {
   useSEO({
@@ -418,6 +419,7 @@ export default function KayakingDetail() {
           </motion.div>
         </div>
       </section>
+      <Footer />
     </div>
   );
 }

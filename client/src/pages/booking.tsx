@@ -16,6 +16,7 @@ import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { useSEO } from "@/lib/seo";
+import Footer from "@/components/Footer";
 
 const STEPS = [
   { id: 1, title: "Personal Details", icon: User },
@@ -553,6 +554,7 @@ export default function Booking() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

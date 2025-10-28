@@ -8,6 +8,7 @@ import raftingImage from "@assets/stock_images/vibrant_water_raftin_9419a08c.jpg
 import raftingHero2 from "@assets/stock_images/adventure_sports_gal_5c0d834f.jpg";
 import raftingHero3 from "@assets/stock_images/adventure_sports_gal_5bf20dc4.jpg";
 import { useSEO, injectStructuredData } from "@/lib/seo";
+import Footer from "@/components/Footer";
 
 export default function RaftingDetail() {
   useSEO({
@@ -404,6 +405,7 @@ export default function RaftingDetail() {
           </motion.div>
         </div>
       </section>
+      <Footer />
     </div>
   );
 }

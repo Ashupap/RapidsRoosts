@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
-import { Calendar, Users, ChevronRight, ChevronLeft, Waves, Mountain, Compass, Send, MapPin, Search, Mail, Phone, Hotel, Plane, Car, CalendarIcon, Minus, Plus } from "lucide-react";
+import { Calendar, Users, ChevronRight, ChevronLeft, Waves, Mountain, Compass, Send, MapPin, Search, Mail, Phone, Hotel, Plane, Car, CalendarIcon, Minus, Plus, Home as HomeIcon, Building2, Bed } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
 import { format, addDays } from "date-fns";
 import { useSEO, injectStructuredData } from "@/lib/seo";
@@ -39,6 +39,8 @@ import gallery5 from "@assets/stock_images/adventure_sports_gal_18a21954.jpg";
 import gallery6 from "@assets/stock_images/adventure_sports_gal_925d082f.jpg";
 import gallery7 from "@assets/stock_images/adventure_sports_gal_01231397.jpg";
 import gallery8 from "@assets/stock_images/adventure_sports_gal_57d199b3.jpg";
+import resort1 from "@assets/stock_images/luxury_resort_accomm_d96d2ca3.jpg";
+import homestay1 from "@assets/stock_images/cozy_homestay_cottag_37c83eba.jpg";
 
 const activities = [
   {
@@ -644,6 +646,139 @@ export default function Home() {
               <Button size="lg" variant="secondary" className="text-lg px-8 shadow-xl hover-elevate" data-testid="button-book-cta">
                 Book Your Adventure
                 <ChevronRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Accommodations Section */}
+      <section className="py-20 px-6 bg-section-light">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <p className="text-sm uppercase tracking-[0.2em] text-primary font-medium mb-4">
+              <Bed className="inline h-3 w-3 mr-2" />
+              Where You'll Stay
+            </p>
+            <h2 className="font-heading text-4xl md:text-5xl font-medium text-foreground mb-6">
+              Resorts & Homestays
+            </h2>
+            <p className="mt-4 text-base md:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+              Choose from luxury riverside resorts to cozy traditional homestays, all designed to complement your adventure experience
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Resort Card */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <Link href="/accommodations">
+                <Card className="group overflow-hidden hover:shadow-2xl transition-all duration-300 hover:border-primary/50 cursor-pointer h-full">
+                  <div className="relative h-64 overflow-hidden">
+                    <img
+                      src={resort1}
+                      alt="Rapids Resort"
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                    <div className="absolute top-4 left-4">
+                      <div className="flex items-center gap-2 bg-primary text-white px-3 py-1 rounded-full text-sm font-medium">
+                        <Building2 className="h-3 w-3" />
+                        Resort
+                      </div>
+                    </div>
+                    <div className="absolute bottom-4 left-4 right-4">
+                      <h3 className="font-heading text-2xl font-bold text-white mb-1">Rapids Resort</h3>
+                      <p className="text-white/90 text-sm">Luxury Meets Adventure</p>
+                    </div>
+                  </div>
+                  <CardContent className="p-6">
+                    <p className="text-muted-foreground mb-4">
+                      Premium rooms with modern amenities, swimming pool, multi-cuisine restaurant, and direct access to all adventure activities
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm text-muted-foreground">Starting from</p>
+                        <p className="text-2xl font-bold text-primary">₹2,200<span className="text-sm font-normal text-muted-foreground">/night</span></p>
+                      </div>
+                      <Button variant="outline" className="group-hover:bg-primary group-hover:text-white transition-colors">
+                        Explore
+                        <ChevronRight className="ml-2 h-4 w-4" />
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </Link>
+            </motion.div>
+
+            {/* Homestay Card */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <Link href="/accommodations">
+                <Card className="group overflow-hidden hover:shadow-2xl transition-all duration-300 hover:border-primary/50 cursor-pointer h-full">
+                  <div className="relative h-64 overflow-hidden">
+                    <img
+                      src={homestay1}
+                      alt="Traditional Homestay"
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                    <div className="absolute top-4 left-4">
+                      <div className="flex items-center gap-2 bg-primary text-white px-3 py-1 rounded-full text-sm font-medium">
+                        <HomeIcon className="h-3 w-3" />
+                        Homestay
+                      </div>
+                    </div>
+                    <div className="absolute bottom-4 left-4 right-4">
+                      <h3 className="font-heading text-2xl font-bold text-white mb-1">Traditional Homestay</h3>
+                      <p className="text-white/90 text-sm">Local Culture & Hospitality</p>
+                    </div>
+                  </div>
+                  <CardContent className="p-6">
+                    <p className="text-muted-foreground mb-4">
+                      Authentic Dandeli experience with home-cooked meals, personalized attention, and warm family environment
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm text-muted-foreground">Starting from</p>
+                        <p className="text-2xl font-bold text-primary">₹1,500<span className="text-sm font-normal text-muted-foreground">/night</span></p>
+                      </div>
+                      <Button variant="outline" className="group-hover:bg-primary group-hover:text-white transition-colors">
+                        Explore
+                        <ChevronRight className="ml-2 h-4 w-4" />
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </Link>
+            </motion.div>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="mt-12 text-center"
+          >
+            <Link href="/accommodations">
+              <Button size="lg" variant="outline" className="group" data-testid="button-view-all-accommodations">
+                View All Accommodations
+                <ChevronRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
           </motion.div>

@@ -9,6 +9,7 @@ import logo from "@assets/logo_1761304770834.jpg";
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/activities", label: "Our Activities" },
+  { href: "/accommodations", label: "Accommodations" },
   { href: "/booking", label: "Book Now" },
   { href: "/status", label: "Check Status" },
 ];

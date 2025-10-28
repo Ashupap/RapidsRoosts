@@ -906,8 +906,12 @@ export default function Home() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-20 px-6 bg-section-light">
-        <div className="max-w-7xl mx-auto">
+      <section className="py-20 px-6 bg-gradient-to-br from-section-light via-white to-section-light relative overflow-hidden">
+        {/* Decorative Elements */}
+        <div className="absolute top-0 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
+        
+        <div className="max-w-7xl mx-auto relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -915,46 +919,136 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <h2 className="font-heading text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+            <p className="text-sm uppercase tracking-[0.2em] text-primary font-medium mb-4">Testimonials</p>
+            <h2 className="font-heading text-4xl md:text-5xl font-medium text-foreground mb-6">
               What Our Guests Say
             </h2>
-            <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-              Real experiences from adventure seekers who visited Dandeli
+            <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+              Real experiences from adventure seekers who discovered the magic of Dandeli
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
             {[
               {
                 name: "Sayba Qureshi",
                 review: "The adventurous activities in the Dandeli Forest were fantastic! We really enjoyed Dandeli's natural beauty and wildlife. Must visit place for nature lovers.",
+                rating: 5,
+                initials: "SQ",
               },
               {
                 name: "Melvin Costa",
                 review: "Wonderful time spent at the stunning jungle resorts. The personnel really made us feel at home, and the views were breathtaking. Ideal location for unwinding.",
+                rating: 5,
+                initials: "MC",
               },
               {
                 name: "Deeksha Thorwat",
                 review: "Loved our time at one of the resorts with swimming pool. After a day of rafting, relaxing by the pool was exactly what we needed. Highly recommend.",
+                rating: 5,
+                initials: "DT",
               },
               {
                 name: "Ali Ansari",
                 review: "We had exactly what we needed throughout our stay. Great amenities, serene surroundings, and the ideal balance of luxury and nature.",
+                rating: 5,
+                initials: "AA",
               },
             ].map((testimonial, index) => (
               <motion.div
                 key={testimonial.name}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                transition={{ 
+                  duration: 0.5, 
+                  delay: index * 0.15,
+                  type: "spring",
+                  stiffness: 100
+                }}
+                whileHover={{ y: -8, transition: { duration: 0.3 } }}
+                data-testid={`card-testimonial-${index}`}
               >
-                <Card className="h-full">
-                  <CardContent className="p-6">
-                    <p className="text-muted-foreground mb-4 italic">
+                <Card className="h-full bg-card/50 backdrop-blur-sm border-2 hover:border-primary/30 transition-all duration-300 hover:shadow-xl overflow-hidden group">
+                  <CardContent className="p-8 relative">
+                    {/* Large Quote Icon */}
+                    <motion.div
+                      initial={{ scale: 0, rotate: -180 }}
+                      whileInView={{ scale: 1, rotate: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.6, delay: index * 0.15 + 0.2 }}
+                      className="absolute top-6 right-6 text-primary/10 group-hover:text-primary/20 transition-colors duration-300"
+                    >
+                      <svg className="w-16 h-16" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                      </svg>
+                    </motion.div>
+
+                    {/* Star Rating */}
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      whileInView={{ opacity: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4, delay: index * 0.15 + 0.3 }}
+                      className="flex gap-1 mb-4"
+                    >
+                      {[...Array(testimonial.rating)].map((_, i) => (
+                        <motion.svg
+                          key={i}
+                          initial={{ scale: 0, rotate: -180 }}
+                          whileInView={{ scale: 1, rotate: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ 
+                            duration: 0.4, 
+                            delay: index * 0.15 + 0.4 + (i * 0.05),
+                            type: "spring",
+                            stiffness: 200
+                          }}
+                          className="w-5 h-5 text-yellow-400 fill-current"
+                          viewBox="0 0 20 20"
+                          data-testid={`star-${index}-${i}`}
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </motion.svg>
+                      ))}
+                    </motion.div>
+
+                    {/* Review Text */}
+                    <motion.p
+                      initial={{ opacity: 0 }}
+                      whileInView={{ opacity: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: index * 0.15 + 0.5 }}
+                      className="text-muted-foreground text-base leading-relaxed mb-6 relative z-10"
+                      data-testid={`text-review-${index}`}
+                    >
                       "{testimonial.review}"
-                    </p>
-                    <p className="font-semibold text-foreground">— {testimonial.name}</p>
+                    </motion.p>
+
+                    {/* Author Section */}
+                    <motion.div
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: index * 0.15 + 0.6 }}
+                      className="flex items-center gap-4"
+                    >
+                      {/* Avatar with Initials */}
+                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center text-white font-semibold text-sm shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        {testimonial.initials}
+                      </div>
+                      <div>
+                        <p className="font-semibold text-foreground" data-testid={`text-name-${index}`}>
+                          {testimonial.name}
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          Verified Guest
+                        </p>
+                      </div>
+                    </motion.div>
+
+                    {/* Decorative gradient on hover */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/0 via-primary/0 to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                   </CardContent>
                 </Card>
               </motion.div>

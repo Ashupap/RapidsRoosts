@@ -175,7 +175,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="w-full max-w-3xl"
+            className="w-full max-w-2xl"
           >
             <Card className="bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg shadow-2xl overflow-hidden border-0">
               <CardContent className="p-0">

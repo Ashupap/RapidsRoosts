@@ -134,6 +134,8 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background">
+      <Navigation />
+      
       {/* Hero Section - Redesigned */}
       <section ref={heroRef} className="relative min-h-[90vh] overflow-hidden">
         {/* Background Image with Parallax */}
@@ -149,11 +151,6 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/60" />
           <div className="absolute inset-0 bg-gradient-to-r from-emerald-900/30 to-teal-900/30" />
         </motion.div>
-
-        {/* Top Navigation Header */}
-        <div className="relative z-20 px-4 md:px-8 py-6">
-          <Navigation />
-        </div>
 
         {/* Hero Content */}
         <div className="relative z-10 flex flex-col items-center justify-center px-6 pt-20 pb-28">

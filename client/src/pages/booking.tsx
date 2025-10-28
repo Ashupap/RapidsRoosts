@@ -138,7 +138,7 @@ export default function Booking() {
       <Navigation />
       
       {/* Header with Progress */}
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border shadow-sm">
+      <div className="sticky top-16 z-40 bg-background/95 backdrop-blur-sm border-b border-border shadow-sm">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="mb-4">
             <Progress value={progress} className="h-2" data-testid="progress-booking" />

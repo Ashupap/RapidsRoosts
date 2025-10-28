@@ -257,57 +257,6 @@ export default function Home() {
             </Card>
           </motion.div>
         </div>
-
-        {/* Stats Section */}
-        <div className="absolute bottom-0 left-0 right-0 z-10 bg-gradient-to-t from-black/80 to-transparent py-12">
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                className="text-center"
-              >
-                <Waves className="h-10 w-10 text-white/80 mx-auto mb-3" />
-                <p className="text-white font-semibold text-sm md:text-base">Over 500 Adventures</p>
-                <p className="text-white/70 text-xs md:text-sm mt-1">Exciting Activities</p>
-              </motion.div>
-              
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                className="text-center"
-              >
-                <MapPin className="h-10 w-10 text-white/80 mx-auto mb-3" />
-                <p className="text-white font-semibold text-sm md:text-base">More than 76,561 Destinations</p>
-                <p className="text-white/70 text-xs md:text-sm mt-1">Scenic Spots</p>
-              </motion.div>
-              
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.5 }}
-                className="text-center"
-              >
-                <Mountain className="h-10 w-10 text-white/80 mx-auto mb-3" />
-                <p className="text-white font-semibold text-sm md:text-base">717,036 Packages</p>
-                <p className="text-white/70 text-xs md:text-sm mt-1">Curated Tours</p>
-              </motion.div>
-              
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.6 }}
-                className="text-center"
-              >
-                <Users className="h-10 w-10 text-white/80 mx-auto mb-3" />
-                <p className="text-white font-semibold text-sm md:text-base">Customer care in 40 Language</p>
-                <p className="text-white/70 text-xs md:text-sm mt-1">Multilingual Support</p>
-              </motion.div>
-            </div>
-          </div>
-        </div>
       </section>
 
       {/* About Dandeli Section */}

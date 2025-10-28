@@ -30,12 +30,15 @@ export default function Navigation() {
 
   const linkClasses = (href: string) => {
     const isActive = location === href;
-    return `text-sm font-medium transition-all duration-300 relative ${
+    const baseClasses = "text-sm font-medium transition-all duration-300 relative";
+    const textShadow = !scrolled ? "drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]" : "";
+    
+    return `${baseClasses} ${textShadow} ${
       isActive
-        ? "text-primary"
+        ? scrolled ? "text-primary" : "text-white font-bold"
         : scrolled 
           ? "text-foreground/70 hover:text-primary"
-          : "text-white/90 hover:text-white"
+          : "text-white hover:text-white"
     }`;
   };
 
@@ -67,12 +70,16 @@ export default function Navigation() {
               </div>
               <div>
                 <h1 className={`font-heading text-lg md:text-xl font-bold tracking-wide transition-colors duration-300 ${
-                  scrolled ? "text-foreground group-hover:text-primary" : "text-white group-hover:text-primary"
+                  scrolled 
+                    ? "text-foreground group-hover:text-primary" 
+                    : "text-white group-hover:text-primary drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
                 }`}>
                   Rapids & Roosts
                 </h1>
                 <p className={`text-[10px] md:text-xs uppercase tracking-wider transition-colors duration-300 ${
-                  scrolled ? "text-muted-foreground" : "text-white/70"
+                  scrolled 
+                    ? "text-muted-foreground" 
+                    : "text-white/90 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
                 }`}>
                   Adventure Tourism
                 </p>
@@ -113,7 +120,9 @@ export default function Navigation() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
               className={`hidden xl:flex items-center gap-6 text-sm transition-colors duration-300 ${
-                scrolled ? "text-foreground" : "text-white/90"
+                scrolled 
+                  ? "text-foreground" 
+                  : "text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
               }`}
             >
               <a

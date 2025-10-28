@@ -34,8 +34,8 @@
   --sidebar-border: 0 0% 92%;
 
   /* ADVENTURE PULSE PALETTE - Main Theme Colors (VIBRANT) */
-  /* Primary - Vibrant Turquoise */
-  --sidebar-primary: 174 72% 42%;
+  /* Primary - Vibrant Orange */
+  --sidebar-primary: 16 92% 60%;
 
   --sidebar-primary-foreground: 0 0% 100%;
 
@@ -43,7 +43,7 @@
 
   --sidebar-accent-foreground: 0 0% 10%;
 
-  --sidebar-ring: 174 72% 42%;
+  --sidebar-ring: 16 92% 60%;
 
   --popover: 0 0% 100%;
 
@@ -51,8 +51,8 @@
 
   --popover-border: 0 0% 92%;
 
-  /* Primary - Vibrant Turquoise (Bright and energetic) */
-  --primary: 174 72% 42%;
+  /* Primary - Vibrant Orange (Bright and energetic) */
+  --primary: 16 92% 60%;
 
   --primary-foreground: 0 0% 100%;
 
@@ -91,8 +91,8 @@
   --destructive-foreground: 0 0% 100%;
 
   --input: 0 0% 90%;
-  --ring: 182 50% 48%;
-  --chart-1: 182 50% 48%;
+  --ring: 16 92% 60%;
+  --chart-1: 16 92% 60%;
   --chart-2: 14 85% 65%;
   --chart-3: 45 93% 47%;
   --chart-4: 220 70% 50%;
@@ -184,8 +184,8 @@
   --sidebar-border: 220 15% 20%;
 
   /* ADVENTURE PULSE PALETTE - Dark Mode */
-  /* Primary - Lighter Teal Rapids for dark mode */
-  --sidebar-primary: 182 68% 58%;
+  /* Primary - Lighter Orange for dark mode */
+  --sidebar-primary: 16 88% 65%;
 
   --sidebar-primary-foreground: 220 20% 8%;
 
@@ -193,7 +193,7 @@
 
   --sidebar-accent-foreground: 0 0% 90%;
 
-  --sidebar-ring: 182 68% 58%;
+  --sidebar-ring: 16 88% 65%;
 
   --popover: 220 18% 12%;
 
@@ -201,8 +201,8 @@
 
   --popover-border: 220 15% 20%;
 
-  /* Primary - Lighter Teal Rapids */
-  --primary: 182 68% 58%;
+  /* Primary - Lighter Orange */
+  --primary: 16 88% 65%;
 
   --primary-foreground: 220 20% 8%;
 
@@ -234,8 +234,8 @@
   --destructive-foreground: 0 0% 100%;
 
   --input: 220 15% 22%;
-  --ring: 182 55% 55%;
-  --chart-1: 182 55% 55%;
+  --ring: 16 88% 65%;
+  --chart-1: 16 88% 65%;
   --chart-2: 14 80% 60%;
   --chart-3: 45 90% 55%;
   --chart-4: 220 70% 60%;

@@ -177,14 +177,14 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="w-full max-w-2xl"
           >
-            <Card className="bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg shadow-2xl overflow-hidden border-0">
+            <Card className="bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg shadow-2xl overflow-hidden border-0 rounded-none">
               <CardContent className="p-0">
                 {/* Tabs for Activity Types */}
                 <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-                  <TabsList className="w-full grid grid-cols-4 rounded-none h-12 bg-transparent border-b border-gray-200 dark:border-gray-700" data-testid="tabs-activity-selector">
+                  <TabsList className="w-full grid grid-cols-4 rounded-none h-12 bg-gray-800 dark:bg-gray-900 border-0" data-testid="tabs-activity-selector">
                     <TabsTrigger 
                       value="rafting" 
-                      className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-none h-full text-xs md:text-sm font-bold uppercase"
+                      className="data-[state=active]:bg-primary data-[state=active]:text-white text-white rounded-none h-full text-xs md:text-sm font-bold uppercase"
                       data-testid="tab-rafting"
                     >
                       <Waves className="h-4 w-4 md:h-5 md:w-5 md:mr-2" />
@@ -192,7 +192,7 @@ export default function Home() {
                     </TabsTrigger>
                     <TabsTrigger 
                       value="safari" 
-                      className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-none h-full text-xs md:text-sm font-bold uppercase"
+                      className="data-[state=active]:bg-primary data-[state=active]:text-white text-white rounded-none h-full text-xs md:text-sm font-bold uppercase"
                       data-testid="tab-safari"
                     >
                       <Compass className="h-4 w-4 md:h-5 md:w-5 md:mr-2" />
@@ -200,7 +200,7 @@ export default function Home() {
                     </TabsTrigger>
                     <TabsTrigger 
                       value="trekking" 
-                      className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-none h-full text-xs md:text-sm font-bold uppercase"
+                      className="data-[state=active]:bg-primary data-[state=active]:text-white text-white rounded-none h-full text-xs md:text-sm font-bold uppercase"
                       data-testid="tab-trekking"
                     >
                       <Mountain className="h-4 w-4 md:h-5 md:w-5 md:mr-2" />
@@ -208,7 +208,7 @@ export default function Home() {
                     </TabsTrigger>
                     <TabsTrigger 
                       value="kayaking" 
-                      className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-none h-full text-xs md:text-sm font-bold uppercase"
+                      className="data-[state=active]:bg-primary data-[state=active]:text-white text-white rounded-none h-full text-xs md:text-sm font-bold uppercase"
                       data-testid="tab-kayaking"
                     >
                       <Send className="h-4 w-4 md:h-5 md:w-5 md:mr-2" />

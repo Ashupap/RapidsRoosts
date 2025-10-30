@@ -32,8 +32,8 @@ The application follows a client-server architecture. The frontend is built with
 - **Bcrypt**: Password hashing for admin credentials.
 
 ## Deployment
-The application includes comprehensive deployment scripts for Windows Server in the `/deployment` directory:
-- **PM2 + IIS Reverse Proxy** (Recommended): Production-grade deployment with process management and load balancing
-- **IIS with iisnode**: Alternative approach for Windows-centric environments
-- **Automated Scripts**: PowerShell scripts for one-click deployment and service configuration
-- **Documentation**: Complete deployment guide with troubleshooting and security checklist
+The application includes comprehensive setup scripts for Windows development environments in the `/deployment` directory:
+- **Quick Setup Script**: Automated PowerShell script (`dev-setup.ps1`) for one-click development environment configuration
+- **Development Guide**: Complete step-by-step setup instructions optimized for development/testing
+- **Configuration Files**: Environment templates and PM2 config for development mode
+- **Documentation**: Detailed troubleshooting guide and common commands reference

@@ -1,59 +1,85 @@
-# Deployment Scripts for Windows Server
+# Development Setup for Windows
 
-This directory contains scripts and configuration files for deploying Rapids & Roosts on Windows Server.
+This directory contains scripts and configuration files for setting up Rapids & Roosts on Windows for development purposes.
 
 ## Files Overview
 
 ### Documentation
-- **DEPLOYMENT_GUIDE.md** - Complete deployment guide with step-by-step instructions
+- **DEPLOYMENT_GUIDE.md** - Complete development setup guide with step-by-step instructions
 
 ### Configuration Files
-- **ecosystem.config.js** - PM2 configuration (in project root)
-- **web.config** - IIS reverse proxy configuration
-- **web-iisnode.config** - IIS with iisnode configuration
-- **.env.example** - Environment variables template
+- **ecosystem.config.js** - PM2 configuration for development (in project root)
+- **.env.example** - Environment variables template for development
+- **web.config** - IIS configuration (for advanced setups only)
+- **web-iisnode.config** - IIS with iisnode configuration (for advanced setups only)
 
-### Deployment Scripts
-- **deploy.ps1** - Automated deployment script
-- **setup-pm2-service.ps1** - PM2 Windows service setup
+### Setup Scripts
+- **dev-setup.ps1** - Automated development environment setup (Recommended)
+- **deploy.ps1** - Alternative deployment script
+- **setup-pm2-service.ps1** - PM2 Windows service setup (optional)
 
 ## Quick Start
 
-### Automated Deployment
+### Automated Setup (Recommended)
 
-1. Clone the repository to `C:\websites\rapids-roosts`
-2. Create `.env` file from `.env.example` and configure
-3. Run as Administrator:
+1. Clone the repository to your preferred location:
    ```powershell
-   cd C:\websites\rapids-roosts\deployment
-   .\deploy.ps1
+   cd C:\dev
+   git clone <your-repository-url> rapids-roosts
+   cd rapids-roosts
    ```
 
-### Manual Deployment
+2. Run the automated setup script:
+   ```powershell
+   cd deployment
+   .\dev-setup.ps1
+   ```
 
-Follow the detailed instructions in **DEPLOYMENT_GUIDE.md**
+3. The script will guide you through the setup process and start the development server.
+
+### Manual Setup
+
+If you prefer manual setup, follow the detailed instructions in **DEPLOYMENT_GUIDE.md**
 
 ## Prerequisites
 
-- Windows Server 2019/2022 or Windows 10/11 Pro
-- Node.js 20.x or higher
-- PostgreSQL 14+
-- Administrator access
+- Windows 10/11 or Windows Server
+- Node.js 20.x or higher ([Download](https://nodejs.org))
+- PostgreSQL 14+ ([Download](https://postgresql.org))
+- Git for Windows ([Download](https://git-scm.com))
+
+## Development Workflow
+
+**Start development server:**
+```powershell
+npm run dev
+```
+
+**Access the application:**
+- Open browser to `http://localhost:5000`
+- Server will auto-reload when you make code changes
+
+**Stop development server:**
+- Press `Ctrl+C` in the terminal
+
+## Common Commands
+
+```powershell
+npm run dev              # Start development server with hot reload
+npm run db:push          # Update database schema
+npm install              # Install/update dependencies
+git pull                 # Get latest code changes
+```
 
 ## Support
 
 For detailed instructions and troubleshooting, see **DEPLOYMENT_GUIDE.md**
 
-## Deployment Methods
+## Note on Production
 
-1. **PM2 + IIS Reverse Proxy** (Recommended)
-   - Better performance and stability
-   - Easier debugging and monitoring
-   - Use `deploy.ps1` for automated setup
-
-2. **IIS with iisnode**
-   - Native IIS integration
-   - Use `web-iisnode.config`
-   - Good for Windows-centric teams
-
-Choose the method that best fits your infrastructure and team expertise.
+This setup is optimized for **development only**. For production deployment:
+- Use different environment variables (NODE_ENV=production)
+- Set up proper security (strong SESSION_SECRET, HTTPS)
+- Configure proper process management (PM2 cluster mode)
+- Set up monitoring and logging
+- Use production-grade database configuration

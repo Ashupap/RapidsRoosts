@@ -1,34 +1,35 @@
-# Rapids & Roosts - Windows Server Deployment Guide
+# Rapids & Roosts - Windows Development Setup Guide
 
-This guide provides step-by-step instructions for deploying the Rapids & Roosts application on Windows Server.
+This guide provides step-by-step instructions for setting up the Rapids & Roosts application on a Windows development server for testing and development purposes.
 
-## Deployment Methods
+## Purpose
 
-We provide two deployment approaches:
-1. **PM2 + IIS Reverse Proxy** (Recommended) - Better for Node.js developers
-2. **IIS with iisnode** (Alternative) - Better for Windows-centric teams
+This is a **development environment setup** - optimized for:
+- Easy testing and iteration
+- Quick start/stop cycles
+- Development mode features (hot reload, detailed logs)
+- Local database access
+- Simple configuration
+
+For production deployment, different configurations are required.
 
 ---
 
 ## Prerequisites
 
 ### Required Software
-- ✅ Windows Server 2019/2022 or Windows 10/11 Pro
+- ✅ Windows 10/11 or Windows Server
 - ✅ Node.js 20.x or higher ([Download](https://nodejs.org))
 - ✅ PostgreSQL 14+ ([Download](https://www.postgresql.org/download/windows/))
 - ✅ Git for Windows ([Download](https://git-scm.com/download/win))
 
-### For PM2 Method
-- PM2 Process Manager (installed via npm)
-- IIS with URL Rewrite and Application Request Routing modules
-
-### For IIS Method
-- IIS with iisnode module
-- URL Rewrite Module
+### Optional Tools
+- PM2 Process Manager (for background process management)
+- VS Code or your preferred code editor
 
 ---
 
-## Method 1: PM2 + IIS Reverse Proxy (Recommended)
+## Development Setup
 
 ### Step 1: Initial Setup
 
@@ -46,9 +47,8 @@ We provide two deployment approaches:
 
 3. **Clone Application**
    ```powershell
-   cd C:\
-   mkdir websites
-   cd websites
+   # Choose your preferred location
+   cd C:\dev
    git clone <your-repository-url> rapids-roosts
    cd rapids-roosts
    ```
@@ -61,13 +61,13 @@ We provide two deployment approaches:
    ```
 
 2. **Set up Environment Variables**
-   - Copy `.env.example` to `.env` (if available)
-   - Edit the `.env` file with your production settings:
+   - Copy `.env.example` to `.env`
+   - Edit the `.env` file with your development settings:
    ```env
-   NODE_ENV=production
-   PORT=3000
-   DATABASE_URL=postgresql://username:password@localhost:5432/rapids_roosts
-   SESSION_SECRET=your-secure-random-secret-here
+   NODE_ENV=development
+   PORT=5000
+   DATABASE_URL=postgresql://postgres:your_password@localhost:5432/rapids_roosts_dev
+   SESSION_SECRET=dev-secret-key-change-for-production
    GMAIL_CLIENT_ID=your-gmail-client-id
    GMAIL_CLIENT_SECRET=your-gmail-client-secret
    GMAIL_REFRESH_TOKEN=your-refresh-token
@@ -76,40 +76,36 @@ We provide two deployment approaches:
 
 3. **Set up Database**
    ```powershell
-   # Create database
-   psql -U postgres -c "CREATE DATABASE rapids_roosts;"
+   # Create development database
+   psql -U postgres -c "CREATE DATABASE rapids_roosts_dev;"
    
    # Run migrations
    npm run db:push
    ```
 
-4. **Build Frontend**
-   ```powershell
-   npm run build
-   ```
+### Step 3: Run the Application
 
-### Step 3: Install and Configure PM2
+**Option A: Direct Development Server (Recommended for Dev)**
+
+```powershell
+# Start the development server with hot reload
+npm run dev
+
+# Open browser at http://localhost:5000
+# Server will auto-reload when you make code changes
+```
+
+**Option B: Using PM2 (For background process)**
 
 1. **Install PM2 Globally**
    ```powershell
    npm install -g pm2
    ```
 
-2. **Test Application Locally**
+2. **Start with PM2**
    ```powershell
-   # Start the application
-   npm run start
-   
-   # Open browser and test at http://localhost:3000
-   ```
-
-3. **Start with PM2**
-   ```powershell
-   # Navigate to project directory
-   cd C:\websites\rapids-roosts
-   
-   # Start application with PM2
-   pm2 start ecosystem.config.js --env production
+   # Start application in development mode
+   pm2 start ecosystem.config.js --env development
    
    # Check status
    pm2 status
@@ -117,221 +113,128 @@ We provide two deployment approaches:
    # View logs
    pm2 logs rapids-roosts
    
-   # Save PM2 process list
-   pm2 save
+   # Stop when done
+   pm2 stop rapids-roosts
    ```
 
-### Step 4: Configure PM2 as Windows Service
+### Step 4: Access the Application
 
-Run the automated setup script:
-```powershell
-# Run as Administrator
-cd C:\websites\rapids-roosts\deployment
-.\setup-pm2-service.ps1
-```
+1. **Open Browser**
+   - Navigate to `http://localhost:5000`
+   - Test all features and pages
 
-Or manually:
-1. **Install pm2-windows-service**
-   ```powershell
-   npm install -g pm2-windows-service
-   ```
-
-2. **Create PM2 Home Directory**
-   ```powershell
-   mkdir C:\pm2
-   setx PM2_HOME "C:\pm2" /M
-   ```
-   Restart PowerShell after this.
-
-3. **Install Service**
-   ```powershell
-   pm2-service-install -n PM2
-   ```
-
-4. **Verify Service**
-   - Press `Win + R`, type `services.msc`
-   - Find "PM2" service
-   - Ensure it's "Running" and set to "Automatic"
-
-### Step 5: Configure IIS Reverse Proxy
-
-1. **Install Required IIS Modules**
-   - URL Rewrite Module: https://www.iis.net/downloads/microsoft/url-rewrite
-   - Application Request Routing: https://www.iis.net/downloads/microsoft/application-request-routing
-
-2. **Enable Proxy in ARR**
-   - Open IIS Manager (`Win + R` → `inetmgr`)
-   - Click on server name
-   - Double-click "Application Request Routing Cache"
-   - Click "Server Proxy Settings" in right panel
-   - Check "Enable proxy"
-   - Click "Apply"
-
-3. **Create IIS Website**
-   - In IIS Manager, right-click "Sites" → "Add Website"
-   - Site name: `rapids-roosts`
-   - Physical path: `C:\inetpub\wwwroot\rapids-roosts-proxy` (create this folder)
-   - Binding: HTTP, Port 80, Host name: `your-domain.com`
-   - Click "OK"
-
-4. **Configure Reverse Proxy**
-   - Copy `deployment/web.config` to `C:\inetpub\wwwroot\rapids-roosts-proxy\web.config`
-   - Or configure manually:
-     - Select your site in IIS Manager
-     - Double-click "URL Rewrite"
-     - Click "Add Rule(s)..." → "Reverse Proxy"
-     - Enter: `localhost:3000`
-     - Click "OK"
-
-5. **Test**
-   - Open browser and navigate to `http://your-domain.com`
-   - Application should load
-
-### Step 6: Configure SSL (HTTPS)
-
-1. **Obtain SSL Certificate**
-   - Use Let's Encrypt with win-acme or
-   - Purchase from certificate authority
-
-2. **Bind Certificate in IIS**
-   - In IIS Manager, right-click your site → "Edit Bindings"
-   - Click "Add"
-   - Type: HTTPS, Port: 443
-   - Select your SSL certificate
-   - Click "OK"
-
-3. **Force HTTPS Redirect**
-   - Update `web.config` to add HTTPS redirect rule (already included in provided config)
+2. **Development Tools**
+   - Browser DevTools for debugging
+   - Check console for errors
+   - Test on different browsers
 
 ---
 
-## Method 2: IIS with iisnode
+## Development Workflow
 
-### Prerequisites
-- Install iisnode from https://github.com/tjanczuk/iisnode/releases
-- Install URL Rewrite Module
+### Daily Development
 
-### Steps
-
-1. **Follow Steps 1-2 from Method 1** (Initial Setup and Configuration)
-
-2. **Modify server/index.ts**
-   - Ensure server listens on `process.env.PORT || 3000`
-   - Already configured in your app
-
-3. **Copy Application to IIS Directory**
-   ```powershell
-   xcopy /E /I C:\websites\rapids-roosts C:\inetpub\wwwroot\rapids-roosts
-   ```
-
-4. **Create IIS Website**
-   - In IIS Manager, right-click "Sites" → "Add Website"
-   - Site name: `rapids-roosts`
-   - Physical path: `C:\inetpub\wwwroot\rapids-roosts`
-   - Binding: HTTP, Port 80
-   - Click "OK"
-
-5. **Copy web.config for iisnode**
-   ```powershell
-   copy C:\inetpub\wwwroot\rapids-roosts\deployment\web-iisnode.config C:\inetpub\wwwroot\rapids-roosts\web.config
-   ```
-
-6. **Test Application**
-   - Navigate to `http://localhost`
-
----
-
-## Post-Deployment
-
-### Monitoring
-
-**PM2 Monitoring:**
+**Starting Work:**
 ```powershell
-pm2 monit          # Real-time monitoring
-pm2 logs           # View logs
-pm2 status         # Check status
-```
+cd C:\dev\rapids-roosts
 
-**Windows Event Viewer:**
-- Check Application logs for errors
-- Check PM2 service logs
-
-### Maintenance
-
-**Update Application:**
-```powershell
-cd C:\websites\rapids-roosts
+# Pull latest changes
 git pull
+
+# Install any new dependencies
 npm install
-npm run build
-pm2 restart rapids-roosts
+
+# Start dev server
+npm run dev
 ```
 
-**Database Backup:**
+**Making Changes:**
+- Edit files in your code editor
+- Server auto-reloads on file changes
+- Refresh browser to see updates
+- Check console for errors
+
+**Stopping Work:**
 ```powershell
-pg_dump -U postgres rapids_roosts > backup_$(Get-Date -Format "yyyyMMdd_HHmmss").sql
+# Press Ctrl+C to stop dev server
+# Or if using PM2:
+pm2 stop rapids-roosts
 ```
 
-**View Application Logs:**
+### Database Management
+
+**View Database:**
 ```powershell
-pm2 logs rapids-roosts --lines 100
+psql -U postgres rapids_roosts_dev
+```
+
+**Reset Database:**
+```powershell
+npm run db:push --force
+```
+
+**Backup Database (Optional):**
+```powershell
+pg_dump -U postgres rapids_roosts_dev > dev_backup.sql
 ```
 
 ### Troubleshooting
 
 **Application won't start:**
-- Check PM2 logs: `pm2 logs`
+- Check error messages in console
 - Verify database connection in `.env`
 - Check Node.js version: `node --version`
+- Try `npm install` again
 
-**Can't access via domain:**
-- Verify IIS bindings
-- Check Windows Firewall (open ports 80, 443)
-- Verify DNS settings
+**Port already in use:**
+```powershell
+# Find process using port 5000
+netstat -ano | findstr :5000
+# Kill the process (replace PID with actual number)
+taskkill /PID <PID> /F
+```
 
 **Database connection errors:**
 - Check PostgreSQL is running: `services.msc`
 - Verify DATABASE_URL in `.env`
-- Test connection: `psql -U postgres rapids_roosts`
+- Test connection: `psql -U postgres rapids_roosts_dev`
+- Try restarting PostgreSQL service
 
-**PM2 doesn't restart after reboot:**
-- Check PM2 service status: `services.msc`
-- Verify PM2_HOME environment variable: `echo $env:PM2_HOME`
-- Reinstall service: `pm2-service-install -n PM2`
+**Hot reload not working:**
+- Check file watcher limits
+- Restart dev server
+- Clear `node_modules` and reinstall: `rm -rf node_modules && npm install`
 
 ---
 
-## Automated Deployment Script
+## Quick Setup Script
 
-For quick deployment, use the automated PowerShell script:
+For quick development setup, use the automated PowerShell script:
 
 ```powershell
-# Run as Administrator
-cd C:\websites\rapids-roosts\deployment
-.\deploy.ps1
+cd C:\dev\rapids-roosts\deployment
+.\dev-setup.ps1
 ```
 
 This script will:
-1. Install dependencies
-2. Build frontend
-3. Set up database
-4. Configure PM2
-5. Start the application
+1. Check prerequisites
+2. Install dependencies
+3. Set up development database
+4. Configure environment
+5. Start the application in development mode
 
 ---
 
-## Security Checklist
+## Development Checklist
 
-- ✅ Change SESSION_SECRET to a strong random value
-- ✅ Use environment variables for sensitive data
-- ✅ Enable Windows Firewall
-- ✅ Keep Windows Server updated
-- ✅ Use HTTPS with valid SSL certificate
-- ✅ Regularly backup database
-- ✅ Set up proper file permissions
-- ✅ Monitor application logs
-- ✅ Keep Node.js and dependencies updated
-- ✅ Disable directory browsing in IIS
+- ✅ PostgreSQL installed and running
+- ✅ Node.js 20.x or higher installed
+- ✅ `.env` file configured with development settings
+- ✅ Database created and migrations run
+- ✅ Application starts without errors
+- ✅ Can access at http://localhost:5000
+- ✅ Hot reload works when editing files
+- ✅ Test data populated for development
 
 ---
 
@@ -343,8 +246,35 @@ For issues or questions:
 3. Review this guide's Troubleshooting section
 4. Check Node.js and PostgreSQL documentation
 
+## Useful Commands
+
+```powershell
+# Development server
+npm run dev              # Start with hot reload
+
+# Database
+npm run db:push          # Apply schema changes
+psql -U postgres rapids_roosts_dev  # Access database
+
+# Code quality
+npm run lint             # Check code quality (if configured)
+npm test                 # Run tests (if configured)
+
+# Git
+git status               # Check changes
+git pull                 # Update code
+git add .                # Stage changes
+git commit -m "message"  # Commit changes
+```
+
 ---
 
-**Deployment completed successfully!** 🎉
+**Development setup completed!** 🎉
 
-Your Rapids & Roosts application should now be running on your Windows Server.
+Your Rapids & Roosts application is now running in development mode on Windows.
+
+**Next Steps:**
+1. Test all features thoroughly
+2. Make your code changes
+3. Test with real data
+4. Prepare for production deployment when ready

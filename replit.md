@@ -30,3 +30,10 @@ The application follows a client-server architecture. The frontend is built with
 - **Lucide React**: Icon library.
 - **Passport.js**: For admin authentication.
 - **Bcrypt**: Password hashing for admin credentials.
+
+## Deployment
+The application includes comprehensive deployment scripts for Windows Server in the `/deployment` directory:
+- **PM2 + IIS Reverse Proxy** (Recommended): Production-grade deployment with process management and load balancing
+- **IIS with iisnode**: Alternative approach for Windows-centric environments
+- **Automated Scripts**: PowerShell scripts for one-click deployment and service configuration
+- **Documentation**: Complete deployment guide with troubleshooting and security checklist

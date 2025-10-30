@@ -18,7 +18,8 @@ Write-Host "[1/5] Checking prerequisites..." -ForegroundColor Yellow
 try {
     $nodeVersion = node --version
     Write-Host "  ✓ Node.js $nodeVersion found" -ForegroundColor Green
-} catch {
+}
+catch {
     Write-Host "  ✗ Node.js not found" -ForegroundColor Red
     Write-Host "    Please install from https://nodejs.org" -ForegroundColor Gray
     exit 1
@@ -28,7 +29,8 @@ try {
 try {
     $gitVersion = git --version
     Write-Host "  ✓ Git found" -ForegroundColor Green
-} catch {
+}
+catch {
     Write-Host "  ⚠ Git not found (optional)" -ForegroundColor Yellow
 }
 
@@ -38,7 +40,8 @@ Write-Host "[2/5] Installing npm dependencies..." -ForegroundColor Yellow
 npm install --silent
 if ($LASTEXITCODE -eq 0) {
     Write-Host "  ✓ Dependencies installed" -ForegroundColor Green
-} else {
+}
+else {
     Write-Host "  ✗ Failed to install dependencies" -ForegroundColor Red
     exit 1
 }
@@ -48,18 +51,15 @@ Write-Host "[3/5] Checking environment configuration..." -ForegroundColor Yellow
 
 if (Test-Path ".env") {
     Write-Host "  ✓ .env file exists" -ForegroundColor Green
-} else {
+}
+else {
     if (Test-Path "deployment\.env.example") {
         Write-Host "  Creating .env file from template..." -ForegroundColor Gray
         Copy-Item "deployment\.env.example" ".env"
         Write-Host "  ✓ .env file created" -ForegroundColor Green
-        Write-Host "  ⚠ Please edit .env file and update database credentials" -ForegroundColor Yellow
-        
-        # Pause for user to edit
-        Write-Host ""
-        Write-Host "Press any key after you've edited the .env file..." -ForegroundColor Yellow
-        $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
-    } else {
+        Write-Host "  ⚠ Please review .env file if you need to customize settings" -ForegroundColor Yellow
+    }
+    else {
         Write-Host "  ✗ .env.example not found" -ForegroundColor Red
         Write-Host "    Please create .env file manually" -ForegroundColor Gray
         exit 1
@@ -80,8 +80,10 @@ if ($LASTEXITCODE -eq 0) {
     if (Test-Path "dev.db") {
         Write-Host "  ✓ Database file created at ./dev.db" -ForegroundColor Green
     }
-} else {
-    Write-Host "  ⚠ Database migrations had issues. You may need to run 'npm run db:push' manually" -ForegroundColor Yellow
+}
+else {
+    Write-Host "  ⚠ Database migrations had issues" -ForegroundColor Yellow
+    Write-Host "    You may need to run 'npm run db:push' manually later" -ForegroundColor Gray
 }
 
 # Step 5: Check if port 5000 is available
@@ -91,13 +93,12 @@ $portInUse = Get-NetTCPConnection -LocalPort 5000 -ErrorAction SilentlyContinue
 if ($portInUse) {
     Write-Host "  ⚠ Port 5000 is already in use" -ForegroundColor Yellow
     Write-Host "    You may need to stop the existing process or change the PORT in .env" -ForegroundColor Gray
-} else {
+}
+else {
     Write-Host "  ✓ Port 5000 is available" -ForegroundColor Green
 }
 
 # Final: Ready to start
-Write-Host "Setup complete!" -ForegroundColor Yellow
-
 Write-Host ""
 Write-Host "========================================" -ForegroundColor Green
 Write-Host "Development Environment Ready!" -ForegroundColor Green
@@ -124,7 +125,8 @@ if ($response -eq "Y" -or $response -eq "y") {
     Write-Host "Press Ctrl+C to stop" -ForegroundColor Gray
     Write-Host ""
     npm run dev
-} else {
+}
+else {
     Write-Host ""
     Write-Host "Setup complete! Run 'npm run dev' when ready to start." -ForegroundColor Green
     Write-Host ""

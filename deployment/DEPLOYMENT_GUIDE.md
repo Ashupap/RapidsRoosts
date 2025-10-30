@@ -11,7 +11,7 @@ This is a **development environment setup** - optimized for:
 - Local database access
 - Simple configuration
 
-For production deployment, different configurations are required.
+For production deployment, see **PRODUCTION_NOTES.md** for detailed configuration.
 
 ---
 

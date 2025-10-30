@@ -23,7 +23,7 @@ The application follows a client-server architecture. The frontend is built with
 - **Full Accessibility Compliance**: All continuous animations (parallax, auto-rotation, adventure effects) respect prefers-reduced-motion using framer-motion's SSR-safe hook.
 
 ## External Dependencies
-- **SQLite**: Development database (file-based). For production, consider PostgreSQL or similar.
+- **SQLite**: Primary database for both development and production (file-based, no server required).
 - **Google Sheets API**: Used for initial booking data persistence (requires `GOOGLE_SHEET_ID` environment variable).
 - **Gmail API**: For sending automated email notifications (booking confirmations and status updates).
 - **Replit Connectors**: Utilized for secure integration with Gmail and potentially Google Sheets.
@@ -32,8 +32,15 @@ The application follows a client-server architecture. The frontend is built with
 - **Bcrypt**: Password hashing for admin credentials.
 
 ## Deployment
-The application includes comprehensive setup scripts for Windows development environments in the `/deployment` directory:
+The application includes comprehensive setup scripts for Windows environments in the `/deployment` directory:
 - **Quick Setup Script**: Automated PowerShell script (`dev-setup.ps1`) for one-click development environment configuration
-- **Development Guide**: Complete step-by-step setup instructions optimized for development/testing
-- **Configuration Files**: Environment templates and PM2 config for development mode
-- **Documentation**: Detailed troubleshooting guide and common commands reference
+- **Development Guide**: Complete step-by-step setup instructions (`DEPLOYMENT_GUIDE.md`)
+- **Production Guide**: SQLite production deployment best practices (`PRODUCTION_NOTES.md`)
+- **Configuration Files**: Environment templates for development and production (`.env.example`, `.env.production.example`)
+- **PM2 Config**: Process management configuration for development and production (`ecosystem.config.js`)
+- **Backup Scripts**: Automated database backup strategies for production
+
+### Database Strategy
+- **Development**: Uses `dev.db` SQLite file for local testing
+- **Production**: Uses `production.db` SQLite file with automated daily backups
+- **Advantages**: Zero configuration, file-based backups, excellent performance for tourism booking sites

@@ -6,10 +6,13 @@ This directory contains scripts and configuration files for setting up Rapids & 
 
 ### Documentation
 - **DEPLOYMENT_GUIDE.md** - Complete development setup guide with step-by-step instructions
+- **PRODUCTION_NOTES.md** - Production deployment guide with SQLite best practices
+- **QUICK_START.md** - Quick reference guide for common tasks
 
 ### Configuration Files
-- **ecosystem.config.js** - PM2 configuration for development (in project root)
+- **ecosystem.config.js** - PM2 configuration for development/production (in project root)
 - **.env.example** - Environment variables template for development
+- **.env.production.example** - Environment variables template for production
 - **web.config** - IIS configuration (for advanced setups only)
 - **web-iisnode.config** - IIS with iisnode configuration (for advanced setups only)
 
@@ -79,9 +82,10 @@ For detailed instructions and troubleshooting, see **DEPLOYMENT_GUIDE.md**
 
 ## Note on Production
 
-This setup is optimized for **development only**. For production deployment:
+This setup is optimized for **development**. For production deployment:
 - Use different environment variables (NODE_ENV=production)
 - Set up proper security (strong SESSION_SECRET, HTTPS)
 - Configure proper process management (PM2 cluster mode)
 - Set up monitoring and logging
-- Consider PostgreSQL or another production-grade database instead of SQLite
+- Use a production SQLite database file (e.g., `production.db`)
+- Set up regular database backups (copy the .db file)

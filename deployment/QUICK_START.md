@@ -143,4 +143,21 @@ See **DEPLOYMENT_GUIDE.md** for detailed instructions and advanced configuration
 
 ---
 
+---
+
+## 🚀 Production Deployment
+
+For production, see **PRODUCTION_NOTES.md** for:
+- Production environment setup
+- SQLite backup strategies
+- Security best practices
+- Monitoring and maintenance
+
+**Quick Production Setup:**
+1. Use `production.db` instead of `dev.db`
+2. Set `NODE_ENV=production`
+3. Generate strong `SESSION_SECRET`
+4. Set up automated daily backups
+5. Use PM2 in production mode
+
 **Happy coding!** 🎉

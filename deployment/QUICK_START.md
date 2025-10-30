@@ -4,8 +4,9 @@
 
 ### Prerequisites
 1. Install [Node.js 20+](https://nodejs.org)
-2. Install [PostgreSQL 14+](https://www.postgresql.org/download/windows/)
-3. Clone this repository
+2. Clone this repository
+
+That's it! SQLite is included - no separate database server needed.
 
 ### One-Command Setup
 
@@ -36,18 +37,19 @@ npm install
 copy deployment\.env.example .env
 
 # Edit .env and update:
-# - DATABASE_URL with your PostgreSQL password
+# - DATABASE_URL is already set to file:./dev.db (SQLite)
+# - Add your Gmail API credentials if needed
 # - Other settings as needed
 ```
 
 ### 3. Setup Database
 ```powershell
-# Create database
-psql -U postgres -c "CREATE DATABASE rapids_roosts_dev;"
-
-# Run migrations
+# SQLite database will be created automatically
+# Just run migrations to create the schema
 npm run db:push
 ```
+
+This creates a `dev.db` file in your project root.
 
 ### 4. Start Development Server
 ```powershell
@@ -87,7 +89,12 @@ npm run db:push
 
 ### View Database
 ```powershell
-psql -U postgres rapids_roosts_dev
+# Option 1: GUI tool (recommended)
+# Download SQLite Browser: https://sqlitebrowser.org/
+
+# Option 2: CLI
+sqlite3 dev.db
+# Then: SELECT * FROM bookings;
 ```
 
 ### Update Dependencies
@@ -115,9 +122,10 @@ taskkill /PID <PID> /F
 ```
 
 ### Database Connection Error
-- Check PostgreSQL is running: `services.msc`
-- Verify password in `.env`
-- Try: `psql -U postgres`
+- Verify `.env` has `DATABASE_URL=file:./dev.db`
+- Check if `dev.db` exists
+- Try deleting `dev.db` and run `npm run db:push` again
+- Check folder write permissions
 
 ### Can't Install Dependencies
 ```powershell

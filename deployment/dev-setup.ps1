@@ -10,10 +10,9 @@ Write-Host ""
 
 # Configuration
 $APP_NAME = "rapids-roosts"
-$DB_NAME = "rapids_roosts_dev"
 
 # Step 1: Check Prerequisites
-Write-Host "[1/6] Checking prerequisites..." -ForegroundColor Yellow
+Write-Host "[1/5] Checking prerequisites..." -ForegroundColor Yellow
 
 # Check Node.js
 try {
@@ -22,16 +21,6 @@ try {
 } catch {
     Write-Host "  ✗ Node.js not found" -ForegroundColor Red
     Write-Host "    Please install from https://nodejs.org" -ForegroundColor Gray
-    exit 1
-}
-
-# Check PostgreSQL
-try {
-    $pgVersion = psql --version
-    Write-Host "  ✓ PostgreSQL found" -ForegroundColor Green
-} catch {
-    Write-Host "  ✗ PostgreSQL not found" -ForegroundColor Red
-    Write-Host "    Please install from https://www.postgresql.org/download/windows/" -ForegroundColor Gray
     exit 1
 }
 
@@ -44,7 +33,7 @@ try {
 }
 
 # Step 2: Install Dependencies
-Write-Host "[2/6] Installing npm dependencies..." -ForegroundColor Yellow
+Write-Host "[2/5] Installing npm dependencies..." -ForegroundColor Yellow
 
 npm install --silent
 if ($LASTEXITCODE -eq 0) {
@@ -55,7 +44,7 @@ if ($LASTEXITCODE -eq 0) {
 }
 
 # Step 3: Check .env file
-Write-Host "[3/6] Checking environment configuration..." -ForegroundColor Yellow
+Write-Host "[3/5] Checking environment configuration..." -ForegroundColor Yellow
 
 if (Test-Path ".env") {
     Write-Host "  ✓ .env file exists" -ForegroundColor Green
@@ -78,41 +67,25 @@ if (Test-Path ".env") {
 }
 
 # Step 4: Setup Database
-Write-Host "[4/6] Setting up database..." -ForegroundColor Yellow
+Write-Host "[4/5] Setting up SQLite database..." -ForegroundColor Yellow
 
-# Read DATABASE_URL from .env
-$envContent = Get-Content ".env"
-$dbUrl = ($envContent | Select-String "DATABASE_URL=").ToString() -replace "DATABASE_URL=", ""
+Write-Host "  SQLite database will be created automatically at ./dev.db" -ForegroundColor Gray
 
-if ($dbUrl) {
-    Write-Host "  Database URL configured: $($dbUrl.Substring(0,30))..." -ForegroundColor Gray
-    
-    # Try to create database
-    Write-Host "  Creating database '$DB_NAME'..." -ForegroundColor Gray
-    psql -U postgres -c "CREATE DATABASE $DB_NAME;" 2>&1 | Out-Null
-    
-    if ($LASTEXITCODE -eq 0) {
-        Write-Host "  ✓ Database created" -ForegroundColor Green
-    } else {
-        Write-Host "  ⚠ Database might already exist (this is OK)" -ForegroundColor Yellow
-    }
-    
-    # Run migrations
-    Write-Host "  Running database migrations..." -ForegroundColor Gray
-    npm run db:push
-    
-    if ($LASTEXITCODE -eq 0) {
-        Write-Host "  ✓ Database migrations completed" -ForegroundColor Green
-    } else {
-        Write-Host "  ⚠ Database migrations had issues. You may need to run 'npm run db:push' manually" -ForegroundColor Yellow
+# Run migrations to create database schema
+Write-Host "  Running database migrations..." -ForegroundColor Gray
+npm run db:push
+
+if ($LASTEXITCODE -eq 0) {
+    Write-Host "  ✓ Database schema created successfully" -ForegroundColor Green
+    if (Test-Path "dev.db") {
+        Write-Host "  ✓ Database file created at ./dev.db" -ForegroundColor Green
     }
 } else {
-    Write-Host "  ⚠ DATABASE_URL not found in .env" -ForegroundColor Yellow
-    Write-Host "    Please configure database manually" -ForegroundColor Gray
+    Write-Host "  ⚠ Database migrations had issues. You may need to run 'npm run db:push' manually" -ForegroundColor Yellow
 }
 
 # Step 5: Check if port 5000 is available
-Write-Host "[5/6] Checking port availability..." -ForegroundColor Yellow
+Write-Host "[5/5] Checking port availability..." -ForegroundColor Yellow
 
 $portInUse = Get-NetTCPConnection -LocalPort 5000 -ErrorAction SilentlyContinue
 if ($portInUse) {
@@ -122,8 +95,8 @@ if ($portInUse) {
     Write-Host "  ✓ Port 5000 is available" -ForegroundColor Green
 }
 
-# Step 6: Ready to start
-Write-Host "[6/6] Setup complete!" -ForegroundColor Yellow
+# Final: Ready to start
+Write-Host "Setup complete!" -ForegroundColor Yellow
 
 Write-Host ""
 Write-Host "========================================" -ForegroundColor Green

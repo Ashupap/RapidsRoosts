@@ -45,8 +45,9 @@ If you prefer manual setup, follow the detailed instructions in **DEPLOYMENT_GUI
 
 - Windows 10/11 or Windows Server
 - Node.js 20.x or higher ([Download](https://nodejs.org))
-- PostgreSQL 14+ ([Download](https://postgresql.org))
 - Git for Windows ([Download](https://git-scm.com))
+
+**Note:** Uses SQLite database - no separate database server required!
 
 ## Development Workflow
 
@@ -66,7 +67,8 @@ npm run dev
 
 ```powershell
 npm run dev              # Start development server with hot reload
-npm run db:push          # Update database schema
+npm run db:push          # Update database schema  
+sqlite3 dev.db           # Access SQLite database
 npm install              # Install/update dependencies
 git pull                 # Get latest code changes
 ```
@@ -82,4 +84,4 @@ This setup is optimized for **development only**. For production deployment:
 - Set up proper security (strong SESSION_SECRET, HTTPS)
 - Configure proper process management (PM2 cluster mode)
 - Set up monitoring and logging
-- Use production-grade database configuration
+- Consider PostgreSQL or another production-grade database instead of SQLite

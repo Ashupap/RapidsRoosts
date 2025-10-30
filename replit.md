@@ -23,7 +23,7 @@ The application follows a client-server architecture. The frontend is built with
 - **Full Accessibility Compliance**: All continuous animations (parallax, auto-rotation, adventure effects) respect prefers-reduced-motion using framer-motion's SSR-safe hook.
 
 ## External Dependencies
-- **PostgreSQL**: Primary database for all application data and session storage.
+- **SQLite**: Development database (file-based). For production, consider PostgreSQL or similar.
 - **Google Sheets API**: Used for initial booking data persistence (requires `GOOGLE_SHEET_ID` environment variable).
 - **Gmail API**: For sending automated email notifications (booking confirmations and status updates).
 - **Replit Connectors**: Utilized for secure integration with Gmail and potentially Google Sheets.

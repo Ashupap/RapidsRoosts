@@ -20,12 +20,12 @@ For production deployment, different configurations are required.
 ### Required Software
 - ✅ Windows 10/11 or Windows Server
 - ✅ Node.js 20.x or higher ([Download](https://nodejs.org))
-- ✅ PostgreSQL 14+ ([Download](https://www.postgresql.org/download/windows/))
 - ✅ Git for Windows ([Download](https://git-scm.com/download/win))
 
 ### Optional Tools
 - PM2 Process Manager (for background process management)
 - VS Code or your preferred code editor
+- SQLite Browser for viewing database (optional)
 
 ---
 
@@ -41,11 +41,7 @@ For production deployment, different configurations are required.
    npm --version
    ```
 
-2. **Install PostgreSQL**
-   - Download and install PostgreSQL
-   - Note the database credentials during installation
-
-3. **Clone Application**
+2. **Clone Application**
    ```powershell
    # Choose your preferred location
    cd C:\dev
@@ -66,7 +62,7 @@ For production deployment, different configurations are required.
    ```env
    NODE_ENV=development
    PORT=5000
-   DATABASE_URL=postgresql://postgres:your_password@localhost:5432/rapids_roosts_dev
+   DATABASE_URL=file:./dev.db
    SESSION_SECRET=dev-secret-key-change-for-production
    GMAIL_CLIENT_ID=your-gmail-client-id
    GMAIL_CLIENT_SECRET=your-gmail-client-secret
@@ -76,12 +72,12 @@ For production deployment, different configurations are required.
 
 3. **Set up Database**
    ```powershell
-   # Create development database
-   psql -U postgres -c "CREATE DATABASE rapids_roosts_dev;"
-   
-   # Run migrations
+   # SQLite database will be created automatically
+   # Run migrations to create schema
    npm run db:push
    ```
+   
+   This will create a `dev.db` file in your project root with all the necessary tables.
 
 ### Step 3: Run the Application
 
@@ -165,17 +161,25 @@ pm2 stop rapids-roosts
 
 **View Database:**
 ```powershell
-psql -U postgres rapids_roosts_dev
+# Option 1: Install SQLite Browser (GUI tool)
+# Download from: https://sqlitebrowser.org/
+
+# Option 2: Use SQLite CLI
+sqlite3 dev.db
+# Then run SQL queries, e.g.: SELECT * FROM bookings;
 ```
 
 **Reset Database:**
 ```powershell
-npm run db:push --force
+# Delete the database file and recreate
+rm dev.db
+npm run db:push
 ```
 
 **Backup Database (Optional):**
 ```powershell
-pg_dump -U postgres rapids_roosts_dev > dev_backup.sql
+# Simply copy the database file
+copy dev.db dev_backup.db
 ```
 
 ### Troubleshooting
@@ -195,10 +199,10 @@ taskkill /PID <PID> /F
 ```
 
 **Database connection errors:**
-- Check PostgreSQL is running: `services.msc`
-- Verify DATABASE_URL in `.env`
-- Test connection: `psql -U postgres rapids_roosts_dev`
-- Try restarting PostgreSQL service
+- Verify DATABASE_URL in `.env` is set to `file:./dev.db`
+- Check if `dev.db` file exists in project root
+- Try deleting `dev.db` and run `npm run db:push` again
+- Check file permissions on the project directory
 
 **Hot reload not working:**
 - Check file watcher limits
@@ -227,14 +231,14 @@ This script will:
 
 ## Development Checklist
 
-- ✅ PostgreSQL installed and running
 - ✅ Node.js 20.x or higher installed
 - ✅ `.env` file configured with development settings
-- ✅ Database created and migrations run
+- ✅ SQLite database file created (`dev.db`)
+- ✅ Database migrations run successfully
 - ✅ Application starts without errors
 - ✅ Can access at http://localhost:5000
 - ✅ Hot reload works when editing files
-- ✅ Test data populated for development
+- ✅ Test data can be added for development
 
 ---
 
@@ -254,7 +258,7 @@ npm run dev              # Start with hot reload
 
 # Database
 npm run db:push          # Apply schema changes
-psql -U postgres rapids_roosts_dev  # Access database
+sqlite3 dev.db           # Access database via CLI
 
 # Code quality
 npm run lint             # Check code quality (if configured)

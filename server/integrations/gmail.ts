@@ -51,7 +51,7 @@ export async function sendBookingConfirmation(
   to: string,
   bookingId: string,
   customerName: string,
-  activityType: string,
+  activities: string[],
   checkInDate: string,
   checkOutDate: string,
   numberOfGuests: number
@@ -107,7 +107,7 @@ export async function sendBookingConfirmation(
               <div class="details">
                 <h3>Booking Details</h3>
                 <div class="detail-row">
-                  <span class="detail-label">Activity:</span> ${activityType.charAt(0).toUpperCase() + activityType.slice(1).replace(/-/g, ' ')}
+                  <span class="detail-label">Activities:</span> ${activities.map(act => act.charAt(0).toUpperCase() + act.slice(1).replace(/-/g, ' ')).join(', ')}
                 </div>
                 <div class="detail-row">
                   <span class="detail-label">Check-in Date:</span> ${checkInDate}
@@ -127,6 +127,11 @@ export async function sendBookingConfirmation(
                   <li>You'll receive a confirmation email within 24 hours</li>
                   <li>Check your booking status anytime using your Booking ID</li>
                 </ul>
+              </div>
+
+              <div style="background: #FFF9E6; border-left: 4px solid #7A5C3A; padding: 15px; margin: 20px 0; border-radius: 4px;">
+                <h4 style="margin-top: 0; color: #7A5C3A;">✨ Flexible Activity Customization</h4>
+                <p style="margin: 0;">You can customize your selected activities after check-in based on weather conditions, your preferences, and availability. Our team will help you create the perfect adventure experience!</p>
               </div>
 
               <div style="text-align: center; margin: 30px 0;">
@@ -165,7 +170,7 @@ Your Booking ID: ${bookingId}
 Status: Pending Confirmation
 
 Booking Details:
-- Activity: ${activityType.charAt(0).toUpperCase() + activityType.slice(1).replace(/-/g, ' ')}
+- Activities: ${activities.map(act => act.charAt(0).toUpperCase() + act.slice(1).replace(/-/g, ' ')).join(', ')}
 - Check-in Date: ${checkInDate}
 - Check-out Date: ${checkOutDate}
 - Number of Guests: ${numberOfGuests}
@@ -219,7 +224,7 @@ export async function sendStatusUpdateEmail(
   bookingId: string,
   customerName: string,
   status: string,
-  activityType: string,
+  activities: string[],
   checkInDate: string,
   checkOutDate: string
 ) {
@@ -274,7 +279,7 @@ export async function sendStatusUpdateEmail(
 
               <div class="details">
                 <div style="padding: 8px 0; border-bottom: 1px solid #eee;">
-                  <strong>Activity:</strong> ${activityType.charAt(0).toUpperCase() + activityType.slice(1).replace(/-/g, ' ')}
+                  <strong>Activities:</strong> ${activities.map(act => act.charAt(0).toUpperCase() + act.slice(1).replace(/-/g, ' ')).join(', ')}
                 </div>
                 <div style="padding: 8px 0; border-bottom: 1px solid #eee;">
                   <strong>Check-in:</strong> ${checkInDate}

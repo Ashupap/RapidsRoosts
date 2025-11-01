@@ -65,7 +65,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         updatedBooking.bookingId,
         updatedBooking.customerName,
         updatedBooking.status,
-        updatedBooking.activityType,
+        updatedBooking.activities,
         updatedBooking.checkInDate,
         updatedBooking.checkOutDate
       ).catch(error => {
@@ -91,7 +91,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         booking.customerEmail,
         booking.bookingId,
         booking.customerName,
-        booking.activityType,
+        booking.activities,
         booking.checkInDate,
         booking.checkOutDate,
         booking.numberOfGuests

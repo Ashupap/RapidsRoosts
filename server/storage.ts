@@ -1,9 +1,12 @@
 import { type User, type InsertUser, type Booking, type InsertBooking, bookings, users } from "@shared/schema";
 import { randomUUID } from "crypto";
-import { nanoid } from "nanoid";
+import { customAlphabet } from "nanoid";
 import { db } from "./db";
 import { eq } from "drizzle-orm";
 import bcrypt from "bcrypt";
+
+// Generate alphanumeric booking IDs
+const generateBookingId = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ', 6);
 
 export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
@@ -51,7 +54,7 @@ export class PostgresStorage implements IStorage {
 
   async createBooking(insertBooking: InsertBooking): Promise<Booking> {
     const id = randomUUID();
-    const bookingId = `RRD-${nanoid(6).toUpperCase()}`;
+    const bookingId = `RRD-${generateBookingId()}`;
     const createdAt = new Date();
     
     const booking: Booking = {

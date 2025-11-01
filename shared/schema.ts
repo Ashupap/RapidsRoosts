@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { pgTable, text, varchar, integer, timestamp } from "drizzle-orm/pg-core";
+import { pgTable, text, varchar, integer, timestamp, jsonb } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -9,7 +9,7 @@ export const bookings = pgTable("bookings", {
   customerName: text("customer_name").notNull(),
   customerEmail: text("customer_email").notNull(),
   customerPhone: text("customer_phone").notNull(),
-  activityType: text("activity_type").notNull(),
+  activities: jsonb("activities").notNull().$type<string[]>(),
   checkInDate: text("check_in_date").notNull(),
   checkOutDate: text("check_out_date").notNull(),
   numberOfGuests: integer("number_of_guests").notNull(),
@@ -27,7 +27,7 @@ export const insertBookingSchema = createInsertSchema(bookings).omit({
   customerName: z.string().min(2, "Name must be at least 2 characters"),
   customerEmail: z.string().email("Invalid email address"),
   customerPhone: z.string().min(10, "Phone number must be at least 10 digits"),
-  activityType: z.string().min(1, "Please select an activity"),
+  activities: z.array(z.string()).min(1, "Please select at least one activity"),
   checkInDate: z.string().min(1, "Check-in date is required"),
   checkOutDate: z.string().min(1, "Check-out date is required"),
   numberOfGuests: z.number().min(1, "At least 1 guest required").max(20, "Maximum 20 guests allowed"),

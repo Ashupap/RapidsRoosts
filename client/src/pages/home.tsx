@@ -138,7 +138,7 @@ export default function Home() {
     : "Select dates";
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen overflow-x-hidden">
       <Navigation />
       
       {/* Hero Section - Redesigned */}
@@ -183,10 +183,10 @@ export default function Home() {
             transition={{ duration: 0.8 }}
             className="text-center max-w-5xl mx-auto mb-4 md:mb-8"
           >
-            <h1 className="font-heading text-3xl md:text-6xl lg:text-7xl font-extrabold text-white mb-2 md:mb-4 leading-tight tracking-tight" data-testid="text-hero-title">
+            <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-3 md:mb-4 leading-tight tracking-tight" data-testid="text-hero-title">
               Discover Your Next Adventure in Dandeli
             </h1>
-            <p className="text-white/90 text-base md:text-xl lg:text-2xl font-medium" data-testid="text-hero-subtitle">
+            <p className="text-white/90 text-lg sm:text-xl md:text-xl lg:text-2xl font-medium" data-testid="text-hero-subtitle">
               Unforgettable Experiences Await in Nature's Paradise
             </p>
           </motion.div>

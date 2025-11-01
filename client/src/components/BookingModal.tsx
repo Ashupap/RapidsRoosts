@@ -46,8 +46,7 @@ import { Badge } from "@/components/ui/badge";
 const STEPS = [
   { id: 1, title: "Contact Info", icon: User, description: "Tell us about you" },
   { id: 2, title: "Trip Details", icon: Calendar, description: "Plan your adventure" },
-  { id: 3, title: "Customize", icon: Activity, description: "Additional preferences" },
-  { id: 4, title: "Review", icon: CheckCircle2, description: "Confirm and submit" },
+  { id: 3, title: "Review", icon: CheckCircle2, description: "Confirm and submit" },
 ];
 
 const ACTIVITIES = [
@@ -164,13 +163,10 @@ export default function BookingModal({ open, onOpenChange, defaultValues }: Book
       case 2:
         fieldsToValidate = ["activities", "checkInDate", "checkOutDate", "numberOfGuests"];
         break;
-      case 3:
-        fieldsToValidate = [];
-        break;
     }
 
     const isValid = await form.trigger(fieldsToValidate);
-    if (isValid && currentStep < 4) {
+    if (isValid && currentStep < 3) {
       setCurrentStep((prev) => prev + 1);
     }
   };
@@ -523,6 +519,26 @@ export default function BookingModal({ open, onOpenChange, defaultValues }: Book
                     )}
                   />
 
+                  {/* Special Requests */}
+                  <FormField
+                    control={form.control}
+                    name="specialRequests"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Special Requests (Optional)</FormLabel>
+                        <FormControl>
+                          <Textarea
+                            placeholder="Any dietary requirements, accessibility needs, or special occasions..."
+                            className="min-h-[100px]"
+                            {...field}
+                            data-testid="textarea-special-requests"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
                   {/* Customization Notice */}
                   <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 flex items-start gap-3">
                     <Info className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
@@ -538,46 +554,10 @@ export default function BookingModal({ open, onOpenChange, defaultValues }: Book
                 </motion.div>
               )}
 
-              {/* Step 3: Additional Info */}
+              {/* Step 3: Review & Submit */}
               {currentStep === 3 && (
                 <motion.div
                   key="step3"
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  transition={{ duration: 0.3 }}
-                  className="space-y-4"
-                >
-                  <div className="flex items-center gap-2 mb-4">
-                    <Activity className="w-5 h-5 text-teal-rapids" />
-                    <h3 className="text-lg font-semibold">Additional Preferences</h3>
-                  </div>
-
-                  <FormField
-                    control={form.control}
-                    name="specialRequests"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Special Requests (Optional)</FormLabel>
-                        <FormControl>
-                          <Textarea
-                            placeholder="Any dietary requirements, accessibility needs, or special occasions..."
-                            className="min-h-[120px]"
-                            {...field}
-                            data-testid="textarea-special-requests"
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </motion.div>
-              )}
-
-              {/* Step 4: Review & Submit */}
-              {currentStep === 4 && (
-                <motion.div
-                  key="step4"
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
@@ -650,30 +630,31 @@ export default function BookingModal({ open, onOpenChange, defaultValues }: Book
                 onClick={prevStep}
                 disabled={currentStep === 1}
                 data-testid="button-previous-step"
+                className="text-gray-700"
               >
-                <ChevronLeft className="w-4 h-4 mr-2" />
+                <ChevronLeft className="w-4 h-4 mr-2 text-gray-700" />
                 Previous
               </Button>
 
-              {currentStep < 4 ? (
+              {currentStep < 3 ? (
                 <Button
                   type="button"
                   onClick={nextStep}
-                  className="bg-teal-rapids hover:bg-teal-rapids/90"
+                  className="bg-teal-rapids hover:bg-teal-rapids/90 text-white"
                   data-testid="button-next-step"
                 >
                   Next
-                  <ChevronRight className="w-4 h-4 ml-2" />
+                  <ChevronRight className="w-4 h-4 ml-2 text-white" />
                 </Button>
               ) : (
                 <Button
                   type="submit"
-                  className="bg-jungle-canopy hover:bg-jungle-canopy/90"
+                  className="bg-jungle-canopy hover:bg-jungle-canopy/90 text-white"
                   disabled={createBookingMutation.isPending}
                   data-testid="button-submit-booking"
                 >
                   {createBookingMutation.isPending ? "Submitting..." : "Confirm Booking"}
-                  <CheckCircle2 className="w-4 h-4 ml-2" />
+                  <CheckCircle2 className="w-4 h-4 ml-2 text-white" />
                 </Button>
               )}
             </div>

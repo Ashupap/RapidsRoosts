@@ -626,40 +626,56 @@ export default function BookingModal({ open, onOpenChange, defaultValues }: Book
 
           {/* Navigation Buttons */}
             <div className="flex justify-between items-center pt-3 border-t mt-3 shrink-0">
-              <Button
+              <button
                 type="button"
-                variant="outline"
                 onClick={prevStep}
                 disabled={currentStep === 1}
                 data-testid="button-previous-step"
-                style={{ color: '#374151' }}
+                className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md border border-gray-300 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                style={{ color: '#374151', fontWeight: 500, fontSize: '14px' }}
               >
-                <ChevronLeft className="w-4 h-4 mr-2" style={{ color: '#374151' }} />
-                Previous
-              </Button>
+                <ChevronLeft className="w-4 h-4" style={{ color: '#374151' }} />
+                <span style={{ color: '#374151' }}>Previous</span>
+              </button>
 
               {currentStep < 3 ? (
-                <Button
+                <button
                   type="button"
                   onClick={nextStep}
-                  className="bg-teal-rapids hover:bg-teal-rapids/90"
                   data-testid="button-next-step"
-                  style={{ color: 'white' }}
+                  className="inline-flex items-center justify-center gap-2 px-6 py-2 rounded-md transition-colors"
+                  style={{ 
+                    backgroundColor: 'hsl(182, 78%, 38%)',
+                    color: 'white',
+                    fontWeight: 500,
+                    fontSize: '14px'
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'hsl(182, 78%, 32%)'}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'hsl(182, 78%, 38%)'}
                 >
-                  Next
-                  <ChevronRight className="w-4 h-4 ml-2" style={{ color: 'white' }} />
-                </Button>
+                  <span style={{ color: 'white' }}>Next</span>
+                  <ChevronRight className="w-4 h-4" style={{ color: 'white' }} />
+                </button>
               ) : (
-                <Button
+                <button
                   type="submit"
-                  className="bg-jungle-canopy hover:bg-jungle-canopy/90"
                   disabled={createBookingMutation.isPending}
                   data-testid="button-submit-booking"
-                  style={{ color: 'white' }}
+                  className="inline-flex items-center justify-center gap-2 px-6 py-2 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  style={{ 
+                    backgroundColor: 'hsl(138, 54%, 32%)',
+                    color: 'white',
+                    fontWeight: 500,
+                    fontSize: '14px'
+                  }}
+                  onMouseEnter={(e) => !createBookingMutation.isPending && (e.currentTarget.style.backgroundColor = 'hsl(138, 54%, 28%)')}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'hsl(138, 54%, 32%)'}
                 >
-                  {createBookingMutation.isPending ? "Submitting..." : "Confirm Booking"}
-                  <CheckCircle2 className="w-4 h-4 ml-2" style={{ color: 'white' }} />
-                </Button>
+                  <span style={{ color: 'white' }}>
+                    {createBookingMutation.isPending ? "Submitting..." : "Confirm Booking"}
+                  </span>
+                  <CheckCircle2 className="w-4 h-4" style={{ color: 'white' }} />
+                </button>
               )}
             </div>
           </form>

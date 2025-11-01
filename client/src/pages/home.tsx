@@ -719,9 +719,28 @@ export default function Home() {
                           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
                           <div className="absolute bottom-4 left-4 right-4">
                             <div className="flex items-center gap-2 mb-2">
-                              <div className="p-2 rounded-lg bg-white/20 backdrop-blur-sm">
-                                <Icon className="h-5 w-5 text-white" />
-                              </div>
+                              <motion.div 
+                                className="p-2 rounded-lg bg-white/20 backdrop-blur-sm"
+                                whileHover={prefersReducedMotion ? { scale: 1.05 } : { 
+                                  scale: 1.1, 
+                                  rotate: [0, -10, 10, -10, 0],
+                                  transition: { duration: 0.5 }
+                                }}
+                              >
+                                <motion.div
+                                  animate={prefersReducedMotion ? {} : { 
+                                    y: [0, -3, 0],
+                                  }}
+                                  transition={prefersReducedMotion ? {} : { 
+                                    duration: 2,
+                                    repeat: Infinity,
+                                    repeatType: "reverse",
+                                    ease: "easeInOut"
+                                  }}
+                                >
+                                  <Icon className="h-5 w-5 text-white" />
+                                </motion.div>
+                              </motion.div>
                               <h3 className="font-heading text-xl font-bold text-white" data-testid={`text-activity-title-${activity.id}`}>
                                 {activity.title}
                               </h3>

@@ -193,40 +193,40 @@ export default function BookingModal({ open, onOpenChange, defaultValues }: Book
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle className="text-2xl font-bold text-jungle-canopy">
+      <DialogContent className="max-w-2xl max-h-[85vh] overflow-hidden flex flex-col">
+        <DialogHeader className="shrink-0">
+          <DialogTitle className="text-xl font-bold text-jungle-canopy">
             Book Your Adventure
           </DialogTitle>
-          <DialogDescription>
+          <DialogDescription className="text-sm">
             Complete your booking in {STEPS.length} simple steps
           </DialogDescription>
         </DialogHeader>
 
         {/* Progress Indicator */}
-        <div className="space-y-4">
+        <div className="space-y-2 shrink-0">
           <div className="flex justify-between items-center">
             {STEPS.map((step, index) => (
               <div
                 key={step.id}
                 className={cn(
                   "flex flex-col items-center flex-1 relative",
-                  index < STEPS.length - 1 && "after:content-[''] after:absolute after:top-5 after:left-[60%] after:w-full after:h-0.5 after:bg-gray-200"
+                  index < STEPS.length - 1 && "after:content-[''] after:absolute after:top-4 after:left-[60%] after:w-full after:h-0.5 after:bg-gray-200"
                 )}
               >
                 <div
                   className={cn(
-                    "w-10 h-10 rounded-full flex items-center justify-center border-2 transition-all duration-300 relative z-10",
+                    "w-8 h-8 rounded-full flex items-center justify-center border-2 transition-all duration-300 relative z-10",
                     currentStep >= step.id
                       ? "bg-teal-rapids border-teal-rapids text-white"
                       : "bg-white border-gray-300 text-gray-400"
                   )}
                 >
-                  <step.icon className="w-5 h-5" />
+                  <step.icon className="w-4 h-4" />
                 </div>
                 <span
                   className={cn(
-                    "text-xs mt-2 font-medium",
+                    "text-xs mt-1 font-medium",
                     currentStep >= step.id ? "text-jungle-canopy" : "text-gray-400"
                   )}
                 >
@@ -235,27 +235,28 @@ export default function BookingModal({ open, onOpenChange, defaultValues }: Book
               </div>
             ))}
           </div>
-          <Progress value={progressPercentage} className="h-2" />
+          <Progress value={progressPercentage} className="h-1.5" />
         </div>
 
         {/* Form Steps */}
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <AnimatePresence mode="wait">
-              {/* Step 1: Contact Information */}
-              {currentStep === 1 && (
-                <motion.div
-                  key="step1"
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  transition={{ duration: 0.3 }}
-                  className="space-y-4"
-                >
-                  <div className="flex items-center gap-2 mb-4">
-                    <User className="w-5 h-5 text-teal-rapids" />
-                    <h3 className="text-lg font-semibold">Personal Information</h3>
-                  </div>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="flex-1 flex flex-col min-h-0">
+            <div className="flex-1 overflow-y-auto pr-2">
+              <AnimatePresence mode="wait">
+                {/* Step 1: Contact Information */}
+                {currentStep === 1 && (
+                  <motion.div
+                    key="step1"
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.3 }}
+                    className="space-y-3"
+                  >
+                    <div className="flex items-center gap-2 mb-2">
+                      <User className="w-4 h-4 text-teal-rapids" />
+                      <h3 className="text-base font-semibold">Personal Information</h3>
+                    </div>
 
                   <FormField
                     control={form.control}
@@ -621,18 +622,19 @@ export default function BookingModal({ open, onOpenChange, defaultValues }: Book
                 </motion.div>
               )}
             </AnimatePresence>
+          </div>
 
-            {/* Navigation Buttons */}
-            <div className="flex justify-between items-center pt-4 border-t">
+          {/* Navigation Buttons */}
+            <div className="flex justify-between items-center pt-3 border-t mt-3 shrink-0">
               <Button
                 type="button"
                 variant="outline"
                 onClick={prevStep}
                 disabled={currentStep === 1}
                 data-testid="button-previous-step"
-                className="text-gray-700"
+                style={{ color: '#374151' }}
               >
-                <ChevronLeft className="w-4 h-4 mr-2 text-gray-700" />
+                <ChevronLeft className="w-4 h-4 mr-2" style={{ color: '#374151' }} />
                 Previous
               </Button>
 
@@ -640,21 +642,23 @@ export default function BookingModal({ open, onOpenChange, defaultValues }: Book
                 <Button
                   type="button"
                   onClick={nextStep}
-                  className="bg-teal-rapids hover:bg-teal-rapids/90 text-white"
+                  className="bg-teal-rapids hover:bg-teal-rapids/90"
                   data-testid="button-next-step"
+                  style={{ color: 'white' }}
                 >
                   Next
-                  <ChevronRight className="w-4 h-4 ml-2 text-white" />
+                  <ChevronRight className="w-4 h-4 ml-2" style={{ color: 'white' }} />
                 </Button>
               ) : (
                 <Button
                   type="submit"
-                  className="bg-jungle-canopy hover:bg-jungle-canopy/90 text-white"
+                  className="bg-jungle-canopy hover:bg-jungle-canopy/90"
                   disabled={createBookingMutation.isPending}
                   data-testid="button-submit-booking"
+                  style={{ color: 'white' }}
                 >
                   {createBookingMutation.isPending ? "Submitting..." : "Confirm Booking"}
-                  <CheckCircle2 className="w-4 h-4 ml-2 text-white" />
+                  <CheckCircle2 className="w-4 h-4 ml-2" style={{ color: 'white' }} />
                 </Button>
               )}
             </div>

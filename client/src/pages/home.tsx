@@ -97,6 +97,7 @@ export default function Home() {
   const [datePickerOpen, setDatePickerOpen] = useState(false);
   const [guestPickerOpen, setGuestPickerOpen] = useState(false);
   const [videoLoaded, setVideoLoaded] = useState(false);
+  const [selectingCheckOut, setSelectingCheckOut] = useState(false);
   
   useSEO({
     title: 'Home - Adventure Tourism in Dandeli',
@@ -239,9 +240,12 @@ export default function Home() {
                   {/* Booking Form */}
                   <div className="p-4">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                      {/* Date Picker */}
+                      {/* Date Picker - Redesigned for Mobile */}
                       <div>
-                        <Popover open={datePickerOpen} onOpenChange={setDatePickerOpen}>
+                        <Popover open={datePickerOpen} onOpenChange={(open) => {
+                          setDatePickerOpen(open);
+                          if (!open) setSelectingCheckOut(false);
+                        }}>
                           <PopoverTrigger asChild>
                             <button
                               className="w-full h-11 px-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-foreground focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer text-left flex items-center gap-2 hover:border-primary transition-colors"
@@ -251,45 +255,86 @@ export default function Home() {
                               <span className="text-sm truncate">{dateRangeText === "Select dates" ? "Check In/Check out Date" : dateRangeText}</span>
                             </button>
                           </PopoverTrigger>
-                          <PopoverContent className="w-auto p-0" align="start">
-                            <div className="p-4 space-y-4">
-                              <div>
-                                <p className="text-sm font-semibold mb-2">Check-in Date</p>
-                                <CalendarComponent
-                                  mode="single"
-                                  selected={checkInDate}
-                                  onSelect={(date) => {
-                                    setCheckInDate(date);
-                                    if (date && !checkOutDate) {
+                          <PopoverContent className="w-auto p-0 max-h-[70vh] overflow-y-auto" align="start" side="bottom">
+                            <div className="p-3">
+                              {/* Date Selection Instructions */}
+                              <div className="mb-3 px-1">
+                                <p className="text-xs font-semibold text-primary mb-1">
+                                  {!checkInDate ? "Select Check-in Date" : !selectingCheckOut ? "Check-in Selected" : "Select Check-out Date"}
+                                </p>
+                                {checkInDate && checkOutDate && (
+                                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                                    <span>{format(checkInDate, "MMM dd")} → {format(checkOutDate, "MMM dd")}</span>
+                                  </div>
+                                )}
+                              </div>
+
+                              {/* Single Calendar with Smart Selection */}
+                              <CalendarComponent
+                                mode="single"
+                                selected={selectingCheckOut ? checkOutDate : checkInDate}
+                                onSelect={(date) => {
+                                  if (!date) return;
+                                  
+                                  if (!checkInDate || selectingCheckOut) {
+                                    // First selection or selecting check-out
+                                    if (!checkInDate) {
+                                      setCheckInDate(date);
                                       setCheckOutDate(addDays(date, 1));
+                                      setSelectingCheckOut(true);
+                                    } else {
+                                      setCheckOutDate(date);
+                                      setSelectingCheckOut(false);
                                     }
+                                  } else {
+                                    // Reset and start over
+                                    setCheckInDate(date);
+                                    setCheckOutDate(addDays(date, 1));
+                                    setSelectingCheckOut(true);
+                                  }
+                                }}
+                                disabled={(date) => {
+                                  const today = new Date();
+                                  today.setHours(0, 0, 0, 0);
+                                  
+                                  if (selectingCheckOut && checkInDate) {
+                                    return date <= checkInDate;
+                                  }
+                                  return date < today;
+                                }}
+                                initialFocus
+                                className="rounded-md border-0"
+                              />
+
+                              {/* Action Buttons */}
+                              <div className="flex gap-2 mt-3 px-1">
+                                <Button 
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => {
+                                    setCheckInDate(undefined);
+                                    setCheckOutDate(undefined);
+                                    setSelectingCheckOut(false);
                                   }}
-                                  disabled={(date) => date < new Date()}
-                                  initialFocus
-                                />
+                                  className="flex-1 text-xs h-8"
+                                >
+                                  Clear
+                                </Button>
+                                <Button 
+                                  onClick={() => setDatePickerOpen(false)} 
+                                  className="flex-1 text-xs h-8"
+                                  data-testid="button-date-done"
+                                  disabled={!checkInDate || !checkOutDate}
+                                >
+                                  Done
+                                </Button>
                               </div>
-                              <div>
-                                <p className="text-sm font-semibold mb-2">Check-out Date</p>
-                                <CalendarComponent
-                                  mode="single"
-                                  selected={checkOutDate}
-                                  onSelect={setCheckOutDate}
-                                  disabled={(date) => !checkInDate || date <= checkInDate}
-                                />
-                              </div>
-                              <Button 
-                                onClick={() => setDatePickerOpen(false)} 
-                                className="w-full"
-                                data-testid="button-date-done"
-                              >
-                                Done
-                              </Button>
                             </div>
                           </PopoverContent>
                         </Popover>
                       </div>
 
-                      {/* Guests Picker */}
+                      {/* Guests Picker - Compact Design */}
                       <div>
                         <Popover open={guestPickerOpen} onOpenChange={setGuestPickerOpen}>
                           <PopoverTrigger asChild>
@@ -301,89 +346,102 @@ export default function Home() {
                               <span className="text-sm truncate">{guestsText === "2 Guests, 1 Room" && !checkInDate ? "Select Guest and Room" : guestsText}</span>
                             </button>
                           </PopoverTrigger>
-                          <PopoverContent className="w-80" align="start">
-                            <div className="space-y-4">
-                              <div className="flex items-center justify-between">
+                          <PopoverContent className="w-72 max-h-[70vh] overflow-y-auto" align="start" side="bottom">
+                            <div className="space-y-3 p-1">
+                              {/* Adults */}
+                              <div className="flex items-center justify-between py-2">
                                 <div>
-                                  <p className="font-semibold">Adults</p>
+                                  <p className="font-semibold text-sm">Adults</p>
                                   <p className="text-xs text-muted-foreground">Age 13+</p>
                                 </div>
-                                <div className="flex items-center gap-3">
+                                <div className="flex items-center gap-2">
                                   <Button
                                     variant="outline"
                                     size="icon"
+                                    className="h-7 w-7"
                                     onClick={() => setAdults(Math.max(1, adults - 1))}
                                     disabled={adults <= 1}
                                     data-testid="button-adults-minus"
                                   >
-                                    <Minus className="h-4 w-4" />
+                                    <Minus className="h-3 w-3" />
                                   </Button>
-                                  <span className="w-8 text-center font-semibold" data-testid="text-adults-count">{adults}</span>
+                                  <span className="w-6 text-center font-semibold text-sm" data-testid="text-adults-count">{adults}</span>
                                   <Button
                                     variant="outline"
                                     size="icon"
+                                    className="h-7 w-7"
                                     onClick={() => setAdults(adults + 1)}
                                     data-testid="button-adults-plus"
                                   >
-                                    <Plus className="h-4 w-4" />
+                                    <Plus className="h-3 w-3" />
                                   </Button>
                                 </div>
                               </div>
-                              <div className="flex items-center justify-between">
+
+                              {/* Children */}
+                              <div className="flex items-center justify-between py-2">
                                 <div>
-                                  <p className="font-semibold">Children</p>
+                                  <p className="font-semibold text-sm">Children</p>
                                   <p className="text-xs text-muted-foreground">Age 0-12</p>
                                 </div>
-                                <div className="flex items-center gap-3">
+                                <div className="flex items-center gap-2">
                                   <Button
                                     variant="outline"
                                     size="icon"
+                                    className="h-7 w-7"
                                     onClick={() => setChildren(Math.max(0, children - 1))}
                                     disabled={children <= 0}
                                     data-testid="button-children-minus"
                                   >
-                                    <Minus className="h-4 w-4" />
+                                    <Minus className="h-3 w-3" />
                                   </Button>
-                                  <span className="w-8 text-center font-semibold" data-testid="text-children-count">{children}</span>
+                                  <span className="w-6 text-center font-semibold text-sm" data-testid="text-children-count">{children}</span>
                                   <Button
                                     variant="outline"
                                     size="icon"
+                                    className="h-7 w-7"
                                     onClick={() => setChildren(children + 1)}
                                     data-testid="button-children-plus"
                                   >
-                                    <Plus className="h-4 w-4" />
+                                    <Plus className="h-3 w-3" />
                                   </Button>
                                 </div>
                               </div>
-                              <div className="flex items-center justify-between">
+
+                              {/* Rooms */}
+                              <div className="flex items-center justify-between py-2">
                                 <div>
-                                  <p className="font-semibold">Rooms</p>
+                                  <p className="font-semibold text-sm">Rooms</p>
                                   <p className="text-xs text-muted-foreground">Max 4 per room</p>
                                 </div>
-                                <div className="flex items-center gap-3">
+                                <div className="flex items-center gap-2">
                                   <Button
                                     variant="outline"
                                     size="icon"
+                                    className="h-7 w-7"
                                     onClick={() => setRooms(Math.max(1, rooms - 1))}
                                     disabled={rooms <= 1}
                                     data-testid="button-rooms-minus"
                                   >
-                                    <Minus className="h-4 w-4" />
+                                    <Minus className="h-3 w-3" />
                                   </Button>
-                                  <span className="w-8 text-center font-semibold" data-testid="text-rooms-count">{rooms}</span>
+                                  <span className="w-6 text-center font-semibold text-sm" data-testid="text-rooms-count">{rooms}</span>
                                   <Button
                                     variant="outline"
                                     size="icon"
+                                    className="h-7 w-7"
                                     onClick={() => setRooms(rooms + 1)}
                                     data-testid="button-rooms-plus"
                                   >
-                                    <Plus className="h-4 w-4" />
+                                    <Plus className="h-3 w-3" />
                                   </Button>
                                 </div>
                               </div>
+
+                              {/* Done Button */}
                               <Button 
                                 onClick={() => setGuestPickerOpen(false)} 
-                                className="w-full"
+                                className="w-full h-8 text-xs mt-2"
                                 data-testid="button-guest-done"
                               >
                                 Done

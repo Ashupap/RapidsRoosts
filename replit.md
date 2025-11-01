@@ -11,12 +11,14 @@ The application follows a client-server architecture. The frontend is built with
 
 ### Key Features:
 - **Comprehensive SEO Optimization**: Dynamic meta tags, Open Graph, Twitter Cards, JSON-LD schemas, canonical URLs, and geo-location tags.
-- **Modern Mobile-Responsive Navigation**: Professional navigation with desktop and mobile (hamburger menu) support.
+- **Modern Mobile-Responsive Navigation**: Professional navigation with desktop and mobile (hamburger menu) support. Includes About Us page link.
+- **About Us Page**: Complete company story page with video hero, statistics, core values, sustainability commitment, and environmental promise sections.
 - **Dedicated Activities Page & Detail Pages**: Showcase and detailed information for various adventure activities.
 - **Adventure Pulse Design System**: Vibrant adventure-themed color palette with glassmorphic UI elements, right-aligned hero booking card for unobstructed content viewing.
 - **Advanced Parallax Effects**: Reusable ParallaxImage, ParallaxText, and ParallaxLayer components with configurable speeds applied to images and activity cards for depth perception.
 - **Adventure-Themed Animations**: Campfire effects at hero footer, water droplets in nature sections, wildlife silhouettes (birds, deer), and floating leaves - all with WCAG-compliant accessibility.
 - **Video Hero Section**: Fullscreen hero carousel with video playback, auto-rotation (12s intervals), and parallax scroll effects - all respecting user motion preferences.
+- **Mobile-Optimized Booking Form**: Compact single-calendar date picker with smart check-in/check-out selection, max-height constraints (70vh), scrollable popovers, and condensed guest picker for optimal mobile experience.
 - **Multi-Step Booking Form**: Progressive booking flow with validation and dynamic summary.
 - **Automated Email Notifications**: Gmail API integration for booking confirmations and status updates.
 - **Admin Dashboard**: Secure panel for managing bookings, including status updates and search/filter capabilities.

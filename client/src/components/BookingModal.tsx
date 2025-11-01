@@ -216,13 +216,21 @@ export default function BookingModal({ open, onOpenChange, defaultValues }: Book
               >
                 <div
                   className={cn(
-                    "w-8 h-8 rounded-full flex items-center justify-center border-2 transition-all duration-300 relative z-10",
-                    currentStep >= step.id
-                      ? "bg-teal-rapids border-teal-rapids text-white"
-                      : "bg-white border-gray-300 text-gray-400"
+                    "w-8 h-8 rounded-full flex items-center justify-center border-2 transition-all duration-300 relative z-10"
                   )}
+                  style={{
+                    backgroundColor: currentStep >= step.id ? 'hsl(182, 78%, 38%)' : 'white',
+                    borderColor: currentStep >= step.id ? 'hsl(182, 78%, 38%)' : '#d1d5db',
+                    color: currentStep >= step.id ? 'white' : '#9ca3af'
+                  }}
                 >
-                  <step.icon className="w-4 h-4" />
+                  <step.icon 
+                    className="w-4 h-4" 
+                    style={{ 
+                      color: currentStep >= step.id ? 'white' : '#9ca3af',
+                      stroke: currentStep >= step.id ? 'white' : '#9ca3af'
+                    }} 
+                  />
                 </div>
                 <span
                   className={cn(
@@ -631,11 +639,20 @@ export default function BookingModal({ open, onOpenChange, defaultValues }: Book
                 onClick={prevStep}
                 disabled={currentStep === 1}
                 data-testid="button-previous-step"
-                className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md border border-gray-300 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                style={{ color: '#374151', fontWeight: 500, fontSize: '14px' }}
+                className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md border transition-colors disabled:cursor-not-allowed"
+                style={{ 
+                  backgroundColor: currentStep === 1 ? '#f3f4f6' : '#ffffff',
+                  borderColor: '#d1d5db',
+                  color: '#1f2937',
+                  fontWeight: 500,
+                  fontSize: '14px',
+                  opacity: currentStep === 1 ? 0.5 : 1
+                }}
+                onMouseEnter={(e) => currentStep !== 1 && (e.currentTarget.style.backgroundColor = '#f9fafb')}
+                onMouseLeave={(e) => currentStep !== 1 && (e.currentTarget.style.backgroundColor = '#ffffff')}
               >
-                <ChevronLeft className="w-4 h-4" style={{ color: '#374151' }} />
-                <span style={{ color: '#374151' }}>Previous</span>
+                <ChevronLeft className="w-4 h-4" style={{ color: '#1f2937', stroke: '#1f2937' }} />
+                <span style={{ color: '#1f2937' }}>Previous</span>
               </button>
 
               {currentStep < 3 ? (

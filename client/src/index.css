@@ -377,7 +377,16 @@
     position: absolute;
     inset: 0px;
     border-radius: inherit;
-    z-index: 999;
+    z-index: 1;
+  }
+
+  /* Ensure button content (text and icons) renders above the hover overlay */
+  .hover-elevate > *,
+  .active-elevate > *,
+  .hover-elevate-2 > *,
+  .active-elevate-2 > * {
+    position: relative;
+    z-index: 2;
   }
 
   .hover-elevate:hover:not(.no-default-hover-elevate)::after,

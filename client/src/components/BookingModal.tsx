@@ -249,7 +249,7 @@ export default function BookingModal({ open, onOpenChange, defaultValues }: Book
         {/* Form Steps */}
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="flex-1 flex flex-col min-h-0">
-            <div className="flex-1 overflow-y-auto pr-2">
+            <div className="flex-1 overflow-y-auto px-4 py-3">
               <AnimatePresence mode="wait">
                 {/* Step 1: Contact Information */}
                 {currentStep === 1 && (

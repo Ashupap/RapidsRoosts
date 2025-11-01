@@ -342,6 +342,11 @@ export default function Home() {
                                     color: white !important;
                                     font-weight: bold;
                                   }
+                                  .compact-calendar .date-endpoint {
+                                    background-color: hsl(182, 78%, 38%) !important;
+                                    color: white !important;
+                                    font-weight: bold;
+                                  }
                                 `}
                               </style>
                               <div className="compact-calendar">
@@ -379,10 +384,16 @@ export default function Home() {
                                     inRange: (date) => {
                                       if (!checkInDate || !checkOutDate) return false;
                                       return date > checkInDate && date < checkOutDate;
+                                    },
+                                    endpoint: (date) => {
+                                      if (!checkInDate || !checkOutDate) return false;
+                                      const dateTime = date.getTime();
+                                      return dateTime === checkInDate.getTime() || dateTime === checkOutDate.getTime();
                                     }
                                   }}
                                   modifiersClassNames={{
-                                    inRange: 'date-in-range'
+                                    inRange: 'date-in-range',
+                                    endpoint: 'date-endpoint'
                                   }}
                                   initialFocus
                                   className="rounded-md border-0"

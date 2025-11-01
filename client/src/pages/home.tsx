@@ -142,7 +142,7 @@ export default function Home() {
       <Navigation />
       
       {/* Hero Section - Redesigned */}
-      <section ref={heroRef} className="relative min-h-[90vh] overflow-hidden -mt-20 pt-20">
+      <section ref={heroRef} className="relative h-screen md:min-h-[90vh] overflow-hidden -mt-20 pt-20">
         {/* Background Video with Parallax */}
         <motion.div
           style={{ y: heroY }}
@@ -176,17 +176,17 @@ export default function Home() {
         </motion.div>
 
         {/* Hero Content */}
-        <div className="relative z-10 flex flex-col items-center justify-center px-6 pt-20 pb-28">
+        <div className="relative z-10 flex flex-col items-center justify-center px-4 md:px-6 pt-16 md:pt-20 pb-8 md:pb-28 h-full">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center max-w-5xl mx-auto mb-8"
+            className="text-center max-w-5xl mx-auto mb-4 md:mb-8"
           >
-            <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-4 leading-tight tracking-tight" data-testid="text-hero-title">
+            <h1 className="font-heading text-3xl md:text-6xl lg:text-7xl font-extrabold text-white mb-2 md:mb-4 leading-tight tracking-tight" data-testid="text-hero-title">
               Discover Your Next Adventure in Dandeli
             </h1>
-            <p className="text-white/90 text-lg md:text-xl lg:text-2xl font-medium" data-testid="text-hero-subtitle">
+            <p className="text-white/90 text-base md:text-xl lg:text-2xl font-medium" data-testid="text-hero-subtitle">
               Unforgettable Experiences Await in Nature's Paradise
             </p>
           </motion.div>

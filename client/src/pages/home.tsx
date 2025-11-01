@@ -13,6 +13,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { ParallaxImage, ParallaxText } from "@/components/ParallaxSection";
 import { CampfireEffect, WaterDroplets, WildlifeSilhouette } from "@/components/AdventureEffects";
+import BookingModal from "@/components/BookingModal";
 import raftingHero1 from "@assets/stock_images/vibrant_water_raftin_9419a08c.jpg";
 import raftingHero2 from "@assets/stock_images/vibrant_water_raftin_5f8fedad.jpg";
 import raftingHero3 from "@assets/stock_images/vibrant_water_raftin_24bbd1b7.jpg";
@@ -98,6 +99,7 @@ export default function Home() {
   const [guestPickerOpen, setGuestPickerOpen] = useState(false);
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [selectingCheckOut, setSelectingCheckOut] = useState(false);
+  const [bookingModalOpen, setBookingModalOpen] = useState(false);
   
   useSEO({
     title: 'Home - Adventure Tourism in Dandeli',
@@ -118,18 +120,15 @@ export default function Home() {
   const heroY = useTransform(scrollYProgress, [0, 1], [prefersReducedMotion ? "0%" : "0%", prefersReducedMotion ? "0%" : "20%"]);
 
   const handleBookNow = () => {
-    const bookingData = {
-      activityType: activeTab,
-      checkInDate: checkInDate ? format(checkInDate, "yyyy-MM-dd") : "",
-      checkOutDate: checkOutDate ? format(checkOutDate, "yyyy-MM-dd") : "",
-      numberOfGuests: adults + children,
-      adults,
-      children,
-      rooms,
-    };
-    sessionStorage.setItem("heroBookingData", JSON.stringify(bookingData));
-    setLocation("/booking");
+    setBookingModalOpen(true);
   };
+
+  const getDefaultBookingValues = () => ({
+    activities: activeTab ? [activeTab] : [],
+    checkInDate: checkInDate ? format(checkInDate, "yyyy-MM-dd") : "",
+    checkOutDate: checkOutDate ? format(checkOutDate, "yyyy-MM-dd") : "",
+    numberOfGuests: adults + children,
+  });
 
   const totalGuests = adults + children;
   const guestsText = `${totalGuests} Guest${totalGuests !== 1 ? 's' : ''}, ${rooms} Room${rooms !== 1 ? 's' : ''}`;
@@ -1361,6 +1360,13 @@ export default function Home() {
       </section>
 
       <Footer />
+
+      {/* Booking Modal */}
+      <BookingModal
+        open={bookingModalOpen}
+        onOpenChange={setBookingModalOpen}
+        defaultValues={getDefaultBookingValues()}
+      />
 
       <style>{`
         .scrollbar-hide::-webkit-scrollbar {

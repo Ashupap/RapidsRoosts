@@ -240,7 +240,7 @@ export default function Home() {
                   {/* Booking Form */}
                   <div className="p-4">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                      {/* Date Picker - Redesigned for Mobile */}
+                      {/* Date Picker - Compact & Animated */}
                       <div>
                         <Popover open={datePickerOpen} onOpenChange={(open) => {
                           setDatePickerOpen(open);
@@ -255,59 +255,142 @@ export default function Home() {
                               <span className="text-sm truncate">{dateRangeText === "Select dates" ? "Check In/Check out Date" : dateRangeText}</span>
                             </button>
                           </PopoverTrigger>
-                          <PopoverContent className="w-auto p-0 max-h-[70vh] overflow-y-auto" align="start" side="bottom">
-                            <div className="p-3">
-                              {/* Date Selection Instructions */}
-                              <div className="mb-3 px-1">
-                                <p className="text-xs font-semibold text-primary mb-1">
-                                  {!checkInDate ? "Select Check-in Date" : !selectingCheckOut ? "Check-in Selected" : "Select Check-out Date"}
-                                </p>
-                                {checkInDate && checkOutDate && (
-                                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                                    <span>{format(checkInDate, "MMM dd")} → {format(checkOutDate, "MMM dd")}</span>
+                          <PopoverContent className="w-auto p-0 max-h-[60vh] overflow-y-auto" align="start" side="bottom">
+                            <div className="p-2">
+                              {/* Compact Date Range Display */}
+                              {checkInDate && checkOutDate && (
+                                <motion.div 
+                                  initial={{ opacity: 0, y: -10 }}
+                                  animate={{ opacity: 1, y: 0 }}
+                                  className="mb-2 p-2 bg-primary/10 rounded-md border border-primary/20"
+                                >
+                                  <div className="flex items-center justify-between text-xs">
+                                    <div className="flex items-center gap-2">
+                                      <div className="text-center">
+                                        <div className="text-[10px] text-muted-foreground uppercase">Check-in</div>
+                                        <div className="font-bold text-primary">{format(checkInDate, "MMM dd")}</div>
+                                      </div>
+                                      <div className="text-primary">→</div>
+                                      <div className="text-center">
+                                        <div className="text-[10px] text-muted-foreground uppercase">Check-out</div>
+                                        <div className="font-bold text-primary">{format(checkOutDate, "MMM dd")}</div>
+                                      </div>
+                                    </div>
+                                    <div className="text-[10px] text-muted-foreground">
+                                      {Math.ceil((checkOutDate.getTime() - checkInDate.getTime()) / (1000 * 60 * 60 * 24))} nights
+                                    </div>
                                   </div>
-                                )}
-                              </div>
+                                </motion.div>
+                              )}
 
-                              {/* Single Calendar with Smart Selection */}
-                              <CalendarComponent
-                                mode="single"
-                                selected={selectingCheckOut ? checkOutDate : checkInDate}
-                                onSelect={(date) => {
-                                  if (!date) return;
-                                  
-                                  if (!checkInDate || selectingCheckOut) {
-                                    // First selection or selecting check-out
-                                    if (!checkInDate) {
+                              {/* Compact Calendar with Range Highlighting */}
+                              <style>
+                                {`
+                                  .compact-calendar .rdp {
+                                    --rdp-cell-size: 32px;
+                                    font-size: 12px;
+                                  }
+                                  .compact-calendar .rdp-months {
+                                    margin: 0;
+                                  }
+                                  .compact-calendar .rdp-month {
+                                    margin: 0;
+                                  }
+                                  .compact-calendar .rdp-caption {
+                                    padding: 4px 8px;
+                                    margin-bottom: 4px;
+                                  }
+                                  .compact-calendar .rdp-nav {
+                                    padding: 0;
+                                  }
+                                  .compact-calendar .rdp-nav_button {
+                                    width: 24px;
+                                    height: 24px;
+                                  }
+                                  .compact-calendar .rdp-table {
+                                    margin: 0;
+                                  }
+                                  .compact-calendar .rdp-head_cell {
+                                    font-size: 10px;
+                                    padding: 2px;
+                                  }
+                                  .compact-calendar .rdp-cell {
+                                    padding: 1px;
+                                  }
+                                  .compact-calendar .rdp-day {
+                                    width: 32px;
+                                    height: 32px;
+                                    font-size: 12px;
+                                  }
+                                  .compact-calendar .date-in-range {
+                                    background: linear-gradient(135deg, hsl(182, 78%, 38%, 0.15) 0%, hsl(182, 78%, 38%, 0.25) 100%);
+                                    position: relative;
+                                  }
+                                  .compact-calendar .date-in-range::after {
+                                    content: '';
+                                    position: absolute;
+                                    inset: 0;
+                                    border-radius: 0.25rem;
+                                    animation: pulse-range 2s ease-in-out infinite;
+                                  }
+                                  @keyframes pulse-range {
+                                    0%, 100% { box-shadow: 0 0 0 0 hsl(182, 78%, 38%, 0.4); }
+                                    50% { box-shadow: 0 0 0 2px hsl(182, 78%, 38%, 0.2); }
+                                  }
+                                  .compact-calendar .rdp-day_selected {
+                                    background-color: hsl(182, 78%, 38%) !important;
+                                    color: white !important;
+                                    font-weight: bold;
+                                  }
+                                `}
+                              </style>
+                              <div className="compact-calendar">
+                                <CalendarComponent
+                                  mode="single"
+                                  selected={selectingCheckOut ? checkOutDate : checkInDate}
+                                  onSelect={(date) => {
+                                    if (!date) return;
+                                    
+                                    if (!checkInDate || selectingCheckOut) {
+                                      if (!checkInDate) {
+                                        setCheckInDate(date);
+                                        setCheckOutDate(addDays(date, 1));
+                                        setSelectingCheckOut(true);
+                                      } else {
+                                        setCheckOutDate(date);
+                                        setSelectingCheckOut(false);
+                                      }
+                                    } else {
                                       setCheckInDate(date);
                                       setCheckOutDate(addDays(date, 1));
                                       setSelectingCheckOut(true);
-                                    } else {
-                                      setCheckOutDate(date);
-                                      setSelectingCheckOut(false);
                                     }
-                                  } else {
-                                    // Reset and start over
-                                    setCheckInDate(date);
-                                    setCheckOutDate(addDays(date, 1));
-                                    setSelectingCheckOut(true);
-                                  }
-                                }}
-                                disabled={(date) => {
-                                  const today = new Date();
-                                  today.setHours(0, 0, 0, 0);
-                                  
-                                  if (selectingCheckOut && checkInDate) {
-                                    return date <= checkInDate;
-                                  }
-                                  return date < today;
-                                }}
-                                initialFocus
-                                className="rounded-md border-0"
-                              />
+                                  }}
+                                  disabled={(date) => {
+                                    const today = new Date();
+                                    today.setHours(0, 0, 0, 0);
+                                    
+                                    if (selectingCheckOut && checkInDate) {
+                                      return date <= checkInDate;
+                                    }
+                                    return date < today;
+                                  }}
+                                  modifiers={{
+                                    inRange: (date) => {
+                                      if (!checkInDate || !checkOutDate) return false;
+                                      return date > checkInDate && date < checkOutDate;
+                                    }
+                                  }}
+                                  modifiersClassNames={{
+                                    inRange: 'date-in-range'
+                                  }}
+                                  initialFocus
+                                  className="rounded-md border-0"
+                                />
+                              </div>
 
-                              {/* Action Buttons */}
-                              <div className="flex gap-2 mt-3 px-1">
+                              {/* Compact Action Buttons */}
+                              <div className="flex gap-1.5 mt-2">
                                 <Button 
                                   variant="outline"
                                   size="sm"
@@ -316,13 +399,13 @@ export default function Home() {
                                     setCheckOutDate(undefined);
                                     setSelectingCheckOut(false);
                                   }}
-                                  className="flex-1 text-xs h-8"
+                                  className="flex-1 text-xs h-7"
                                 >
                                   Clear
                                 </Button>
                                 <Button 
                                   onClick={() => setDatePickerOpen(false)} 
-                                  className="flex-1 text-xs h-8"
+                                  className="flex-1 text-xs h-7"
                                   data-testid="button-date-done"
                                   disabled={!checkInDate || !checkOutDate}
                                 >

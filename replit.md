@@ -19,10 +19,13 @@ The application follows a client-server architecture. The frontend is built with
 - **Adventure-Themed Animations**: Campfire effects at hero footer, water droplets in nature sections, wildlife silhouettes (birds, deer), and floating leaves - all with WCAG-compliant accessibility.
 - **Video Hero Section**: Fullscreen hero carousel with video playback, auto-rotation (12s intervals), and parallax scroll effects - all respecting user motion preferences.
 - **Mobile-Optimized Booking Form**: Compact single-calendar date picker with smart check-in/check-out selection, max-height constraints (70vh), scrollable popovers, and condensed guest picker for optimal mobile experience.
+- **Beautiful Booking Modal**: Modern dialog-based booking interface with multi-step form (Contact Info, Trip Details, Customize, Review), animated transitions, activity icons, progress indicator, and form persistence across steps. Seamlessly integrates with hero form selections.
+- **Multiple Activity Selection**: Users can select multiple activities using checkboxes with visual feedback. Each activity displays icon, name, and description. Clear customization notice informs guests that final activity schedule can be adjusted after check-in based on availability.
+- **Enhanced Booking System**: Booking IDs now use alphanumeric format (RRD-{6 characters}) for easier communication. Activities stored as JSON array in database (jsonb column) supporting multiple selections per booking. Email confirmations list all selected activities with customization notice.
 - **Multi-Step Booking Form**: Progressive booking flow with validation and dynamic summary.
-- **Automated Email Notifications**: Gmail API integration for booking confirmations and status updates.
+- **Automated Email Notifications**: Gmail API integration for booking confirmations (listing all activities) and status updates.
 - **Admin Dashboard**: Secure panel for managing bookings, including status updates and search/filter capabilities.
-- **Full Accessibility Compliance**: All continuous animations (parallax, auto-rotation, adventure effects) respect prefers-reduced-motion using framer-motion's SSR-safe hook.
+- **Full Accessibility Compliance**: All continuous animations (parallax, auto-rotation, adventure effects) respect prefers-reduced-motion using framer-motion's SSR-safe hook. Modal includes proper ARIA labels and data-testid attributes for testing.
 
 ## External Dependencies
 - **SQLite**: Primary database for both development and production (file-based, no server required).

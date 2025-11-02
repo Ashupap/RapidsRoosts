@@ -92,6 +92,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         booking.bookingId,
         booking.customerName,
         booking.activities,
+        booking.accommodation,
         booking.checkInDate,
         booking.checkOutDate,
         booking.numberOfGuests

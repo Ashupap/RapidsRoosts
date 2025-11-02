@@ -42,6 +42,8 @@ import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Home } from "lucide-react";
 
 const STEPS = [
   { id: 1, title: "Contact Info", icon: User, description: "Tell us about you" },
@@ -87,6 +89,14 @@ const ACTIVITIES = [
   },
 ];
 
+const ACCOMMODATIONS = [
+  { value: "cottage", label: "Riverside Cottage" },
+  { value: "tent", label: "Luxury Tent" },
+  { value: "dormitory", label: "Shared Dormitory" },
+  { value: "treehouse", label: "Jungle Treehouse" },
+  { value: "none", label: "No Accommodation Needed" },
+];
+
 interface BookingModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -106,6 +116,7 @@ export default function BookingModal({ open, onOpenChange, defaultValues }: Book
       customerEmail: "",
       customerPhone: "",
       activities: [],
+      accommodation: undefined,
       checkInDate: "",
       checkOutDate: "",
       numberOfGuests: 1,
@@ -115,16 +126,17 @@ export default function BookingModal({ open, onOpenChange, defaultValues }: Book
 
   // Sync form values only when modal transitions from closed to open
   useEffect(() => {
-    if (open && !prevOpenRef.current && defaultValues) {
+    if (open && !prevOpenRef.current) {
       form.reset({
-        customerName: defaultValues.customerName || "",
-        customerEmail: defaultValues.customerEmail || "",
-        customerPhone: defaultValues.customerPhone || "",
-        activities: defaultValues.activities || [],
-        checkInDate: defaultValues.checkInDate || "",
-        checkOutDate: defaultValues.checkOutDate || "",
-        numberOfGuests: defaultValues.numberOfGuests || 1,
-        specialRequests: defaultValues.specialRequests || "",
+        customerName: defaultValues?.customerName || "",
+        customerEmail: defaultValues?.customerEmail || "",
+        customerPhone: defaultValues?.customerPhone || "",
+        activities: defaultValues?.activities || [],
+        accommodation: defaultValues?.accommodation || undefined,
+        checkInDate: defaultValues?.checkInDate || "",
+        checkOutDate: defaultValues?.checkOutDate || "",
+        numberOfGuests: defaultValues?.numberOfGuests || 1,
+        specialRequests: defaultValues?.specialRequests || "",
       });
       // Reset to step 1 when modal opens
       setCurrentStep(1);
@@ -534,6 +546,35 @@ export default function BookingModal({ open, onOpenChange, defaultValues }: Book
                     )}
                   />
 
+                  {/* Accommodation */}
+                  <FormField
+                    control={form.control}
+                    name="accommodation"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="flex items-center gap-2">
+                          <Home className="w-4 h-4" />
+                          Accommodation (Optional)
+                        </FormLabel>
+                        <Select onValueChange={field.onChange} value={field.value}>
+                          <FormControl>
+                            <SelectTrigger data-testid="select-accommodation">
+                              <SelectValue placeholder="Select accommodation type" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {ACCOMMODATIONS.map((accommodation) => (
+                              <SelectItem key={accommodation.value} value={accommodation.value}>
+                                {accommodation.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
                   {/* Special Requests */}
                   <FormField
                     control={form.control}
@@ -622,6 +663,12 @@ export default function BookingModal({ open, onOpenChange, defaultValues }: Book
                             : "Not selected"}
                         </p>
                         <p><strong>Guests:</strong> {numberOfGuests}</p>
+                        {form.getValues("accommodation") && (
+                          <p>
+                            <strong>Accommodation:</strong>{" "}
+                            {ACCOMMODATIONS.find((a) => a.value === form.getValues("accommodation"))?.label}
+                          </p>
+                        )}
                       </div>
                     </div>
 

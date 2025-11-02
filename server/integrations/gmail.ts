@@ -52,6 +52,7 @@ export async function sendBookingConfirmation(
   bookingId: string,
   customerName: string,
   activities: string[],
+  accommodation: string | null,
   checkInDate: string,
   checkOutDate: string,
   numberOfGuests: number
@@ -109,6 +110,9 @@ export async function sendBookingConfirmation(
                 <div class="detail-row">
                   <span class="detail-label">Activities:</span> ${activities.map(act => act.charAt(0).toUpperCase() + act.slice(1).replace(/-/g, ' ')).join(', ')}
                 </div>
+                ${accommodation ? `<div class="detail-row">
+                  <span class="detail-label">Accommodation:</span> ${accommodation.charAt(0).toUpperCase() + accommodation.slice(1).replace(/-/g, ' ')}
+                </div>` : ''}
                 <div class="detail-row">
                   <span class="detail-label">Check-in Date:</span> ${checkInDate}
                 </div>
@@ -170,7 +174,7 @@ Your Booking ID: ${bookingId}
 Status: Pending Confirmation
 
 Booking Details:
-- Activities: ${activities.map(act => act.charAt(0).toUpperCase() + act.slice(1).replace(/-/g, ' ')).join(', ')}
+- Activities: ${activities.map(act => act.charAt(0).toUpperCase() + act.slice(1).replace(/-/g, ' ')).join(', ')}${accommodation ? `\n- Accommodation: ${accommodation.charAt(0).toUpperCase() + accommodation.slice(1).replace(/-/g, ' ')}` : ''}
 - Check-in Date: ${checkInDate}
 - Check-out Date: ${checkOutDate}
 - Number of Guests: ${numberOfGuests}

@@ -153,7 +153,13 @@ export default function BookingModal({ open, onOpenChange, defaultValues }: Book
     createBookingMutation.mutate(data);
   };
 
-  const nextStep = async () => {
+  const nextStep = async (e?: React.MouseEvent<HTMLButtonElement>) => {
+    // Prevent any default form submission behavior
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
     let fieldsToValidate: (keyof InsertBooking)[] = [];
 
     switch (currentStep) {
@@ -658,7 +664,7 @@ export default function BookingModal({ open, onOpenChange, defaultValues }: Book
               {currentStep < 3 ? (
                 <button
                   type="button"
-                  onClick={nextStep}
+                  onClick={(e) => nextStep(e)}
                   data-testid="button-next-step"
                   className="inline-flex items-center justify-center gap-2 px-6 py-2 rounded-md transition-colors"
                   style={{ 

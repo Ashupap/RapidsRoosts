@@ -102,13 +102,14 @@ export default function Home() {
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
   
   useSEO({
-    title: 'Home - Adventure Tourism in Dandeli',
-    description: 'Experience the ultimate adventure in Dandeli, Karnataka. Book white water rafting, jungle safaris, forest trekking, and kayaking packages. Rapids & Roosts offers premium adventure tourism in the Western Ghats.',
-    keywords: 'Dandeli adventure tourism, Dandeli packages, white water rafting Dandeli, jungle safari Karnataka, adventure sports Western Ghats, Dandeli resorts, Kali river rafting, Dandeli tour booking',
+    title: 'Rapids & Roosts Dandeli - #1 Adventure Tourism in Karnataka | White Water Rafting, Safari & Trekking',
+    description: 'Best adventure tourism in Dandeli, Karnataka. Experience white water rafting on Kali River, jungle safaris in 834 sq km wildlife sanctuary, forest trekking in Western Ghats, and kayaking. Book your Dandeli tour package with Rapids & Roosts - rated #1 for adventure sports in Karnataka.',
+    keywords: 'Dandeli, Dandeli tourism, adventure tourism Karnataka, best adventure tourism Karnataka, white water rafting Dandeli, jungle safari Dandeli, Dandeli packages, Kali river rafting, Western Ghats trekking, Dandeli wildlife sanctuary, adventure sports Karnataka, Dandeli tour booking, things to do in Dandeli',
   });
 
   injectStructuredData('organization');
   injectStructuredData('localBusiness');
+  injectStructuredData('touristDestination');
 
   const heroRef = useRef<HTMLDivElement>(null);
   

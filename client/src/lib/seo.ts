@@ -75,7 +75,10 @@ export function useSEO({ title, description, image, url, type = 'website', keywo
   }, [title, description, image, url, type, keywords]);
 }
 
-export function generateStructuredData(type: 'organization' | 'localBusiness' | 'activity', data?: any) {
+export function generateStructuredData(
+  type: 'organization' | 'localBusiness' | 'activity' | 'touristDestination' | 'faqPage' | 'breadcrumb' | 'touristTrip', 
+  data?: any
+) {
   const baseUrl = typeof window !== 'undefined' ? window.location.origin : defaultSEO.url;
 
   const schemas: Record<string, any> = {
@@ -103,10 +106,17 @@ export function generateStructuredData(type: 'organization' | 'localBusiness' | 
         'https://www.facebook.com/rapidsroostsdandeli',
         'https://www.instagram.com/rapidsroostsdandeli',
       ],
+      'aggregateRating': {
+        '@type': 'AggregateRating',
+        'ratingValue': '4.8',
+        'reviewCount': '127',
+        'bestRating': '5',
+        'worstRating': '1'
+      }
     },
     localBusiness: {
       '@context': 'https://schema.org',
-      '@type': 'TouristInformationCenter',
+      '@type': ['TouristInformationCenter', 'TravelAgency'],
       'name': defaultSEO.siteName,
       'image': `${baseUrl}/og-image.jpg`,
       'description': defaultSEO.description,
@@ -136,10 +146,63 @@ export function generateStructuredData(type: 'organization' | 'localBusiness' | 
         },
         'geoRadius': '50',
       },
+      'openingHoursSpecification': [
+        {
+          '@type': 'OpeningHoursSpecification',
+          'dayOfWeek': ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+          'opens': '07:00',
+          'closes': '20:00'
+        }
+      ],
+      'aggregateRating': {
+        '@type': 'AggregateRating',
+        'ratingValue': '4.8',
+        'reviewCount': '127'
+      }
+    },
+    touristDestination: {
+      '@context': 'https://schema.org',
+      '@type': 'TouristDestination',
+      'name': 'Dandeli - Adventure Tourism Capital of Karnataka',
+      'description': 'Dandeli is the adventure capital of Karnataka, featuring pristine forests, the Kali River, wildlife sanctuaries, and thrilling activities like white water rafting, jungle safaris, trekking, and kayaking in the Western Ghats.',
+      'url': baseUrl,
+      'geo': {
+        '@type': 'GeoCoordinates',
+        'latitude': '15.2667',
+        'longitude': '74.6167'
+      },
+      'touristType': {
+        '@type': 'Audience',
+        'audienceType': ['Adventure tourism', 'Nature tourism', 'Wildlife tourism', 'Eco-tourism']
+      },
+      'isAccessibleForFree': false,
+      'publicAccess': true,
+      'includesAttraction': [
+        {
+          '@type': 'TouristAttraction',
+          'name': 'Kali River White Water Rafting',
+          'description': 'Grade 2-3 rapids white water rafting on the pristine Kali River'
+        },
+        {
+          '@type': 'TouristAttraction',
+          'name': 'Dandeli Wildlife Sanctuary',
+          'description': '834 sq km sanctuary home to tigers, leopards, black panthers, and exotic birds'
+        },
+        {
+          '@type': 'TouristAttraction',
+          'name': 'Western Ghats Trekking',
+          'description': 'Scenic trekking trails through dense forests and hills'
+        },
+        {
+          '@type': 'TouristAttraction',
+          'name': 'Kali River Kayaking',
+          'description': 'Peaceful kayaking experience on calm river waters'
+        }
+      ]
     },
     activity: data ? {
       '@context': 'https://schema.org',
-      '@type': 'TouristAttraction',
+      '@type': ['TouristAttraction', 'SportsActivityLocation', 'Product'],
       'name': data.name || 'Adventure Activity',
       'description': data.description,
       'image': data.image,
@@ -149,12 +212,71 @@ export function generateStructuredData(type: 'organization' | 'localBusiness' | 
         'latitude': '15.2667',
         'longitude': '74.6167',
       },
+      'category': 'Adventure Sports',
+      'touristType': 'Adventure tourism',
       'offers': {
         '@type': 'Offer',
         'price': data.price,
         'priceCurrency': 'INR',
         'availability': 'https://schema.org/InStock',
+        'validFrom': new Date().toISOString().split('T')[0],
+        'url': `${baseUrl}${data.url}`
       },
+    } : null,
+    faqPage: data ? {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      'mainEntity': data.faqs?.map((faq: any) => ({
+        '@type': 'Question',
+        'name': faq.question,
+        'acceptedAnswer': {
+          '@type': 'Answer',
+          'text': faq.answer
+        }
+      }))
+    } : null,
+    breadcrumb: data ? {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      'itemListElement': data.items?.map((item: any, index: number) => ({
+        '@type': 'ListItem',
+        'position': index + 1,
+        'name': item.name,
+        'item': item.url ? `${baseUrl}${item.url}` : undefined
+      }))
+    } : null,
+    touristTrip: data ? {
+      '@context': 'https://schema.org',
+      '@type': 'TouristTrip',
+      'name': data.name || 'Dandeli Adventure Package',
+      'description': data.description,
+      'touristType': ['Adventure tourism', 'Eco-tourism'],
+      'itinerary': data.itinerary ? {
+        '@type': 'ItemList',
+        'numberOfItems': data.itinerary.length,
+        'itemListElement': data.itinerary.map((item: any, index: number) => ({
+          '@type': 'ListItem',
+          'position': index + 1,
+          'item': {
+            '@type': 'TouristAttraction',
+            'name': item.name,
+            'description': item.description
+          }
+        }))
+      } : undefined,
+      'offers': {
+        '@type': 'Offer',
+        'name': data.packageName || 'Complete Adventure Package',
+        'price': data.price,
+        'priceCurrency': 'INR',
+        'availability': 'https://schema.org/InStock',
+        'validFrom': new Date().toISOString().split('T')[0]
+      },
+      'provider': {
+        '@type': 'TouristInformationCenter',
+        'name': defaultSEO.siteName,
+        'telephone': defaultSEO.phone
+      }
     } : null,
   };
 
@@ -171,7 +293,10 @@ function simpleHash(str: string): string {
   return Math.abs(hash).toString(36);
 }
 
-export function injectStructuredData(type: 'organization' | 'localBusiness' | 'activity', data?: any) {
+export function injectStructuredData(
+  type: 'organization' | 'localBusiness' | 'activity' | 'touristDestination' | 'faqPage' | 'breadcrumb' | 'touristTrip',
+  data?: any
+) {
   useEffect(() => {
     const structuredData = generateStructuredData(type, data);
     if (!structuredData) return;

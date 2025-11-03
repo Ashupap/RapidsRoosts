@@ -1,0 +1,22 @@
+# robots.txt for Rapids & Roosts Dandeli
+# https://www.robotstxt.org/robotstxt.html
+
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://rapidsroosts.com/sitemap.xml
+
+# Block admin routes
+Disallow: /admin
+Disallow: /admin/*
+
+# Block api routes from indexing
+Disallow: /api
+Disallow: /api/*
+
+# Block booking modal direct access
+Disallow: /*?modal=*
+
+# Crawl delay for polite crawling
+Crawl-delay: 1

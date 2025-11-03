@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Heart, Target, Award, Shield, Users, Leaf, Mountain, Waves, MapPin, CheckCircle2, ChevronRight } from "lucide-react";
 import { useRef, useState } from "react";
-import { useSEO } from "@/lib/seo";
+import { useSEO, injectStructuredData } from "@/lib/seo";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { ParallaxImage } from "@/components/ParallaxSection";
@@ -20,9 +20,17 @@ export default function About() {
   const [videoLoaded, setVideoLoaded] = useState(false);
   
   useSEO({
-    title: 'About Us - Rapids & Roosts Dandeli',
-    description: 'Learn about Rapids & Roosts, Dandeli\'s premier adventure tourism operator. With 15+ years of experience, we offer authentic eco-friendly adventures in the Western Ghats of Karnataka.',
-    keywords: 'about Rapids Roosts, Dandeli tour operator, adventure tourism company, Western Ghats adventures, eco-friendly tourism Karnataka, sustainable adventure travel',
+    title: 'About Rapids & Roosts - Best Adventure Tourism Company in Dandeli, Karnataka | 15+ Years Experience',
+    description: 'Discover Rapids & Roosts, Dandeli\'s #1 rated adventure tourism operator with 15+ years of experience and 10,000+ happy adventurers. Offering eco-friendly white water rafting, jungle safaris, trekking, and kayaking in Karnataka\'s Western Ghats. Certified guides, international safety standards, and sustainable tourism practices. Book your Dandeli adventure with the most trusted tour operator.',
+    keywords: 'about Rapids Roosts Dandeli, best Dandeli tour operator, Dandeli adventure tourism company, Western Ghats adventures Karnataka, eco-friendly tourism Dandeli, sustainable adventure travel, best adventure company Karnataka, Dandeli tour packages, trusted Dandeli operator, adventure tourism Dandeli, Dandeli wildlife tourism, Kali river adventures',
+  });
+
+  injectStructuredData('organization');
+  injectStructuredData('breadcrumb', {
+    items: [
+      { name: 'Home', url: '/' },
+      { name: 'About Us' }
+    ]
   });
 
   const heroRef = useRef<HTMLDivElement>(null);

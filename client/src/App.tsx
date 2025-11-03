@@ -16,6 +16,7 @@ import Rafting from "@/pages/rafting";
 import Safari from "@/pages/safari";
 import Kayaking from "@/pages/kayaking";
 import Trekking from "@/pages/trekking";
+import DandeliGuide from "@/pages/dandeli-guide";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -34,6 +35,7 @@ function Router() {
       <Route path="/safari" component={Safari} />
       <Route path="/kayaking" component={Kayaking} />
       <Route path="/trekking" component={Trekking} />
+      <Route path="/dandeli-guide" component={DandeliGuide} />
       <Route component={NotFound} />
     </Switch>
   );

@@ -34,12 +34,18 @@ export default function Activities() {
   const heroY = useTransform(scrollYProgress, [0, 1], [prefersReducedMotion ? "0%" : "0%", prefersReducedMotion ? "0%" : "20%"]);
 
   useSEO({
-    title: 'Our Activities - Adventure Sports & Tours in Dandeli',
-    description: 'Explore our complete range of adventure activities in Dandeli. White water rafting, jungle safaris, forest trekking, kayaking, and customized adventure packages. Detailed pricing, timings, and booking information.',
-    keywords: 'Dandeli activities, adventure sports Dandeli, rafting safari trekking kayaking, Dandeli tour activities, Western Ghats adventures, Karnataka outdoor activities',
+    title: 'Adventure Activities in Dandeli - White Water Rafting, Safari, Trekking | Best Dandeli Packages',
+    description: 'Discover the best adventure activities in Dandeli, Karnataka. White water rafting on Kali River (Grade 2-3 rapids), wildlife safaris in 834 sq km sanctuary, Western Ghats trekking, kayaking & more. Detailed pricing from ₹600. Book your Dandeli adventure package with Rapids & Roosts - #1 rated adventure tourism operator.',
+    keywords: 'Dandeli activities, adventure activities in Dandeli, things to do in Dandeli, white water rafting Dandeli, jungle safari Dandeli, Dandeli trekking, kayaking Dandeli, adventure sports Karnataka, Dandeli tour packages, Kali river activities, Dandeli wildlife safari, adventure tourism Dandeli, best activities in Dandeli, Dandeli water sports',
   });
 
   injectStructuredData('organization');
+  injectStructuredData('breadcrumb', {
+    items: [
+      { name: 'Home', url: '/' },
+      { name: 'Activities' }
+    ]
+  });
 
   const activities = getAllActivities();
 

@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Search, CheckCircle2, Clock, XCircle, Calendar, Users, Activity, Mail, Phone } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import type { Booking } from "@shared/schema";
-import { useSEO } from "@/lib/seo";
+import { useSEO, injectStructuredData } from "@/lib/seo";
 import Footer from "@/components/Footer";
 import Navigation from "@/components/Navigation";
 
@@ -40,9 +40,17 @@ const STATUS_CONFIG = {
 
 export default function Status() {
   useSEO({
-    title: 'Check Booking Status - Track Your Dandeli Adventure Booking',
-    description: 'Check your Dandeli adventure booking status. Track your rafting, safari, trekking, or kayaking reservation using your booking ID. Get instant updates on confirmation status.',
-    keywords: 'check booking status Dandeli, track booking, booking confirmation Dandeli, adventure booking status, reservation status',
+    title: 'Check Dandeli Booking Status - Track Your Adventure Booking | Instant Confirmation Updates',
+    description: 'Track your Dandeli adventure booking status instantly using your booking ID. Check confirmation status for white water rafting, jungle safari, trekking, or kayaking reservations. Get real-time updates on your Karnataka adventure tour booking. 24/7 online tracking for Rapids & Roosts bookings.',
+    keywords: 'check Dandeli booking status, track booking Dandeli, Dandeli booking confirmation, adventure booking status, reservation status Dandeli, booking ID check, track Dandeli tour, booking confirmation status, check booking online Dandeli',
+  });
+
+  injectStructuredData('organization');
+  injectStructuredData('breadcrumb', {
+    items: [
+      { name: 'Home', url: '/' },
+      { name: 'Check Booking Status' }
+    ]
   });
 
   const [bookingId, setBookingId] = useState("");

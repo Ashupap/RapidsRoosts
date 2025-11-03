@@ -110,6 +110,43 @@ export default function Home() {
   injectStructuredData('organization');
   injectStructuredData('localBusiness');
   injectStructuredData('touristDestination');
+  
+  injectStructuredData('faqPage', {
+    faqs: [
+      {
+        question: "What is the best time to visit Dandeli?",
+        answer: "The best time to visit Dandeli is from October to May. October to February offers pleasant weather (15-28°C) perfect for all activities. March to May is ideal for white water rafting as the Kali River has strong currents. Avoid monsoon season (June-September) as most adventure activities are closed for safety."
+      },
+      {
+        question: "How do I reach Dandeli from Bangalore?",
+        answer: "Dandeli is approximately 460 km from Bangalore. You can reach by: 1) Road: 8-9 hours drive via NH48 and NH63. Regular buses available from Bangalore Majestic. 2) Train: Take a train to Hubli (400 km), then taxi/bus to Dandeli (72 km). 3) Flight: Fly to Hubli Airport, then 2-hour drive to Dandeli."
+      },
+      {
+        question: "What activities are included in Dandeli tour packages?",
+        answer: "Our Dandeli packages include white water rafting (9 km or 1 km options), jungle safari in 834 sq km wildlife sanctuary, forest trekking through Western Ghats, kayaking on Kali River, bird watching, and nature walks. All safety equipment, guides, and permits are included."
+      },
+      {
+        question: "Is Dandeli safe for families and children?",
+        answer: "Yes, Dandeli is completely safe for families! We offer age-appropriate activities: jungle safaris suitable for all ages, easy trekking trails for children 5+, and short rafting (1 km) for beginners. Our experienced guides ensure safety with quality equipment and thorough briefings."
+      },
+      {
+        question: "What wildlife can I see in Dandeli Wildlife Sanctuary?",
+        answer: "Dandeli Wildlife Sanctuary (834 sq km) is home to Bengal tigers, black panthers, leopards, sloth bears, elephants, Indian bison, deer species, crocodiles, and over 300 bird species including hornbills, kingfishers, and eagles."
+      },
+      {
+        question: "What should I pack for a Dandeli trip?",
+        answer: "Essentials: Comfortable clothing, sturdy shoes for trekking, swimwear for water activities, sunscreen (SPF 50+), insect repellent, hat/cap, sunglasses, camera, power bank, personal medications, and a light jacket for evenings. We provide all safety gear and helmets."
+      },
+      {
+        question: "What accommodation options are available in Dandeli?",
+        answer: "We offer diverse accommodations: Riverside Cottages (scenic Kali River views), Luxury Tents (glamping experience), Jungle Treehouses (elevated stays amidst nature), and Shared Dormitories (budget-friendly). All options include meals, WiFi access, and 24/7 hot water."
+      },
+      {
+        question: "How difficult is white water rafting in Dandeli?",
+        answer: "Dandeli offers Grade 2-3 rapids, suitable for beginners to intermediate rafters. No prior experience needed! We offer 1 km Short Rafting (1 hour, easy for first-timers) and 9 km Long Rafting (2-3 hours, more thrilling). Professional instructors provide complete training."
+      }
+    ]
+  });
 
   const heroRef = useRef<HTMLDivElement>(null);
   
@@ -1220,6 +1257,100 @@ export default function Home() {
             <Link href="/booking">
               <Button size="lg" data-testid="button-book-from-gallery">
                 Start Your Adventure
+                <ChevronRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-20 px-6 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <p className="text-sm uppercase tracking-[0.2em] text-primary font-medium mb-4">FAQ</p>
+            <h2 className="font-heading text-4xl md:text-5xl font-medium text-foreground mb-6">
+              Frequently Asked Questions
+            </h2>
+            <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+              Everything you need to know about planning your Dandeli adventure
+            </p>
+          </motion.div>
+
+          <div className="space-y-4">
+            {[
+              {
+                question: "What is the best time to visit Dandeli?",
+                answer: "The best time to visit Dandeli is from October to May. October to February offers pleasant weather (15-28°C) perfect for all activities. March to May is ideal for white water rafting as the Kali River has strong currents. Avoid monsoon season (June-September) as most adventure activities are closed for safety."
+              },
+              {
+                question: "How do I reach Dandeli from Bangalore?",
+                answer: "Dandeli is approximately 460 km from Bangalore. You can reach by: 1) Road: 8-9 hours drive via NH48 and NH63. Regular buses available from Bangalore Majestic. 2) Train: Take a train to Hubli (400 km), then taxi/bus to Dandeli (72 km). 3) Flight: Fly to Hubli Airport, then 2-hour drive to Dandeli. We can arrange pickups from Hubli."
+              },
+              {
+                question: "What activities are included in Dandeli tour packages?",
+                answer: "Our Dandeli packages include white water rafting (9 km or 1 km options), jungle safari in 834 sq km wildlife sanctuary, forest trekking through Western Ghats, kayaking on Kali River, bird watching, and nature walks. All safety equipment, guides, and permits are included. You can customize your package with additional activities like coracle rides, zip-lining, and night camping."
+              },
+              {
+                question: "Is Dandeli safe for families and children?",
+                answer: "Yes, Dandeli is completely safe for families! We offer age-appropriate activities: jungle safaris suitable for all ages, easy trekking trails for children 5+, and short rafting (1 km) for beginners. Our experienced guides ensure safety with quality equipment and thorough briefings. Children under 12 get special supervision during adventure activities."
+              },
+              {
+                question: "What wildlife can I see in Dandeli Wildlife Sanctuary?",
+                answer: "Dandeli Wildlife Sanctuary (834 sq km) is home to Bengal tigers, black panthers, leopards, sloth bears, elephants, Indian bison, deer species (sambar, spotted, barking), crocodiles, and over 300 bird species including hornbills, kingfishers, and eagles. Best viewing times are early morning (6-9 AM) and evening (4-6 PM) safari drives."
+              },
+              {
+                question: "What should I pack for a Dandeli trip?",
+                answer: "Essentials: Comfortable clothing (quick-dry recommended), sturdy shoes for trekking, swimwear for water activities, sunscreen (SPF 50+), insect repellent, hat/cap, sunglasses, camera, power bank, personal medications, and a light jacket for evenings. For rafting, bring extra clothes and waterproof bags for electronics. We provide all safety gear and helmets."
+              },
+              {
+                question: "What accommodation options are available in Dandeli?",
+                answer: "We offer diverse accommodations: Riverside Cottages (scenic Kali River views, AC, private bathrooms), Luxury Tents (glamping experience, modern amenities), Jungle Treehouses (elevated stays amidst nature), and Shared Dormitories (budget-friendly, clean facilities). All options include meals, WiFi access, and 24/7 hot water. You can select your preference during booking."
+              },
+              {
+                question: "How difficult is white water rafting in Dandeli?",
+                answer: "Dandeli offers Grade 2-3 rapids, suitable for beginners to intermediate rafters. No prior experience needed! We offer: 1 km Short Rafting (1 hour, Grade 2, easy for first-timers) and 9 km Long Rafting (2-3 hours, Grade 2-3, more thrilling). Professional instructors provide complete training and safety briefings. Age limit: 12+ for long rafting, 8+ for short rafting. Swimming ability not mandatory but recommended."
+              }
+            ].map((faq, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.05 }}
+              >
+                <details className="group bg-section-light rounded-lg overflow-hidden border border-border hover:border-primary/30 transition-colors">
+                  <summary className="flex items-center justify-between cursor-pointer p-6 font-semibold text-foreground hover:text-primary transition-colors list-none" data-testid={`button-faq-${index}`}>
+                    <span className="text-lg pr-4">{faq.question}</span>
+                    <ChevronRight className="h-5 w-5 flex-shrink-0 transition-transform duration-300 group-open:rotate-90 text-primary" />
+                  </summary>
+                  <div className="px-6 pb-6">
+                    <p className="text-muted-foreground leading-relaxed" data-testid={`text-answer-${index}`}>
+                      {faq.answer}
+                    </p>
+                  </div>
+                </details>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="mt-12 text-center"
+          >
+            <p className="text-muted-foreground mb-6">Still have questions? We're here to help!</p>
+            <Link href="/booking">
+              <Button size="lg" data-testid="button-book-from-faq">
+                Book Your Adventure
                 <ChevronRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>

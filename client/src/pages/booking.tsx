@@ -15,7 +15,7 @@ import { useLocation } from "wouter";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import { useSEO } from "@/lib/seo";
+import { useSEO, injectStructuredData } from "@/lib/seo";
 import Footer from "@/components/Footer";
 import Navigation from "@/components/Navigation";
 
@@ -36,9 +36,17 @@ const ACTIVITIES = [
 
 export default function Booking() {
   useSEO({
-    title: 'Book Your Adventure - Dandeli Activity Booking',
-    description: 'Book your adventure tour in Dandeli. Choose from white water rafting, jungle safaris, forest trekking, and kayaking. Instant confirmation with secure online booking.',
-    keywords: 'book Dandeli tour, Dandeli booking, rafting booking Dandeli, safari booking Karnataka, adventure booking Western Ghats',
+    title: 'Book Dandeli Adventure Package - Instant Confirmation | Rafting, Safari, Trekking Booking',
+    description: 'Book your Dandeli adventure package online with instant confirmation. Choose white water rafting, jungle safaris, Western Ghats trekking, kayaking, or complete packages. Secure payment, best prices from ₹600, flexible dates, and 24/7 customer support. Easy multi-step booking process for your Karnataka adventure.',
+    keywords: 'book Dandeli tour, Dandeli tour booking online, book rafting Dandeli, Dandeli package booking, adventure booking Karnataka, safari booking Dandeli, book Dandeli activities, online Dandeli booking, Dandeli tour packages, instant booking confirmation, book adventure tour Karnataka',
+  });
+
+  injectStructuredData('organization');
+  injectStructuredData('breadcrumb', {
+    items: [
+      { name: 'Home', url: '/' },
+      { name: 'Book Your Adventure' }
+    ]
   });
 
   const [currentStep, setCurrentStep] = useState(1);

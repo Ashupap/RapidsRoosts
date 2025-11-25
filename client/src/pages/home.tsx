@@ -2,11 +2,12 @@ import { Link } from "wouter";
 import { motion, useScroll, useTransform, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ChevronRight, ChevronLeft, Waves, Mountain, Compass, Send, MapPin, Mail, Phone, Bed, Building2, Home as HomeIcon } from "lucide-react";
+import { ChevronRight, ChevronLeft, Waves, Mountain, Compass, Send, MapPin, Mail, Phone, Bed, Building2, Home as HomeIcon, PhoneCall } from "lucide-react";
 import { useRef, useState } from "react";
 import { useSEO, injectStructuredData } from "@/lib/seo";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import ContactModal from "@/components/ContactModal";
 import { ParallaxImage, ParallaxText } from "@/components/ParallaxSection";
 import { CampfireEffect, WaterDroplets, WildlifeSilhouette } from "@/components/AdventureEffects";
 import raftingHero1 from "@assets/stock_images/vibrant_water_raftin_9419a08c.jpg";
@@ -80,6 +81,7 @@ const activities = [
 export default function Home() {
   const prefersReducedMotion = useReducedMotion();
   const [videoLoaded, setVideoLoaded] = useState(false);
+  const [contactModalOpen, setContactModalOpen] = useState(false);
   const heroRef = useRef<HTMLDivElement>(null);
   
   const { scrollYProgress } = useScroll({
@@ -202,11 +204,21 @@ export default function Home() {
                   <ChevronRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
-              <Link href="/about">
-                <Button size="lg" variant="outline" className="bg-white/10 backdrop-blur-sm border-white/30 text-white hover:bg-white/20 font-semibold px-8" data-testid="button-about-us">
-                  About Us
+              <a href="tel:+919483940400">
+                <Button size="lg" className="bg-orange-500 hover:bg-orange-600 text-white font-bold px-8" data-testid="button-call-hero">
+                  <PhoneCall className="mr-2 h-5 w-5" />
+                  Call Us
                 </Button>
-              </Link>
+              </a>
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="bg-white/10 backdrop-blur-sm border-white/30 text-white hover:bg-white/20 font-semibold px-8" 
+                onClick={() => setContactModalOpen(true)}
+                data-testid="button-contact-hero"
+              >
+                Contact Us
+              </Button>
             </motion.div>
             
             {/* Activity Icons Row */}
@@ -441,10 +453,6 @@ export default function Home() {
                             <div className="flex items-center justify-between text-sm">
                               <span className="text-muted-foreground">Difficulty</span>
                               <span className="font-semibold text-foreground">{activity.difficulty}</span>
-                            </div>
-                            <div className="flex items-center justify-between text-sm">
-                              <span className="text-muted-foreground">Price</span>
-                              <span className="font-bold text-primary">{activity.price}</span>
                             </div>
                           </div>
                           <Button className="w-full group-hover:bg-primary/90" data-testid={`button-explore-${activity.id}`}>
@@ -683,11 +691,22 @@ export default function Home() {
                       <span className="text-sm">Swimming Pool Access</span>
                     </div>
                   </div>
-                  <Link href="/about" className="w-full">
-                    <Button className="w-full" data-testid="button-learn-couple">
-                      Learn More
+                  <div className="flex flex-col gap-2">
+                    <a href="tel:+919483940400" className="w-full">
+                      <Button className="w-full bg-orange-500 hover:bg-orange-600" data-testid="button-call-couple">
+                        <PhoneCall className="mr-2 h-4 w-4" />
+                        Call Us
+                      </Button>
+                    </a>
+                    <Button 
+                      variant="outline" 
+                      className="w-full" 
+                      onClick={() => setContactModalOpen(true)}
+                      data-testid="button-contact-couple"
+                    >
+                      Contact Us
                     </Button>
-                  </Link>
+                  </div>
                 </CardContent>
               </Card>
             </motion.div>
@@ -730,11 +749,22 @@ export default function Home() {
                       <span className="text-sm">Campfire & Rain Dance</span>
                     </div>
                   </div>
-                  <Link href="/about" className="w-full">
-                    <Button className="w-full" data-testid="button-learn-family">
-                      Learn More
+                  <div className="flex flex-col gap-2">
+                    <a href="tel:+919483940400" className="w-full">
+                      <Button className="w-full bg-orange-500 hover:bg-orange-600" data-testid="button-call-family">
+                        <PhoneCall className="mr-2 h-4 w-4" />
+                        Call Us
+                      </Button>
+                    </a>
+                    <Button 
+                      variant="outline" 
+                      className="w-full" 
+                      onClick={() => setContactModalOpen(true)}
+                      data-testid="button-contact-family"
+                    >
+                      Contact Us
                     </Button>
-                  </Link>
+                  </div>
                 </CardContent>
               </Card>
             </motion.div>
@@ -774,11 +804,22 @@ export default function Home() {
                       <span className="text-sm">Group Activities</span>
                     </div>
                   </div>
-                  <Link href="/about" className="w-full">
-                    <Button className="w-full" data-testid="button-learn-student">
-                      Learn More
+                  <div className="flex flex-col gap-2">
+                    <a href="tel:+919483940400" className="w-full">
+                      <Button className="w-full bg-orange-500 hover:bg-orange-600" data-testid="button-call-student">
+                        <PhoneCall className="mr-2 h-4 w-4" />
+                        Call Us
+                      </Button>
+                    </a>
+                    <Button 
+                      variant="outline" 
+                      className="w-full" 
+                      onClick={() => setContactModalOpen(true)}
+                      data-testid="button-contact-student"
+                    >
+                      Contact Us
                     </Button>
-                  </Link>
+                  </div>
                 </CardContent>
               </Card>
             </motion.div>
@@ -1147,6 +1188,8 @@ export default function Home() {
       </section>
 
       <Footer />
+
+      <ContactModal open={contactModalOpen} onOpenChange={setContactModalOpen} />
 
       <style>{`
         .scrollbar-hide::-webkit-scrollbar {

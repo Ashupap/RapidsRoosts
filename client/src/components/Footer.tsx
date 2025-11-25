@@ -6,11 +6,11 @@ import logo from "@assets/logo_1761304770834.jpg";
 
 export default function Footer() {
   const socialLinks = [
-    { icon: FaFacebook, href: "https://facebook.com", label: "Facebook", color: "hover:text-[#1877F2]" },
-    { icon: FaInstagram, href: "https://instagram.com", label: "Instagram", color: "hover:text-[#E4405F]" },
-    { icon: FaTwitter, href: "https://twitter.com", label: "Twitter", color: "hover:text-[#1DA1F2]" },
-    { icon: FaYoutube, href: "https://youtube.com", label: "YouTube", color: "hover:text-[#FF0000]" },
-    { icon: FaWhatsapp, href: "https://wa.me/919483940400", label: "WhatsApp", color: "hover:text-[#25D366]" },
+    { icon: FaFacebook, href: "https://facebook.com", label: "Facebook", color: "text-[#1877F2]", bgColor: "bg-[#1877F2]/20 hover:bg-[#1877F2]/30" },
+    { icon: FaInstagram, href: "https://instagram.com", label: "Instagram", color: "text-[#E4405F]", bgColor: "bg-[#E4405F]/20 hover:bg-[#E4405F]/30" },
+    { icon: FaTwitter, href: "https://twitter.com", label: "Twitter", color: "text-[#1DA1F2]", bgColor: "bg-[#1DA1F2]/20 hover:bg-[#1DA1F2]/30" },
+    { icon: FaYoutube, href: "https://youtube.com", label: "YouTube", color: "text-[#FF0000]", bgColor: "bg-[#FF0000]/20 hover:bg-[#FF0000]/30" },
+    { icon: FaWhatsapp, href: "https://wa.me/919483940400", label: "WhatsApp", color: "text-[#25D366]", bgColor: "bg-[#25D366]/20 hover:bg-[#25D366]/30" },
   ];
 
   return (
@@ -63,10 +63,10 @@ export default function Footer() {
                     transition: { duration: 0.2 },
                   }}
                   whileTap={{ scale: 0.9 }}
-                  className={`w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center transition-all duration-300 ${social.color} hover:bg-white/20 border border-white/20 hover:border-white/40`}
+                  className={`w-10 h-10 rounded-full ${social.bgColor} backdrop-blur-sm flex items-center justify-center transition-all duration-300 border border-white/20 hover:border-white/40 hover:scale-110`}
                   data-testid={`link-social-${social.label.toLowerCase()}`}
                 >
-                  <social.icon className="w-5 h-5" />
+                  <social.icon className={`w-5 h-5 ${social.color}`} />
                 </motion.a>
               ))}
             </div>

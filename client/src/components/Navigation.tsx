@@ -83,7 +83,7 @@ export default function Navigation() {
                     ? "text-muted-foreground" 
                     : "text-white/90 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
                 }`}>
-                  Adventure Tourism
+                  Adventure Dandeli
                 </p>
               </div>
             </motion.div>

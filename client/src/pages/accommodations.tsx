@@ -25,6 +25,7 @@ import { useSEO } from "@/lib/seo";
 import Footer from "@/components/Footer";
 import Navigation from "@/components/Navigation";
 import { useRef, useState } from "react";
+import { useContactModal } from "@/context/ContactModalContext";
 import activityVideo from "@assets/activity-video-compressed.mp4";
 import fallbackImage from "@assets/stock_images/vibrant_water_raftin_9419a08c.jpg";
 import resort1 from "@assets/stock_images/luxury_resort_accomm_d96d2ca3.jpg";
@@ -107,6 +108,7 @@ const accommodations = [
 ];
 
 export default function Accommodations() {
+  const { openContactModal } = useContactModal();
   const prefersReducedMotion = useReducedMotion();
   const [videoLoaded, setVideoLoaded] = useState(false);
   const heroRef = useRef<HTMLDivElement>(null);
@@ -184,11 +186,9 @@ export default function Accommodations() {
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </a>
-                <Link href="/about">
-                  <Button size="lg" variant="outline" className="text-base bg-white/10 backdrop-blur-sm border-white/30 text-white hover:bg-white/20">
-                    Contact Us
-                  </Button>
-                </Link>
+                <Button size="lg" variant="outline" className="text-base bg-white/10 backdrop-blur-sm border-white/30 text-white hover:bg-white/20" onClick={openContactModal}>
+                  Contact Us
+                </Button>
               </div>
             </motion.div>
           </div>
@@ -327,12 +327,10 @@ export default function Accommodations() {
                             {accommodation.capacity}
                           </p>
                         </div>
-                        <Link href="/about">
-                          <Button className="text-base" data-testid={`button-contact-${accommodation.id}`}>
-                            Contact Us
-                            <ArrowRight className="ml-2 h-4 w-4" />
-                          </Button>
-                        </Link>
+                        <Button className="text-base" onClick={openContactModal} data-testid={`button-contact-${accommodation.id}`}>
+                          Contact Us
+                          <ArrowRight className="ml-2 h-4 w-4" />
+                        </Button>
                       </div>
                     </div>
                   </div>
@@ -360,12 +358,10 @@ export default function Accommodations() {
                   stay, meals, activities, and sightseeing. Contact us to learn more!
                 </p>
                 <div className="flex flex-wrap justify-center gap-4">
-                  <Link href="/about">
-                    <Button size="lg" className="text-base">
-                      Contact Us
-                      <ArrowRight className="ml-2 h-5 w-5" />
-                    </Button>
-                  </Link>
+                  <Button size="lg" className="text-base" onClick={openContactModal}>
+                    Contact Us
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
                   <a href="tel:+919483940400">
                     <Button size="lg" variant="outline" className="text-base">
                       <Phone className="mr-2 h-5 w-5" />

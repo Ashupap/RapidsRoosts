@@ -8,8 +8,10 @@ import trekkingImage from "@assets/generated_images/Forest_trekking_adventure_tr
 import { useSEO, injectStructuredData } from "@/lib/seo";
 import Footer from "@/components/Footer";
 import Navigation from "@/components/Navigation";
+import { useContactModal } from "@/context/ContactModalContext";
 
 export default function TrekkingDetail() {
+  const { openContactModal } = useContactModal();
   useSEO({
     title: 'Forest Trekking - Guided Treks in Western Ghats Dandeli',
     description: 'Discover hidden forest trails through Western Ghats biodiversity hotspot. Trek to Shiroli Peak, Kavala Caves, Syntheri Rocks, and Magod Falls with expert guides. Multiple difficulty levels available.',
@@ -244,12 +246,10 @@ export default function TrekkingDetail() {
                       Explore the breathtaking Western Ghats trails with expert local guides. 
                       Contact us to learn more.
                     </p>
-                    <Link href="/about">
-                      <Button size="lg" variant="secondary" className="w-full" data-testid="button-contact-trekking">
-                        Contact Us
-                        <ChevronRight className="ml-2 h-5 w-5" />
-                      </Button>
-                    </Link>
+                    <Button size="lg" variant="secondary" className="w-full" onClick={openContactModal} data-testid="button-contact-trekking">
+                      Contact Us
+                      <ChevronRight className="ml-2 h-5 w-5" />
+                    </Button>
                   </CardContent>
                 </Card>
               </motion.div>

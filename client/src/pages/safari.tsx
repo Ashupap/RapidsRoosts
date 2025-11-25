@@ -9,8 +9,10 @@ import safariImage2 from "@assets/stock_images/jungle_safari_wildli_5c354858.jpg
 import { useSEO, injectStructuredData } from "@/lib/seo";
 import Footer from "@/components/Footer";
 import Navigation from "@/components/Navigation";
+import { useContactModal } from "@/context/ContactModalContext";
 
 export default function SafariDetail() {
+  const { openContactModal } = useContactModal();
   useSEO({
     title: 'Jungle Safari - Wildlife Safari in Dandeli Wildlife Sanctuary',
     description: 'Explore the 834 sq km Dandeli Wildlife Sanctuary on a guided jungle safari. Spot tigers, leopards, elephants, sloth bears, and 200+ bird species.',
@@ -248,12 +250,10 @@ export default function SafariDetail() {
                     <p className="mb-6 opacity-90">
                       Explore the incredible biodiversity of Dandeli Wildlife Sanctuary. Contact us to learn more.
                     </p>
-                    <Link href="/about">
-                      <Button size="lg" variant="secondary" className="w-full" data-testid="button-contact-safari">
-                        Contact Us
-                        <ChevronRight className="ml-2 h-5 w-5" />
-                      </Button>
-                    </Link>
+                    <Button size="lg" variant="secondary" className="w-full" onClick={openContactModal} data-testid="button-contact-safari">
+                      Contact Us
+                      <ChevronRight className="ml-2 h-5 w-5" />
+                    </Button>
                   </CardContent>
                 </Card>
               </motion.div>

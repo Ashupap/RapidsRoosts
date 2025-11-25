@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Phone, Mail, MapPin, Send, CheckCircle, Loader2 } from "lucide-react";
+import { Phone, Mail, Send, CheckCircle, Loader2, MessageCircle, Sparkles } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface ContactModalProps {
@@ -62,100 +62,120 @@ export default function ContactModal({ open, onOpenChange }: ContactModalProps) 
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto" data-testid="dialog-contact">
-        <DialogHeader>
-          <DialogTitle className="font-heading text-2xl" data-testid="text-contact-title">
-            Contact Us
-          </DialogTitle>
-          <DialogDescription data-testid="text-contact-description">
-            Get in touch for bookings, inquiries, or any questions about our adventures
-          </DialogDescription>
-        </DialogHeader>
-
-        <AnimatePresence mode="wait">
-          {isSubmitted ? (
-            <motion.div
-              key="success"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              className="flex flex-col items-center justify-center py-8"
-            >
-              <motion.div
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ type: "spring", stiffness: 200, damping: 15 }}
-              >
-                <CheckCircle className="h-16 w-16 text-green-500 mb-4" />
-              </motion.div>
-              <h3 className="font-heading text-xl font-bold mb-2" data-testid="text-success-title">
-                Thank You!
-              </h3>
-              <p className="text-muted-foreground text-center" data-testid="text-success-message">
-                Your message has been sent successfully. We'll respond shortly.
-              </p>
-            </motion.div>
-          ) : (
-            <motion.div
-              key="form"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            >
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6 p-4 bg-muted/50 rounded-lg">
-                <a
-                  href="tel:+919483940400"
-                  className="flex items-center gap-2 text-sm hover:text-primary transition-colors"
-                  data-testid="link-phone"
-                >
-                  <Phone className="h-4 w-4 text-primary" />
-                  <span>+91 94839 40400</span>
-                </a>
-                <a
-                  href="mailto:info@rapidsroosts.com"
-                  className="flex items-center gap-2 text-sm hover:text-primary transition-colors"
-                  data-testid="link-email"
-                >
-                  <Mail className="h-4 w-4 text-primary" />
-                  <span>info@rapidsroosts.com</span>
-                </a>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <MapPin className="h-4 w-4 text-primary" />
-                  <span>Dandeli, Karnataka</span>
-                </div>
+      <DialogContent className="sm:max-w-[480px] p-0 overflow-hidden border-0 shadow-2xl" data-testid="dialog-contact">
+        <div className="bg-gradient-to-br from-primary via-primary to-emerald-700 p-6 text-white">
+          <DialogHeader className="space-y-3">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-white/20 rounded-full backdrop-blur-sm">
+                <MessageCircle className="h-6 w-6" />
               </div>
+              <div>
+                <DialogTitle className="font-heading text-2xl text-white" data-testid="text-contact-title">
+                  Let's Plan Your Adventure
+                </DialogTitle>
+                <DialogDescription className="text-white/80 mt-1" data-testid="text-contact-description">
+                  Get in touch and we'll respond within 24 hours
+                </DialogDescription>
+              </div>
+            </div>
+          </DialogHeader>
+          
+          <div className="flex gap-4 mt-5">
+            <a
+              href="tel:+919483940400"
+              className="flex items-center gap-2 px-4 py-2 bg-white/20 rounded-full text-sm font-medium hover:bg-white/30 transition-colors backdrop-blur-sm"
+              data-testid="link-phone"
+            >
+              <Phone className="h-4 w-4" />
+              +91 94839 40400
+            </a>
+            <a
+              href="mailto:info@rapidsroosts.com"
+              className="flex items-center gap-2 px-4 py-2 bg-white/20 rounded-full text-sm font-medium hover:bg-white/30 transition-colors backdrop-blur-sm"
+              data-testid="link-email"
+            >
+              <Mail className="h-4 w-4" />
+              Email Us
+            </a>
+          </div>
+        </div>
 
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="p-6">
+          <AnimatePresence mode="wait">
+            {isSubmitted ? (
+              <motion.div
+                key="success"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                className="flex flex-col items-center justify-center py-10"
+              >
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                  className="relative"
+                >
+                  <div className="absolute inset-0 bg-green-500/20 rounded-full blur-xl animate-pulse" />
+                  <div className="relative p-4 bg-gradient-to-br from-green-400 to-green-600 rounded-full">
+                    <CheckCircle className="h-12 w-12 text-white" />
+                  </div>
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                  className="mt-6 text-center"
+                >
+                  <h3 className="font-heading text-2xl font-bold text-foreground mb-2" data-testid="text-success-title">
+                    Thank You!
+                  </h3>
+                  <p className="text-muted-foreground" data-testid="text-success-message">
+                    We'll get back to you shortly with exciting adventure options!
+                  </p>
+                </motion.div>
+              </motion.div>
+            ) : (
+              <motion.form
+                key="form"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onSubmit={handleSubmit}
+                className="space-y-4"
+              >
+                <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="name">Name *</Label>
+                    <Label htmlFor="name" className="text-sm font-medium">Your Name *</Label>
                     <Input
                       id="name"
                       name="name"
-                      placeholder="Your name"
+                      placeholder="John Doe"
                       value={formData.name}
                       onChange={handleChange}
                       required
+                      className="h-11 border-2 focus:border-primary transition-colors"
                       data-testid="input-name"
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="phone">Phone *</Label>
+                    <Label htmlFor="phone" className="text-sm font-medium">Phone Number *</Label>
                     <Input
                       id="phone"
                       name="phone"
                       type="tel"
-                      placeholder="+91 XXXXX XXXXX"
+                      placeholder="+91 98765 43210"
                       value={formData.phone}
                       onChange={handleChange}
                       required
+                      className="h-11 border-2 focus:border-primary transition-colors"
                       data-testid="input-phone"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
+                  <Label htmlFor="email" className="text-sm font-medium">Email Address</Label>
                   <Input
                     id="email"
                     name="email"
@@ -163,59 +183,68 @@ export default function ContactModal({ open, onOpenChange }: ContactModalProps) 
                     placeholder="your@email.com"
                     value={formData.email}
                     onChange={handleChange}
+                    className="h-11 border-2 focus:border-primary transition-colors"
                     data-testid="input-email"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="message">Message *</Label>
+                  <Label htmlFor="message" className="text-sm font-medium">Your Message *</Label>
                   <Textarea
                     id="message"
                     name="message"
-                    placeholder="Tell us about your adventure plans, group size, preferred dates..."
+                    placeholder="Tell us about your adventure plans - group size, preferred dates, activities you're interested in..."
                     rows={4}
                     value={formData.message}
                     onChange={handleChange}
                     required
+                    className="border-2 focus:border-primary transition-colors resize-none"
                     data-testid="input-message"
                   />
                 </div>
 
-                <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                <div className="flex gap-3 pt-2">
                   <Button
                     type="submit"
-                    className="flex-1"
+                    size="lg"
+                    className="flex-1 h-12 text-base font-semibold bg-gradient-to-r from-primary to-emerald-600 hover:from-primary/90 hover:to-emerald-600/90 shadow-lg shadow-primary/25"
                     disabled={isSubmitting}
                     data-testid="button-submit-contact"
                   >
                     {isSubmitting ? (
                       <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        <Loader2 className="mr-2 h-5 w-5 animate-spin" />
                         Sending...
                       </>
                     ) : (
                       <>
-                        <Send className="mr-2 h-4 w-4" />
+                        <Send className="mr-2 h-5 w-5" />
                         Send Message
                       </>
                     )}
                   </Button>
-                  <a href="tel:+919483940400" className="flex-1">
+                  <a href="tel:+919483940400">
                     <Button
                       type="button"
+                      size="lg"
                       variant="outline"
-                      className="w-full"
+                      className="h-12 px-6 border-2 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white font-semibold"
                       data-testid="button-call-modal"
                     >
-                      <Phone className="mr-2 h-4 w-4" />
-                      Call Now
+                      <Phone className="mr-2 h-5 w-5" />
+                      Call
                     </Button>
                   </a>
                 </div>
-              </form>
-            </motion.div>
-          )}
-        </AnimatePresence>
+
+                <p className="text-xs text-muted-foreground text-center pt-2 flex items-center justify-center gap-1">
+                  <Sparkles className="h-3 w-3" />
+                  We respond to all inquiries within 24 hours
+                </p>
+              </motion.form>
+            )}
+          </AnimatePresence>
+        </div>
       </DialogContent>
     </Dialog>
   );

@@ -7,7 +7,7 @@ import { useRef, useState } from "react";
 import { useSEO, injectStructuredData } from "@/lib/seo";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import ContactModal from "@/components/ContactModal";
+import { useContactModal } from "@/context/ContactModalContext";
 import { ParallaxImage, ParallaxText } from "@/components/ParallaxSection";
 import { CampfireEffect, WaterDroplets, WildlifeSilhouette } from "@/components/AdventureEffects";
 import raftingHero1 from "@assets/stock_images/vibrant_water_raftin_9419a08c.jpg";
@@ -81,7 +81,7 @@ const activities = [
 export default function Home() {
   const prefersReducedMotion = useReducedMotion();
   const [videoLoaded, setVideoLoaded] = useState(false);
-  const [contactModalOpen, setContactModalOpen] = useState(false);
+  const { openContactModal } = useContactModal();
   const heroRef = useRef<HTMLDivElement>(null);
   
   const { scrollYProgress } = useScroll({
@@ -214,7 +214,7 @@ export default function Home() {
                 size="lg" 
                 variant="outline" 
                 className="bg-white/10 backdrop-blur-sm border-white/30 text-white hover:bg-white/20 font-semibold px-8" 
-                onClick={() => setContactModalOpen(true)}
+                onClick={openContactModal}
                 data-testid="button-contact-hero"
               >
                 Contact Us
@@ -701,7 +701,7 @@ export default function Home() {
                     <Button 
                       variant="outline" 
                       className="w-full" 
-                      onClick={() => setContactModalOpen(true)}
+                      onClick={openContactModal}
                       data-testid="button-contact-couple"
                     >
                       Contact Us
@@ -759,7 +759,7 @@ export default function Home() {
                     <Button 
                       variant="outline" 
                       className="w-full" 
-                      onClick={() => setContactModalOpen(true)}
+                      onClick={openContactModal}
                       data-testid="button-contact-family"
                     >
                       Contact Us
@@ -814,7 +814,7 @@ export default function Home() {
                     <Button 
                       variant="outline" 
                       className="w-full" 
-                      onClick={() => setContactModalOpen(true)}
+                      onClick={openContactModal}
                       data-testid="button-contact-student"
                     >
                       Contact Us
@@ -1025,12 +1025,10 @@ export default function Home() {
             className="mt-12 text-center"
           >
             <p className="text-muted-foreground mb-6">Still have questions? We're here to help!</p>
-            <Link href="/about">
-              <Button size="lg" data-testid="button-contact-from-faq">
-                Contact Us
-                <ChevronRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
+            <Button size="lg" onClick={openContactModal} data-testid="button-contact-from-faq">
+              Contact Us
+              <ChevronRight className="ml-2 h-5 w-5" />
+            </Button>
           </motion.div>
         </div>
       </section>
@@ -1188,8 +1186,6 @@ export default function Home() {
       </section>
 
       <Footer />
-
-      <ContactModal open={contactModalOpen} onOpenChange={setContactModalOpen} />
 
       <style>{`
         .scrollbar-hide::-webkit-scrollbar {

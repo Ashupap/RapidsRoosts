@@ -8,8 +8,10 @@ import kayakingImage from "@assets/generated_images/Peaceful_kayaking_river_adve
 import { useSEO, injectStructuredData } from "@/lib/seo";
 import Footer from "@/components/Footer";
 import Navigation from "@/components/Navigation";
+import { useContactModal } from "@/context/ContactModalContext";
 
 export default function KayakingDetail() {
+  const { openContactModal } = useContactModal();
   useSEO({
     title: 'Kayaking Adventure - Kali River Kayaking in Dandeli',
     description: 'Paddle through serene Kali River waters and Supa Reservoir on a guided kayaking adventure. Perfect for beginners and experienced paddlers. Flatwater and whitewater options available.',
@@ -261,12 +263,10 @@ export default function KayakingDetail() {
                       Experience the serenity of Dandeli's waters surrounded by pristine Western Ghats forests. 
                       Contact us to learn more.
                     </p>
-                    <Link href="/about">
-                      <Button size="lg" variant="secondary" className="w-full" data-testid="button-contact-kayaking">
-                        Contact Us
-                        <ChevronRight className="ml-2 h-5 w-5" />
-                      </Button>
-                    </Link>
+                    <Button size="lg" variant="secondary" className="w-full" onClick={openContactModal} data-testid="button-contact-kayaking">
+                      Contact Us
+                      <ChevronRight className="ml-2 h-5 w-5" />
+                    </Button>
                   </CardContent>
                 </Card>
               </motion.div>

@@ -10,8 +10,10 @@ import raftingHero3 from "@assets/stock_images/adventure_sports_gal_5bf20dc4.jpg
 import { useSEO, injectStructuredData } from "@/lib/seo";
 import Footer from "@/components/Footer";
 import Navigation from "@/components/Navigation";
+import { useContactModal } from "@/context/ContactModalContext";
 
 export default function RaftingDetail() {
+  const { openContactModal } = useContactModal();
   useSEO({
     title: 'White Water Rafting - Kali River Rafting Adventure in Dandeli',
     description: 'Experience thrilling white water rafting on the Kali River in Dandeli. Navigate Grade 2-3 rapids with professional guides. Choose from 9 km long rafting or 1 km short rafting routes.',
@@ -306,12 +308,10 @@ export default function RaftingDetail() {
                     <p className="mb-6 opacity-90">
                       Experience the thrill of a lifetime on the Kali River. Contact us to learn more about our rafting adventures.
                     </p>
-                    <Link href="/about">
-                      <Button size="lg" variant="secondary" className="w-full" data-testid="button-contact-rafting">
-                        Contact Us
-                        <ChevronRight className="ml-2 h-5 w-5" />
-                      </Button>
-                    </Link>
+                    <Button size="lg" variant="secondary" className="w-full" onClick={openContactModal} data-testid="button-contact-rafting">
+                      Contact Us
+                      <ChevronRight className="ml-2 h-5 w-5" />
+                    </Button>
                   </CardContent>
                 </Card>
               </motion.div>

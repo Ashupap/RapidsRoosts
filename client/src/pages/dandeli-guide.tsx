@@ -21,8 +21,10 @@ import {
 import { useSEO, injectStructuredData } from "@/lib/seo";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import { useContactModal } from "@/context/ContactModalContext";
 
 export default function DandeliGuide() {
+  const { openContactModal } = useContactModal();
   useSEO({
     title: 'Complete Dandeli Travel Guide 2025 - Best Time to Visit, Activities, Hotels & Travel Tips',
     description: 'The ultimate Dandeli travel guide for 2025. Discover the best time to visit Dandeli, top adventure activities (white water rafting, wildlife safari, trekking), accommodation options, how to reach, weather, food, and travel tips. Plan your perfect Dandeli trip to Karnataka\'s adventure capital with this comprehensive guide.',
@@ -591,12 +593,10 @@ export default function DandeliGuide() {
             <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
               Discover Dandeli's incredible adventures and create memories that last a lifetime. 100% safe experiences guaranteed.
             </p>
-            <Link href="/about">
-              <Button size="lg" className="text-lg px-8" data-testid="button-contact-from-guide">
-                Contact Us
-                <ChevronRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
+            <Button size="lg" className="text-lg px-8" onClick={openContactModal} data-testid="button-contact-from-guide">
+              Contact Us
+              <ChevronRight className="ml-2 h-5 w-5" />
+            </Button>
           </motion.div>
 
         </div>

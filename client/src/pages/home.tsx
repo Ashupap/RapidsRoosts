@@ -216,8 +216,22 @@ export default function Home() {
                   </motion.span>
                 </AnimatePresence>
               </span>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-amber-300 to-orange-500 drop-shadow-[0_0_30px_rgba(251,146,60,0.5)]">
-                Dandeli
+              <span className="inline-flex items-center gap-3">
+                <motion.span
+                  animate={{ y: [0, -3, 0] }}
+                  transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                  className="inline-block"
+                >
+                  <MapPin className="w-10 h-10 md:w-14 md:h-14 text-red-500 drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]" style={{ filter: 'drop-shadow(0 0 8px white)' }} />
+                </motion.span>
+                <span 
+                  className="text-red-500 font-extrabold"
+                  style={{ 
+                    textShadow: '0 0 10px rgba(255,255,255,0.9), 0 0 20px rgba(255,255,255,0.7), 0 0 30px rgba(255,255,255,0.5), 2px 2px 0 white, -2px -2px 0 white, 2px -2px 0 white, -2px 2px 0 white'
+                  }}
+                >
+                  Dandeli
+                </span>
               </span>
             </h1>
             <p className="text-white/90 text-lg sm:text-xl md:text-xl lg:text-2xl font-medium mb-8" data-testid="text-hero-subtitle">

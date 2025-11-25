@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -16,15 +16,29 @@ import {
   Home as HomeIcon,
   Utensils,
   Clock,
-  Heart
+  Heart,
+  BookOpen
 } from "lucide-react";
 import { useSEO, injectStructuredData } from "@/lib/seo";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { useContactModal } from "@/context/ContactModalContext";
+import { useRef, useState } from "react";
+import guideVideo from "@assets/activity-video-compressed.mp4";
+import fallbackImage from "@assets/stock_images/beautiful_scenic_att_1cdf7d23.jpg";
 
 export default function DandeliGuide() {
   const { openContactModal } = useContactModal();
+  const prefersReducedMotion = useReducedMotion();
+  const [videoLoaded, setVideoLoaded] = useState(false);
+  const heroRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+
+  const heroY = useTransform(scrollYProgress, [0, 1], [prefersReducedMotion ? "0%" : "0%", prefersReducedMotion ? "0%" : "20%"]);
   useSEO({
     title: 'Complete Dandeli Travel Guide 2025 - Best Time to Visit, Activities, Hotels & Travel Tips',
     description: 'The ultimate Dandeli travel guide for 2025. Discover the best time to visit Dandeli, top adventure activities (white water rafting, wildlife safari, trekking), accommodation options, how to reach, weather, food, and travel tips. Plan your perfect Dandeli trip to Karnataka\'s adventure capital with this comprehensive guide.',
@@ -40,31 +54,83 @@ export default function DandeliGuide() {
   });
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       <Navigation />
 
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-16 px-6 bg-gradient-to-br from-primary/10 via-background to-primary/5">
-        <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center"
+      {/* Hero Section with Video Background */}
+      <section ref={heroRef} className="relative min-h-[70vh] overflow-hidden -mt-20 pt-20">
+        {/* Background Video with Parallax */}
+        <motion.div
+          style={{ y: heroY }}
+          className="absolute inset-0 z-0"
+        >
+          {/* Video Background */}
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="metadata"
+            poster={fallbackImage}
+            onLoadedData={() => setVideoLoaded(true)}
+            className="absolute inset-0 w-full h-full object-cover"
           >
-            <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6" data-testid="heading-guide-title">
-              Complete Dandeli Travel Guide 2025
-            </h1>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Your comprehensive guide to exploring Dandeli, Karnataka's adventure capital. Everything you need to know for an unforgettable trip to the Western Ghats.
-            </p>
-          </motion.div>
+            <source src={guideVideo} type="video/mp4" />
+          </video>
+          
+          {/* Fallback Image - shown until video loads */}
+          {!videoLoaded && (
+            <div 
+              className="absolute inset-0 bg-cover bg-center"
+              style={{ backgroundImage: `url(${fallbackImage})` }}
+            />
+          )}
+          
+          {/* Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/70" />
+          <div className="absolute inset-0 bg-gradient-to-r from-emerald-900/30 to-teal-900/30" />
+        </motion.div>
+
+        {/* Hero Content */}
+        <div className="relative z-10 flex items-center justify-center px-6 pt-32 pb-20">
+          <div className="max-w-7xl mx-auto relative z-10">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-center max-w-4xl mx-auto"
+            >
+              <p className="text-sm uppercase tracking-[0.2em] text-white/90 font-medium mb-6">
+                <BookOpen className="inline h-4 w-4 mr-2" />
+                Your Ultimate Travel Resource
+              </p>
+              <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight" data-testid="heading-guide-title">
+                Complete Dandeli Travel Guide 2025
+              </h1>
+              <p className="text-lg md:text-xl text-white/90 max-w-3xl mx-auto leading-relaxed mb-8">
+                Your comprehensive guide to exploring Dandeli, Karnataka's adventure capital. Everything you need to know for an unforgettable trip to the Western Ghats.
+              </p>
+              <div className="flex flex-wrap justify-center gap-4">
+                <Link href="/activities">
+                  <Button size="lg" className="bg-primary hover:bg-primary/90 text-white font-bold px-8">
+                    Explore Activities
+                    <ChevronRight className="ml-2 h-5 w-5" />
+                  </Button>
+                </Link>
+                <a href="tel:+919483940400">
+                  <Button size="lg" className="bg-orange-500 hover:bg-orange-600 text-white font-bold px-8">
+                    Call Us
+                  </Button>
+                </a>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
       {/* Main Content */}
-      <section className="py-16 px-6">
-        <div className="max-w-4xl mx-auto prose prose-lg">
+      <section className="py-16 px-6 bg-background">
+        <div className="max-w-4xl mx-auto">
           
           {/* Introduction */}
           <motion.div

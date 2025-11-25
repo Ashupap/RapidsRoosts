@@ -243,8 +243,8 @@ export default function DandeliGuide() {
                     Dandeli is famous for offering some of India's best white water rafting experiences. The Kali River provides Grade 2-3 rapids that are perfect for both beginners and experienced rafters.
                   </p>
                   <ul className="space-y-2 text-muted-foreground mb-3">
-                    <li><strong>Short Rafting:</strong> 1 km stretch (1 hour) - ₹600 per person - Perfect for families and first-timers</li>
-                    <li><strong>Long Rafting:</strong> 9 km stretch (2-3 hours) - ₹1,500 per person - For adventure enthusiasts</li>
+                    <li><strong>Short Rafting:</strong> 1 km stretch (1 hour) - Perfect for families and first-timers</li>
+                    <li><strong>Long Rafting:</strong> 9 km stretch (2-3 hours) - For adventure enthusiasts</li>
                     <li><strong>Best Time:</strong> March to May (strongest currents) and October to February</li>
                     <li><strong>Safety:</strong> Certified instructors, quality equipment, full training provided</li>
                   </ul>
@@ -262,7 +262,6 @@ export default function DandeliGuide() {
                   </p>
                   <ul className="space-y-2 text-muted-foreground mb-3">
                     <li><strong>Duration:</strong> 2-3 hours guided jeep safari</li>
-                    <li><strong>Price:</strong> ₹600 per person</li>
                     <li><strong>Best Time:</strong> Early morning (6-9 AM) or evening (4-6 PM)</li>
                     <li><strong>Highlights:</strong> Tiger sightings (rare but possible), abundant deer, exotic birds, crocodiles near riverbanks</li>
                   </ul>
@@ -328,7 +327,6 @@ export default function DandeliGuide() {
               <Card>
                 <CardContent className="p-6">
                   <h3 className="text-lg font-semibold text-foreground mb-2">Riverside Cottages</h3>
-                  <p className="text-muted-foreground mb-2">₹2,500-4,000 per night</p>
                   <p className="text-sm text-muted-foreground">Scenic Kali River views, AC, private bathrooms, ideal for couples and families</p>
                 </CardContent>
               </Card>
@@ -336,7 +334,6 @@ export default function DandeliGuide() {
               <Card>
                 <CardContent className="p-6">
                   <h3 className="text-lg font-semibold text-foreground mb-2">Luxury Jungle Tents</h3>
-                  <p className="text-muted-foreground mb-2">₹3,000-5,000 per night</p>
                   <p className="text-sm text-muted-foreground">Glamping experience with modern amenities, perfect for adventure seekers</p>
                 </CardContent>
               </Card>
@@ -344,7 +341,6 @@ export default function DandeliGuide() {
               <Card>
                 <CardContent className="p-6">
                   <h3 className="text-lg font-semibold text-foreground mb-2">Jungle Treehouses</h3>
-                  <p className="text-muted-foreground mb-2">₹3,500-6,000 per night</p>
                   <p className="text-sm text-muted-foreground">Elevated stays amidst nature, unique experience with wildlife sounds</p>
                 </CardContent>
               </Card>
@@ -352,7 +348,6 @@ export default function DandeliGuide() {
               <Card>
                 <CardContent className="p-6">
                   <h3 className="text-lg font-semibold text-foreground mb-2">Budget Dormitories</h3>
-                  <p className="text-muted-foreground mb-2">₹500-1,000 per bed</p>
                   <p className="text-sm text-muted-foreground">Clean shared facilities, perfect for backpackers and groups</p>
                 </CardContent>
               </Card>
@@ -438,12 +433,12 @@ export default function DandeliGuide() {
 
               <Card>
                 <CardContent className="p-6">
-                  <h3 className="text-lg font-semibold text-foreground mb-3">Budgeting for Dandeli Trip</h3>
+                  <h3 className="text-lg font-semibold text-foreground mb-3">Trip Planning Tips</h3>
                   <ul className="space-y-2 text-muted-foreground">
-                    <li><strong>Budget Trip (Per Person):</strong> ₹3,000-5,000 for 2 days/1 night</li>
-                    <li><strong>Mid-Range Trip:</strong> ₹6,000-10,000 for 2 days/1 night</li>
-                    <li><strong>Luxury Trip:</strong> ₹12,000-20,000 for 2 days/1 night</li>
-                    <li className="text-sm mt-3">* Includes accommodation, meals, and 2-3 activities. Transport not included.</li>
+                    <li><strong>Budget-Friendly:</strong> Opt for dormitories and group packages</li>
+                    <li><strong>Mid-Range:</strong> Comfortable cottages with activities included</li>
+                    <li><strong>Luxury:</strong> Premium resorts with personalized experiences</li>
+                    <li className="text-sm mt-3">* Contact us for customized packages based on your preferences.</li>
                   </ul>
                 </CardContent>
               </Card>
@@ -594,11 +589,11 @@ export default function DandeliGuide() {
               Ready to Experience Dandeli's Adventure?
             </h2>
             <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Book your Dandeli adventure package today and create memories that last a lifetime. Best prices, instant confirmation, and 100% safe experiences guaranteed.
+              Discover Dandeli's incredible adventures and create memories that last a lifetime. 100% safe experiences guaranteed.
             </p>
-            <Link href="/booking">
-              <Button size="lg" className="text-lg px-8" data-testid="button-book-from-guide">
-                Book Your Dandeli Trip Now
+            <Link href="/about">
+              <Button size="lg" className="text-lg px-8" data-testid="button-contact-from-guide">
+                Contact Us
                 <ChevronRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>

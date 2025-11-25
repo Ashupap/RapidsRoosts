@@ -1,19 +1,14 @@
-import { Link, useLocation } from "wouter";
+import { Link } from "wouter";
 import { motion, useScroll, useTransform, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Calendar as CalendarComponent } from "@/components/ui/calendar";
-import { Calendar, Users, ChevronRight, ChevronLeft, Waves, Mountain, Compass, Send, MapPin, Search, Mail, Phone, Hotel, Plane, Car, CalendarIcon, Minus, Plus, Home as HomeIcon, Building2, Bed } from "lucide-react";
-import { useRef, useState, useEffect } from "react";
-import { format, addDays } from "date-fns";
+import { ChevronRight, ChevronLeft, Waves, Mountain, Compass, Send, MapPin, Mail, Phone } from "lucide-react";
+import { useRef, useState } from "react";
 import { useSEO, injectStructuredData } from "@/lib/seo";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { ParallaxImage, ParallaxText } from "@/components/ParallaxSection";
 import { CampfireEffect, WaterDroplets, WildlifeSilhouette } from "@/components/AdventureEffects";
-import BookingModal from "@/components/BookingModal";
 import raftingHero1 from "@assets/stock_images/vibrant_water_raftin_9419a08c.jpg";
 import raftingHero2 from "@assets/stock_images/vibrant_water_raftin_5f8fedad.jpg";
 import raftingHero3 from "@assets/stock_images/vibrant_water_raftin_24bbd1b7.jpg";
@@ -52,7 +47,6 @@ const activities = [
     icon: Waves,
     duration: "1-3 hours",
     difficulty: "Moderate to Advanced",
-    price: "₹600 - ₹1,500",
   },
   {
     id: "safari",
@@ -62,7 +56,6 @@ const activities = [
     icon: Compass,
     duration: "2-3 hours",
     difficulty: "Easy",
-    price: "₹600/person",
   },
   {
     id: "trekking",
@@ -72,7 +65,6 @@ const activities = [
     icon: Mountain,
     duration: "4-6 hours",
     difficulty: "Moderate",
-    price: "Included in package",
   },
   {
     id: "kayaking",
@@ -82,29 +74,25 @@ const activities = [
     icon: Send,
     duration: "2-3 hours",
     difficulty: "Easy to Moderate",
-    price: "Included in package",
   },
 ];
 
 export default function Home() {
   const prefersReducedMotion = useReducedMotion();
-  const [, setLocation] = useLocation();
-  const [activeTab, setActiveTab] = useState("rafting");
-  const [checkInDate, setCheckInDate] = useState<Date>();
-  const [checkOutDate, setCheckOutDate] = useState<Date>();
-  const [adults, setAdults] = useState(2);
-  const [children, setChildren] = useState(0);
-  const [rooms, setRooms] = useState(1);
-  const [datePickerOpen, setDatePickerOpen] = useState(false);
-  const [guestPickerOpen, setGuestPickerOpen] = useState(false);
   const [videoLoaded, setVideoLoaded] = useState(false);
-  const [selectingCheckOut, setSelectingCheckOut] = useState(false);
-  const [bookingModalOpen, setBookingModalOpen] = useState(false);
+  const heroRef = useRef<HTMLDivElement>(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+
+  const heroY = useTransform(scrollYProgress, [0, 1], [prefersReducedMotion ? "0%" : "0%", prefersReducedMotion ? "0%" : "20%"]);
   
   useSEO({
     title: 'Rapids & Roosts Dandeli - #1 Adventure Tourism in Karnataka | White Water Rafting, Safari & Trekking',
-    description: 'Best adventure tourism in Dandeli, Karnataka. Experience white water rafting on Kali River, jungle safaris in 834 sq km wildlife sanctuary, forest trekking in Western Ghats, and kayaking. Book your Dandeli tour package with Rapids & Roosts - rated #1 for adventure sports in Karnataka.',
-    keywords: 'Dandeli, Dandeli tourism, adventure tourism Karnataka, best adventure tourism Karnataka, white water rafting Dandeli, jungle safari Dandeli, Dandeli packages, Kali river rafting, Western Ghats trekking, Dandeli wildlife sanctuary, adventure sports Karnataka, Dandeli tour booking, things to do in Dandeli',
+    description: 'Best adventure tourism in Dandeli, Karnataka. Experience white water rafting on Kali River, jungle safaris in 834 sq km wildlife sanctuary, forest trekking in Western Ghats, and kayaking. Rapids & Roosts - rated #1 for adventure sports in Karnataka.',
+    keywords: 'Dandeli, Dandeli tourism, adventure tourism Karnataka, best adventure tourism Karnataka, white water rafting Dandeli, jungle safari Dandeli, Dandeli packages, Kali river rafting, Western Ghats trekking, Dandeli wildlife sanctuary, adventure sports Karnataka, things to do in Dandeli',
   });
 
   injectStructuredData('organization');
@@ -122,8 +110,8 @@ export default function Home() {
         answer: "Dandeli is approximately 460 km from Bangalore. You can reach by: 1) Road: 8-9 hours drive via NH48 and NH63. Regular buses available from Bangalore Majestic. 2) Train: Take a train to Hubli (400 km), then taxi/bus to Dandeli (72 km). 3) Flight: Fly to Hubli Airport, then 2-hour drive to Dandeli."
       },
       {
-        question: "What activities are included in Dandeli tour packages?",
-        answer: "Our Dandeli packages include white water rafting (9 km or 1 km options), jungle safari in 834 sq km wildlife sanctuary, forest trekking through Western Ghats, kayaking on Kali River, bird watching, and nature walks. All safety equipment, guides, and permits are included."
+        question: "What activities are available in Dandeli?",
+        answer: "Dandeli offers white water rafting (9 km or 1 km options), jungle safari in 834 sq km wildlife sanctuary, forest trekking through Western Ghats, kayaking on Kali River, bird watching, and nature walks. All activities include safety equipment and experienced guides."
       },
       {
         question: "Is Dandeli safe for families and children?",
@@ -139,7 +127,7 @@ export default function Home() {
       },
       {
         question: "What accommodation options are available in Dandeli?",
-        answer: "We offer diverse accommodations: Riverside Cottages (scenic Kali River views), Luxury Tents (glamping experience), Jungle Treehouses (elevated stays amidst nature), and Shared Dormitories (budget-friendly). All options include meals, WiFi access, and 24/7 hot water."
+        answer: "We offer diverse accommodations: Riverside Cottages (scenic Kali River views), Luxury Tents (glamping experience), Jungle Treehouses (elevated stays amidst nature), and Shared Dormitories. All options include meals, WiFi access, and 24/7 hot water."
       },
       {
         question: "How difficult is white water rafting in Dandeli?",
@@ -147,32 +135,6 @@ export default function Home() {
       }
     ]
   });
-
-  const heroRef = useRef<HTMLDivElement>(null);
-  
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"],
-  });
-
-  const heroY = useTransform(scrollYProgress, [0, 1], [prefersReducedMotion ? "0%" : "0%", prefersReducedMotion ? "0%" : "20%"]);
-
-  const handleBookNow = () => {
-    setBookingModalOpen(true);
-  };
-
-  const getDefaultBookingValues = () => ({
-    activities: activeTab ? [activeTab] : [],
-    checkInDate: checkInDate ? format(checkInDate, "yyyy-MM-dd") : "",
-    checkOutDate: checkOutDate ? format(checkOutDate, "yyyy-MM-dd") : "",
-    numberOfGuests: adults + children,
-  });
-
-  const totalGuests = adults + children;
-  const guestsText = `${totalGuests} Guest${totalGuests !== 1 ? 's' : ''}, ${rooms} Room${rooms !== 1 ? 's' : ''}`;
-  const dateRangeText = checkInDate && checkOutDate 
-    ? `${format(checkInDate, "MMM dd")} - ${format(checkOutDate, "MMM dd, yyyy")}`
-    : "Select dates";
 
   return (
     <div className="min-h-screen overflow-x-hidden">
@@ -218,385 +180,67 @@ export default function Home() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center max-w-5xl mx-auto mb-4 md:mb-8"
+            className="text-center max-w-5xl mx-auto"
           >
-            <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-3 md:mb-4 leading-tight tracking-tight" data-testid="text-hero-title">
+            <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-4 md:mb-6 leading-tight tracking-tight" data-testid="text-hero-title">
               Discover Your Next Adventure in Dandeli
             </h1>
-            <p className="text-white/90 text-lg sm:text-xl md:text-xl lg:text-2xl font-medium" data-testid="text-hero-subtitle">
-              Unforgettable Experiences Await in Nature's Paradise
+            <p className="text-white/90 text-lg sm:text-xl md:text-xl lg:text-2xl font-medium mb-8" data-testid="text-hero-subtitle">
+              Karnataka's Premier Adventure Destination - White Water Rafting, Jungle Safaris, Trekking & More
             </p>
-          </motion.div>
-
-          {/* Booking Form Card - Narrower Design */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="w-full max-w-2xl"
-          >
-            <Card className="bg-white/50 dark:bg-gray-900/50 backdrop-blur-lg shadow-2xl overflow-hidden border-0 rounded-none">
-              <CardContent className="p-0">
-                {/* Tabs for Activity Types */}
-                <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-                  <TabsList className="w-full grid grid-cols-4 rounded-none h-12 bg-gray-800 dark:bg-gray-900 border-0" data-testid="tabs-activity-selector">
-                    <TabsTrigger 
-                      value="rafting" 
-                      className="data-[state=active]:bg-primary data-[state=active]:text-white text-white rounded-none h-full text-xs md:text-sm font-bold uppercase"
-                      data-testid="tab-rafting"
-                    >
-                      <Waves className="h-4 w-4 md:h-5 md:w-5 md:mr-2" />
-                      <span className="hidden md:inline">Rafting</span>
-                    </TabsTrigger>
-                    <TabsTrigger 
-                      value="safari" 
-                      className="data-[state=active]:bg-primary data-[state=active]:text-white text-white rounded-none h-full text-xs md:text-sm font-bold uppercase"
-                      data-testid="tab-safari"
-                    >
-                      <Compass className="h-4 w-4 md:h-5 md:w-5 md:mr-2" />
-                      <span className="hidden md:inline">Safari</span>
-                    </TabsTrigger>
-                    <TabsTrigger 
-                      value="trekking" 
-                      className="data-[state=active]:bg-primary data-[state=active]:text-white text-white rounded-none h-full text-xs md:text-sm font-bold uppercase"
-                      data-testid="tab-trekking"
-                    >
-                      <Mountain className="h-4 w-4 md:h-5 md:w-5 md:mr-2" />
-                      <span className="hidden md:inline">Trekking</span>
-                    </TabsTrigger>
-                    <TabsTrigger 
-                      value="kayaking" 
-                      className="data-[state=active]:bg-primary data-[state=active]:text-white text-white rounded-none h-full text-xs md:text-sm font-bold uppercase"
-                      data-testid="tab-kayaking"
-                    >
-                      <Send className="h-4 w-4 md:h-5 md:w-5 md:mr-2" />
-                      <span className="hidden md:inline">Kayaking</span>
-                    </TabsTrigger>
-                  </TabsList>
-
-                  {/* Booking Form */}
-                  <div className="p-4">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                      {/* Date Picker - Compact & Animated */}
-                      <div>
-                        <Popover open={datePickerOpen} onOpenChange={(open) => {
-                          setDatePickerOpen(open);
-                          if (!open) setSelectingCheckOut(false);
-                        }}>
-                          <PopoverTrigger asChild>
-                            <button
-                              className="w-full h-11 px-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-foreground focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer text-left flex items-center gap-2 hover:border-primary transition-colors"
-                              data-testid="button-date-picker"
-                            >
-                              <CalendarIcon className="h-4 w-4 text-primary shrink-0" />
-                              <span className="text-sm truncate">{dateRangeText === "Select dates" ? "Check In/Check out Date" : dateRangeText}</span>
-                            </button>
-                          </PopoverTrigger>
-                          <PopoverContent className="w-auto p-0 max-h-[60vh] overflow-y-auto" align="start" side="bottom">
-                            <div className="p-2">
-                              {/* Compact Date Range Display */}
-                              {checkInDate && checkOutDate && (
-                                <motion.div 
-                                  initial={{ opacity: 0, y: -10 }}
-                                  animate={{ opacity: 1, y: 0 }}
-                                  className="mb-2 p-2 bg-primary/10 rounded-md border border-primary/20"
-                                >
-                                  <div className="flex items-center justify-between text-xs">
-                                    <div className="flex items-center gap-2">
-                                      <div className="text-center">
-                                        <div className="text-[10px] text-muted-foreground uppercase">Check-in</div>
-                                        <div className="font-bold text-primary">{format(checkInDate, "MMM dd")}</div>
-                                      </div>
-                                      <div className="text-primary">→</div>
-                                      <div className="text-center">
-                                        <div className="text-[10px] text-muted-foreground uppercase">Check-out</div>
-                                        <div className="font-bold text-primary">{format(checkOutDate, "MMM dd")}</div>
-                                      </div>
-                                    </div>
-                                    <div className="text-[10px] text-muted-foreground">
-                                      {Math.ceil((checkOutDate.getTime() - checkInDate.getTime()) / (1000 * 60 * 60 * 24))} nights
-                                    </div>
-                                  </div>
-                                </motion.div>
-                              )}
-
-                              {/* Compact Calendar with Range Highlighting */}
-                              <style>
-                                {`
-                                  .compact-calendar .rdp {
-                                    --rdp-cell-size: 32px;
-                                    font-size: 12px;
-                                  }
-                                  .compact-calendar .rdp-months {
-                                    margin: 0;
-                                  }
-                                  .compact-calendar .rdp-month {
-                                    margin: 0;
-                                  }
-                                  .compact-calendar .rdp-caption {
-                                    padding: 4px 8px;
-                                    margin-bottom: 4px;
-                                  }
-                                  .compact-calendar .rdp-nav {
-                                    padding: 0;
-                                  }
-                                  .compact-calendar .rdp-nav_button {
-                                    width: 24px;
-                                    height: 24px;
-                                  }
-                                  .compact-calendar .rdp-table {
-                                    margin: 0;
-                                  }
-                                  .compact-calendar .rdp-head_cell {
-                                    font-size: 10px;
-                                    padding: 2px;
-                                  }
-                                  .compact-calendar .rdp-cell {
-                                    padding: 1px;
-                                  }
-                                  .compact-calendar .rdp-day {
-                                    width: 32px;
-                                    height: 32px;
-                                    font-size: 12px;
-                                  }
-                                  .compact-calendar .date-in-range {
-                                    background: linear-gradient(135deg, hsl(182, 78%, 38%, 0.15) 0%, hsl(182, 78%, 38%, 0.25) 100%);
-                                    position: relative;
-                                  }
-                                  .compact-calendar .date-in-range::after {
-                                    content: '';
-                                    position: absolute;
-                                    inset: 0;
-                                    border-radius: 0.25rem;
-                                    animation: pulse-range 2s ease-in-out infinite;
-                                  }
-                                  @keyframes pulse-range {
-                                    0%, 100% { box-shadow: 0 0 0 0 hsl(182, 78%, 38%, 0.4); }
-                                    50% { box-shadow: 0 0 0 2px hsl(182, 78%, 38%, 0.2); }
-                                  }
-                                  .compact-calendar .rdp-day_selected {
-                                    background-color: hsl(182, 78%, 38%) !important;
-                                    color: white !important;
-                                    font-weight: bold;
-                                  }
-                                  .compact-calendar .date-endpoint {
-                                    background-color: hsl(182, 78%, 38%) !important;
-                                    color: white !important;
-                                    font-weight: bold;
-                                  }
-                                `}
-                              </style>
-                              <div className="compact-calendar">
-                                <CalendarComponent
-                                  mode="single"
-                                  selected={selectingCheckOut ? checkOutDate : checkInDate}
-                                  onSelect={(date) => {
-                                    if (!date) return;
-                                    
-                                    if (!checkInDate || selectingCheckOut) {
-                                      if (!checkInDate) {
-                                        setCheckInDate(date);
-                                        setCheckOutDate(addDays(date, 1));
-                                        setSelectingCheckOut(true);
-                                      } else {
-                                        setCheckOutDate(date);
-                                        setSelectingCheckOut(false);
-                                      }
-                                    } else {
-                                      setCheckInDate(date);
-                                      setCheckOutDate(addDays(date, 1));
-                                      setSelectingCheckOut(true);
-                                    }
-                                  }}
-                                  disabled={(date) => {
-                                    const today = new Date();
-                                    today.setHours(0, 0, 0, 0);
-                                    
-                                    if (selectingCheckOut && checkInDate) {
-                                      return date <= checkInDate;
-                                    }
-                                    return date < today;
-                                  }}
-                                  modifiers={{
-                                    inRange: (date) => {
-                                      if (!checkInDate || !checkOutDate) return false;
-                                      return date > checkInDate && date < checkOutDate;
-                                    },
-                                    endpoint: (date) => {
-                                      if (!checkInDate || !checkOutDate) return false;
-                                      const dateTime = date.getTime();
-                                      return dateTime === checkInDate.getTime() || dateTime === checkOutDate.getTime();
-                                    }
-                                  }}
-                                  modifiersClassNames={{
-                                    inRange: 'date-in-range',
-                                    endpoint: 'date-endpoint'
-                                  }}
-                                  initialFocus
-                                  className="rounded-md border-0"
-                                />
-                              </div>
-
-                              {/* Compact Action Buttons */}
-                              <div className="flex gap-1.5 mt-2">
-                                <Button 
-                                  variant="outline"
-                                  size="sm"
-                                  onClick={() => {
-                                    setCheckInDate(undefined);
-                                    setCheckOutDate(undefined);
-                                    setSelectingCheckOut(false);
-                                  }}
-                                  className="flex-1 text-xs h-7"
-                                >
-                                  Clear
-                                </Button>
-                                <Button 
-                                  onClick={() => setDatePickerOpen(false)} 
-                                  className="flex-1 text-xs h-7"
-                                  data-testid="button-date-done"
-                                  disabled={!checkInDate || !checkOutDate}
-                                >
-                                  Done
-                                </Button>
-                              </div>
-                            </div>
-                          </PopoverContent>
-                        </Popover>
-                      </div>
-
-                      {/* Guests Picker - Compact Design */}
-                      <div>
-                        <Popover open={guestPickerOpen} onOpenChange={setGuestPickerOpen}>
-                          <PopoverTrigger asChild>
-                            <button
-                              className="w-full h-11 px-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-foreground focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer text-left flex items-center gap-2 hover:border-primary transition-colors"
-                              data-testid="button-guest-picker"
-                            >
-                              <Users className="h-4 w-4 text-primary shrink-0" />
-                              <span className="text-sm truncate">{guestsText === "2 Guests, 1 Room" && !checkInDate ? "Select Guest and Room" : guestsText}</span>
-                            </button>
-                          </PopoverTrigger>
-                          <PopoverContent className="w-72 max-h-[70vh] overflow-y-auto" align="start" side="bottom">
-                            <div className="space-y-3 p-1">
-                              {/* Adults */}
-                              <div className="flex items-center justify-between py-2">
-                                <div>
-                                  <p className="font-semibold text-sm">Adults</p>
-                                  <p className="text-xs text-muted-foreground">Age 13+</p>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                  <Button
-                                    variant="outline"
-                                    size="icon"
-                                    className="h-7 w-7"
-                                    onClick={() => setAdults(Math.max(1, adults - 1))}
-                                    disabled={adults <= 1}
-                                    data-testid="button-adults-minus"
-                                  >
-                                    <Minus className="h-3 w-3" />
-                                  </Button>
-                                  <span className="w-6 text-center font-semibold text-sm" data-testid="text-adults-count">{adults}</span>
-                                  <Button
-                                    variant="outline"
-                                    size="icon"
-                                    className="h-7 w-7"
-                                    onClick={() => setAdults(adults + 1)}
-                                    data-testid="button-adults-plus"
-                                  >
-                                    <Plus className="h-3 w-3" />
-                                  </Button>
-                                </div>
-                              </div>
-
-                              {/* Children */}
-                              <div className="flex items-center justify-between py-2">
-                                <div>
-                                  <p className="font-semibold text-sm">Children</p>
-                                  <p className="text-xs text-muted-foreground">Age 0-12</p>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                  <Button
-                                    variant="outline"
-                                    size="icon"
-                                    className="h-7 w-7"
-                                    onClick={() => setChildren(Math.max(0, children - 1))}
-                                    disabled={children <= 0}
-                                    data-testid="button-children-minus"
-                                  >
-                                    <Minus className="h-3 w-3" />
-                                  </Button>
-                                  <span className="w-6 text-center font-semibold text-sm" data-testid="text-children-count">{children}</span>
-                                  <Button
-                                    variant="outline"
-                                    size="icon"
-                                    className="h-7 w-7"
-                                    onClick={() => setChildren(children + 1)}
-                                    data-testid="button-children-plus"
-                                  >
-                                    <Plus className="h-3 w-3" />
-                                  </Button>
-                                </div>
-                              </div>
-
-                              {/* Rooms */}
-                              <div className="flex items-center justify-between py-2">
-                                <div>
-                                  <p className="font-semibold text-sm">Rooms</p>
-                                  <p className="text-xs text-muted-foreground">Max 4 per room</p>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                  <Button
-                                    variant="outline"
-                                    size="icon"
-                                    className="h-7 w-7"
-                                    onClick={() => setRooms(Math.max(1, rooms - 1))}
-                                    disabled={rooms <= 1}
-                                    data-testid="button-rooms-minus"
-                                  >
-                                    <Minus className="h-3 w-3" />
-                                  </Button>
-                                  <span className="w-6 text-center font-semibold text-sm" data-testid="text-rooms-count">{rooms}</span>
-                                  <Button
-                                    variant="outline"
-                                    size="icon"
-                                    className="h-7 w-7"
-                                    onClick={() => setRooms(rooms + 1)}
-                                    data-testid="button-rooms-plus"
-                                  >
-                                    <Plus className="h-3 w-3" />
-                                  </Button>
-                                </div>
-                              </div>
-
-                              {/* Done Button */}
-                              <Button 
-                                onClick={() => setGuestPickerOpen(false)} 
-                                className="w-full h-8 text-xs mt-2"
-                                data-testid="button-guest-done"
-                              >
-                                Done
-                              </Button>
-                            </div>
-                          </PopoverContent>
-                        </Popover>
-                      </div>
-
-                      {/* Book Now Button */}
-                      <div>
-                        <Button 
-                          onClick={handleBookNow}
-                          className="w-full h-11 text-base font-bold bg-primary hover:bg-primary/90 text-white shadow-lg"
-                          data-testid="button-book-now-hero"
-                        >
-                          BOOK NOW
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                </Tabs>
-              </CardContent>
-            </Card>
+            
+            {/* Activity Quick Links */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="flex flex-wrap justify-center gap-4"
+            >
+              <Link href="/activities">
+                <Button size="lg" className="bg-primary hover:bg-primary/90 text-white font-bold px-8" data-testid="button-explore-activities">
+                  Explore Activities
+                  <ChevronRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
+              <Link href="/about">
+                <Button size="lg" variant="outline" className="bg-white/10 backdrop-blur-sm border-white/30 text-white hover:bg-white/20 font-semibold px-8" data-testid="button-about-us">
+                  About Us
+                </Button>
+              </Link>
+            </motion.div>
+            
+            {/* Activity Icons Row */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+              className="flex justify-center gap-8 mt-12"
+            >
+              <div className="flex flex-col items-center text-white/80">
+                <div className="w-14 h-14 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center mb-2">
+                  <Waves className="h-7 w-7" />
+                </div>
+                <span className="text-sm font-medium">Rafting</span>
+              </div>
+              <div className="flex flex-col items-center text-white/80">
+                <div className="w-14 h-14 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center mb-2">
+                  <Compass className="h-7 w-7" />
+                </div>
+                <span className="text-sm font-medium">Safari</span>
+              </div>
+              <div className="flex flex-col items-center text-white/80">
+                <div className="w-14 h-14 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center mb-2">
+                  <Mountain className="h-7 w-7" />
+                </div>
+                <span className="text-sm font-medium">Trekking</span>
+              </div>
+              <div className="flex flex-col items-center text-white/80">
+                <div className="w-14 h-14 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center mb-2">
+                  <Send className="h-7 w-7" />
+                </div>
+                <span className="text-sm font-medium">Kayaking</span>
+              </div>
+            </motion.div>
           </motion.div>
         </div>
       </section>
@@ -847,11 +491,11 @@ export default function Home() {
               Ready for Your Next Adventure?
             </h2>
             <p className="text-lg md:text-xl mb-8 text-primary-foreground/90">
-              Book your thrilling experience in Dandeli today and create memories that will last a lifetime
+              Discover thrilling experiences in Dandeli and create memories that will last a lifetime
             </p>
-            <Link href="/booking">
-              <Button size="lg" variant="secondary" className="text-lg px-8 shadow-xl hover-elevate" data-testid="button-book-cta">
-                Book Your Adventure
+            <Link href="/activities">
+              <Button size="lg" variant="secondary" className="text-lg px-8 shadow-xl hover-elevate" data-testid="button-explore-cta">
+                Explore Activities
                 <ChevronRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
@@ -913,11 +557,7 @@ export default function Home() {
                     <p className="text-muted-foreground mb-4">
                       Premium rooms with modern amenities, swimming pool, multi-cuisine restaurant, and direct access to all adventure activities
                     </p>
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-sm text-muted-foreground">Starting from</p>
-                        <p className="text-2xl font-bold text-primary">₹2,200<span className="text-sm font-normal text-muted-foreground">/night</span></p>
-                      </div>
+                    <div className="flex items-center justify-end">
                       <Button variant="outline" className="group-hover:bg-primary group-hover:text-white transition-colors">
                         Explore
                         <ChevronRight className="ml-2 h-4 w-4" />
@@ -959,11 +599,7 @@ export default function Home() {
                     <p className="text-muted-foreground mb-4">
                       Authentic Dandeli experience with home-cooked meals, personalized attention, and warm family environment
                     </p>
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-sm text-muted-foreground">Starting from</p>
-                        <p className="text-2xl font-bold text-primary">₹1,500<span className="text-sm font-normal text-muted-foreground">/night</span></p>
-                      </div>
+                    <div className="flex items-center justify-end">
                       <Button variant="outline" className="group-hover:bg-primary group-hover:text-white transition-colors">
                         Explore
                         <ChevronRight className="ml-2 h-4 w-4" />
@@ -1023,7 +659,7 @@ export default function Home() {
                 <CardContent className="p-8">
                   <div className="text-center mb-6">
                     <h3 className="font-heading text-2xl font-bold mb-2">Couple Package</h3>
-                    <p className="text-3xl font-bold text-primary">From ₹2,200<span className="text-sm font-normal text-muted-foreground">/person</span></p>
+                    <p className="text-sm text-muted-foreground">Perfect for romantic getaways</p>
                   </div>
                   <div className="space-y-3 mb-6">
                     <div className="flex items-center gap-2">
@@ -1047,9 +683,9 @@ export default function Home() {
                       <span className="text-sm">Swimming Pool Access</span>
                     </div>
                   </div>
-                  <Link href="/booking" className="w-full">
-                    <Button className="w-full" data-testid="button-book-couple">
-                      Book Now
+                  <Link href="/about" className="w-full">
+                    <Button className="w-full" data-testid="button-learn-couple">
+                      Learn More
                     </Button>
                   </Link>
                 </CardContent>
@@ -1070,7 +706,7 @@ export default function Home() {
                       MOST POPULAR
                     </div>
                     <h3 className="font-heading text-2xl font-bold mb-2">Family Package</h3>
-                    <p className="text-3xl font-bold text-primary">From ₹2,000<span className="text-sm font-normal text-muted-foreground">/person</span></p>
+                    <p className="text-sm text-muted-foreground">Great for families & groups</p>
                   </div>
                   <div className="space-y-3 mb-6">
                     <div className="flex items-center gap-2">
@@ -1094,9 +730,9 @@ export default function Home() {
                       <span className="text-sm">Campfire & Rain Dance</span>
                     </div>
                   </div>
-                  <Link href="/booking" className="w-full">
-                    <Button className="w-full" data-testid="button-book-family">
-                      Book Now
+                  <Link href="/about" className="w-full">
+                    <Button className="w-full" data-testid="button-learn-family">
+                      Learn More
                     </Button>
                   </Link>
                 </CardContent>
@@ -1114,7 +750,7 @@ export default function Home() {
                 <CardContent className="p-8">
                   <div className="text-center mb-6">
                     <h3 className="font-heading text-2xl font-bold mb-2">Student Package</h3>
-                    <p className="text-3xl font-bold text-primary">From ₹1,800<span className="text-sm font-normal text-muted-foreground">/person</span></p>
+                    <p className="text-sm text-muted-foreground">Ideal for student groups</p>
                   </div>
                   <div className="space-y-3 mb-6">
                     <div className="flex items-center gap-2">
@@ -1138,9 +774,9 @@ export default function Home() {
                       <span className="text-sm">Group Activities</span>
                     </div>
                   </div>
-                  <Link href="/booking" className="w-full">
-                    <Button className="w-full" data-testid="button-book-student">
-                      Book Now
+                  <Link href="/about" className="w-full">
+                    <Button className="w-full" data-testid="button-learn-student">
+                      Learn More
                     </Button>
                   </Link>
                 </CardContent>
@@ -1254,9 +890,9 @@ export default function Home() {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="mt-12 text-center"
           >
-            <Link href="/booking">
-              <Button size="lg" data-testid="button-book-from-gallery">
-                Start Your Adventure
+            <Link href="/activities">
+              <Button size="lg" data-testid="button-explore-from-gallery">
+                Explore Activities
                 <ChevronRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
@@ -1348,9 +984,9 @@ export default function Home() {
             className="mt-12 text-center"
           >
             <p className="text-muted-foreground mb-6">Still have questions? We're here to help!</p>
-            <Link href="/booking">
-              <Button size="lg" data-testid="button-book-from-faq">
-                Book Your Adventure
+            <Link href="/about">
+              <Button size="lg" data-testid="button-contact-from-faq">
+                Contact Us
                 <ChevronRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
@@ -1511,13 +1147,6 @@ export default function Home() {
       </section>
 
       <Footer />
-
-      {/* Booking Modal */}
-      <BookingModal
-        open={bookingModalOpen}
-        onOpenChange={setBookingModalOpen}
-        defaultValues={getDefaultBookingValues()}
-      />
 
       <style>{`
         .scrollbar-hide::-webkit-scrollbar {

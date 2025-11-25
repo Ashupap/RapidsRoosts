@@ -11,8 +11,7 @@ const navLinks = [
   { href: "/about", label: "About Us" },
   { href: "/activities", label: "Our Activities" },
   { href: "/accommodations", label: "Accommodations" },
-  { href: "/booking", label: "Book Now" },
-  { href: "/status", label: "Check Status" },
+  { href: "/dandeli-guide", label: "Travel Guide" },
 ];
 
 export default function Navigation() {
@@ -217,14 +216,14 @@ export default function Navigation() {
                   </div>
 
                   {/* Mobile CTA */}
-                  <Link href="/booking">
+                  <Link href="/activities">
                     <Button
                       className="w-full mt-4"
                       size="lg"
                       onClick={() => setMobileMenuOpen(false)}
-                      data-testid="button-book-mobile"
+                      data-testid="button-explore-mobile"
                     >
-                      Book Your Adventure
+                      Explore Activities
                     </Button>
                   </Link>
                 </nav>

@@ -2,7 +2,7 @@ import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "wouter";
-import { Calendar, Clock, Users, Shield, MapPin, ChevronRight, Waves, IndianRupee } from "lucide-react";
+import { Calendar, Clock, Users, Shield, MapPin, ChevronRight, Waves } from "lucide-react";
 import { useState } from "react";
 import raftingImage from "@assets/stock_images/vibrant_water_raftin_9419a08c.jpg";
 import raftingHero2 from "@assets/stock_images/adventure_sports_gal_5c0d834f.jpg";
@@ -14,17 +14,11 @@ import Navigation from "@/components/Navigation";
 export default function RaftingDetail() {
   useSEO({
     title: 'White Water Rafting - Kali River Rafting Adventure in Dandeli',
-    description: 'Experience thrilling white water rafting on the Kali River in Dandeli. Navigate Grade 2-3 rapids with professional guides. Choose from 9 km long rafting or 1 km short rafting routes. Book now from ₹600.',
-    keywords: 'white water rafting Dandeli, Kali river rafting, rafting Karnataka, Dandeli rafting price, river rafting Western Ghats, Grade 2-3 rapids, adventure rafting India',
+    description: 'Experience thrilling white water rafting on the Kali River in Dandeli. Navigate Grade 2-3 rapids with professional guides. Choose from 9 km long rafting or 1 km short rafting routes.',
+    keywords: 'white water rafting Dandeli, Kali river rafting, rafting Karnataka, river rafting Western Ghats, Grade 2-3 rapids, adventure rafting India',
   });
 
-  injectStructuredData('activity', {
-    name: 'White Water Rafting',
-    description: 'Navigate Grade 2-3 rapids on the pristine Kali River',
-    image: raftingImage,
-    url: '/rafting',
-    price: '600-1500',
-  });
+  injectStructuredData('organization');
 
   const { scrollYProgress } = useScroll();
   const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
@@ -120,9 +114,9 @@ export default function RaftingDetail() {
             </Card>
             <Card>
               <CardContent className="p-6 text-center">
-                <IndianRupee className="h-8 w-8 mx-auto mb-2 text-primary" />
-                <h3 className="font-semibold mb-1">Price Range</h3>
-                <p className="text-sm text-muted-foreground" data-testid="text-rafting-price">₹500 - ₹1,800</p>
+                <Shield className="h-8 w-8 mx-auto mb-2 text-primary" />
+                <h3 className="font-semibold mb-1">Safety</h3>
+                <p className="text-sm text-muted-foreground" data-testid="text-rafting-safety">Professional Guides</p>
               </CardContent>
             </Card>
             <Card>
@@ -186,7 +180,7 @@ export default function RaftingDetail() {
                           <Clock className="h-4 w-4" /> 30 minutes
                         </span>
                         <span className="flex items-center gap-1">
-                          <IndianRupee className="h-4 w-4" /> ₹500-600
+                          <Users className="h-4 w-4" /> 6-8 per raft
                         </span>
                       </div>
                     </CardContent>
@@ -201,7 +195,7 @@ export default function RaftingDetail() {
                           <Clock className="h-4 w-4" /> 1-1.5 hours
                         </span>
                         <span className="flex items-center gap-1">
-                          <IndianRupee className="h-4 w-4" /> ₹1,000-1,400
+                          <Users className="h-4 w-4" /> 6-8 per raft
                         </span>
                       </div>
                     </CardContent>
@@ -221,7 +215,7 @@ export default function RaftingDetail() {
                           <Clock className="h-4 w-4" /> 2-4 hours
                         </span>
                         <span className="flex items-center gap-1">
-                          <IndianRupee className="h-4 w-4" /> ₹1,350-1,800
+                          <Users className="h-4 w-4" /> 6-8 per raft
                         </span>
                       </div>
                     </CardContent>
@@ -310,12 +304,11 @@ export default function RaftingDetail() {
                       Ready to Ride the Rapids?
                     </h3>
                     <p className="mb-6 opacity-90">
-                      Book your white water rafting adventure and experience the thrill of a lifetime 
-                      on the Kali River.
+                      Experience the thrill of a lifetime on the Kali River. Contact us to learn more about our rafting adventures.
                     </p>
-                    <Link href="/booking">
-                      <Button size="lg" variant="secondary" className="w-full" data-testid="button-book-rafting">
-                        Book Your Rafting Trip
+                    <Link href="/about">
+                      <Button size="lg" variant="secondary" className="w-full" data-testid="button-contact-rafting">
+                        Contact Us
                         <ChevronRight className="ml-2 h-5 w-5" />
                       </Button>
                     </Link>

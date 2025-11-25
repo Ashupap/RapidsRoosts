@@ -2,7 +2,7 @@ import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "wouter";
-import { Calendar, Clock, Users, Shield, MapPin, ChevronRight, Compass, IndianRupee, Binoculars } from "lucide-react";
+import { Calendar, Clock, Users, Shield, MapPin, ChevronRight, Compass, Binoculars } from "lucide-react";
 import { useState } from "react";
 import safariImage from "@assets/generated_images/Jungle_safari_wildlife_adventure_3300876a.png";
 import safariImage2 from "@assets/stock_images/jungle_safari_wildli_5c354858.jpg";
@@ -13,17 +13,11 @@ import Navigation from "@/components/Navigation";
 export default function SafariDetail() {
   useSEO({
     title: 'Jungle Safari - Wildlife Safari in Dandeli Wildlife Sanctuary',
-    description: 'Explore the 834 sq km Dandeli Wildlife Sanctuary on a guided jungle safari. Spot tigers, leopards, elephants, sloth bears, and 200+ bird species. Book your jeep safari from ₹600 per person.',
-    keywords: 'jungle safari Dandeli, Dandeli wildlife sanctuary, tiger safari Karnataka, wildlife tour Dandeli, bird watching Karnataka, jeep safari Western Ghats, Dandeli safari booking',
+    description: 'Explore the 834 sq km Dandeli Wildlife Sanctuary on a guided jungle safari. Spot tigers, leopards, elephants, sloth bears, and 200+ bird species.',
+    keywords: 'jungle safari Dandeli, Dandeli wildlife sanctuary, tiger safari Karnataka, wildlife tour Dandeli, bird watching Karnataka, jeep safari Western Ghats',
   });
 
-  injectStructuredData('activity', {
-    name: 'Jungle Safari',
-    description: 'Explore 834 sq km wildlife sanctuary with expert naturalists',
-    image: safariImage,
-    url: '/safari',
-    price: '600',
-  });
+  injectStructuredData('organization');
 
   const { scrollYProgress} = useScroll();
   const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
@@ -134,9 +128,9 @@ export default function SafariDetail() {
             </Card>
             <Card>
               <CardContent className="p-6 text-center">
-                <IndianRupee className="h-8 w-8 mx-auto mb-2 text-primary" />
-                <h3 className="font-semibold mb-1">Safari Cost</h3>
-                <p className="text-sm text-muted-foreground" data-testid="text-safari-price">₹600/person</p>
+                <Shield className="h-8 w-8 mx-auto mb-2 text-primary" />
+                <h3 className="font-semibold mb-1">Safety</h3>
+                <p className="text-sm text-muted-foreground" data-testid="text-safari-safety">Expert Naturalists</p>
               </CardContent>
             </Card>
             <Card>
@@ -252,11 +246,11 @@ export default function SafariDetail() {
                       Ready for Wild Encounters?
                     </h3>
                     <p className="mb-6 opacity-90">
-                      Book your jungle safari and explore the incredible biodiversity of Dandeli Wildlife Sanctuary.
+                      Explore the incredible biodiversity of Dandeli Wildlife Sanctuary. Contact us to learn more.
                     </p>
-                    <Link href="/booking">
-                      <Button size="lg" variant="secondary" className="w-full" data-testid="button-book-safari">
-                        Book Your Safari
+                    <Link href="/about">
+                      <Button size="lg" variant="secondary" className="w-full" data-testid="button-contact-safari">
+                        Contact Us
                         <ChevronRight className="ml-2 h-5 w-5" />
                       </Button>
                     </Link>

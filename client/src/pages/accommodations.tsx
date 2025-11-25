@@ -178,17 +178,17 @@ export default function Accommodations() {
                 accommodations that complement your Dandeli adventure perfectly.
               </p>
               <div className="flex flex-wrap items-center justify-center gap-4">
-                <Link href="/booking">
+                <a href="#accommodations">
                   <Button size="lg" className="text-base">
-                    Book Your Stay
+                    View Options
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
-                </Link>
-                <a href="#accommodations">
-                  <Button size="lg" variant="outline" className="text-base bg-white/10 backdrop-blur-sm border-white/30 text-white hover:bg-white/20">
-                    View Options
-                  </Button>
                 </a>
+                <Link href="/about">
+                  <Button size="lg" variant="outline" className="text-base bg-white/10 backdrop-blur-sm border-white/30 text-white hover:bg-white/20">
+                    Contact Us
+                  </Button>
+                </Link>
               </div>
             </motion.div>
           </div>
@@ -322,19 +322,14 @@ export default function Accommodations() {
 
                       <div className="flex items-end justify-between">
                         <div>
-                          <p className="text-sm text-muted-foreground mb-1">Starting from</p>
-                          <p className="text-3xl font-bold text-primary">
-                            ₹{accommodation.pricePerNight.toLocaleString()}
-                            <span className="text-sm font-normal text-muted-foreground">/night</span>
-                          </p>
-                          <p className="text-xs text-muted-foreground flex items-center gap-1 mt-1">
+                          <p className="text-xs text-muted-foreground flex items-center gap-1">
                             <Users className="h-3 w-3" />
                             {accommodation.capacity}
                           </p>
                         </div>
-                        <Link href="/booking">
-                          <Button className="text-base" data-testid={`button-book-${accommodation.id}`}>
-                            Book Now
+                        <Link href="/about">
+                          <Button className="text-base" data-testid={`button-contact-${accommodation.id}`}>
+                            Contact Us
                             <ArrowRight className="ml-2 h-4 w-4" />
                           </Button>
                         </Link>
@@ -361,13 +356,13 @@ export default function Accommodations() {
                 <CheckCircle2 className="h-16 w-16 text-primary mx-auto mb-6" />
                 <h2 className="font-heading text-3xl font-bold mb-4">Complete Adventure Packages</h2>
                 <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-                  All our accommodations can be booked as part of complete adventure packages including
-                  stay, meals, activities, and sightseeing. Perfect for a hassle-free experience!
+                  All our accommodations can be enjoyed as part of complete adventure packages including
+                  stay, meals, activities, and sightseeing. Contact us to learn more!
                 </p>
                 <div className="flex flex-wrap justify-center gap-4">
-                  <Link href="/booking">
+                  <Link href="/about">
                     <Button size="lg" className="text-base">
-                      View Packages
+                      Contact Us
                       <ArrowRight className="ml-2 h-5 w-5" />
                     </Button>
                   </Link>

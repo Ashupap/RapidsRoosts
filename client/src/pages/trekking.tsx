@@ -2,7 +2,7 @@ import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "wouter";
-import { Calendar, Clock, Users, Shield, MapPin, ChevronRight, Mountain, IndianRupee, Compass } from "lucide-react";
+import { Calendar, Clock, Users, Shield, MapPin, ChevronRight, Mountain, Compass } from "lucide-react";
 import { useState } from "react";
 import trekkingImage from "@assets/generated_images/Forest_trekking_adventure_trail_14dd1cd1.png";
 import { useSEO, injectStructuredData } from "@/lib/seo";
@@ -16,13 +16,7 @@ export default function TrekkingDetail() {
     keywords: 'forest trekking Dandeli, Western Ghats treks, Shiroli Peak trek, Kavala Caves, Syntheri Rocks, nature trails Dandeli, trekking Karnataka, jungle trek India',
   });
 
-  injectStructuredData('activity', {
-    name: 'Forest Trekking',
-    description: 'Discover hidden trails through Western Ghats biodiversity',
-    image: trekkingImage,
-    url: '/trekking',
-    price: 'Included in package',
-  });
+  injectStructuredData('organization');
 
   const { scrollYProgress } = useScroll();
   const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
@@ -124,9 +118,9 @@ export default function TrekkingDetail() {
             </Card>
             <Card>
               <CardContent className="p-6 text-center">
-                <IndianRupee className="h-8 w-8 mx-auto mb-2 text-primary" />
-                <h3 className="font-semibold mb-1">Price Range</h3>
-                <p className="text-sm text-muted-foreground" data-testid="text-trekking-price">₹500-₹1,000</p>
+                <Shield className="h-8 w-8 mx-auto mb-2 text-primary" />
+                <h3 className="font-semibold mb-1">Safety</h3>
+                <p className="text-sm text-muted-foreground" data-testid="text-trekking-safety">Certified Guides</p>
               </CardContent>
             </Card>
             <Card>
@@ -247,12 +241,12 @@ export default function TrekkingDetail() {
                       Ready for Adventure?
                     </h3>
                     <p className="mb-6 opacity-90">
-                      Book your trekking expedition and explore the breathtaking Western Ghats trails 
-                      with expert local guides.
+                      Explore the breathtaking Western Ghats trails with expert local guides. 
+                      Contact us to learn more.
                     </p>
-                    <Link href="/booking">
-                      <Button size="lg" variant="secondary" className="w-full" data-testid="button-book-trekking">
-                        Book Your Trek
+                    <Link href="/about">
+                      <Button size="lg" variant="secondary" className="w-full" data-testid="button-contact-trekking">
+                        Contact Us
                         <ChevronRight className="ml-2 h-5 w-5" />
                       </Button>
                     </Link>

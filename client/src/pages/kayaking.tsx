@@ -2,7 +2,7 @@ import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "wouter";
-import { Calendar, Clock, Users, Shield, MapPin, ChevronRight, Send, IndianRupee, Droplets } from "lucide-react";
+import { Calendar, Clock, Users, Shield, MapPin, ChevronRight, Send, Droplets } from "lucide-react";
 import { useState } from "react";
 import kayakingImage from "@assets/generated_images/Peaceful_kayaking_river_adventure_e3974c90.png";
 import { useSEO, injectStructuredData } from "@/lib/seo";
@@ -12,17 +12,11 @@ import Navigation from "@/components/Navigation";
 export default function KayakingDetail() {
   useSEO({
     title: 'Kayaking Adventure - Kali River Kayaking in Dandeli',
-    description: 'Paddle through serene Kali River waters and Supa Reservoir on a guided kayaking adventure. Perfect for beginners and experienced paddlers. Flatwater and whitewater options available from ₹150 per hour.',
+    description: 'Paddle through serene Kali River waters and Supa Reservoir on a guided kayaking adventure. Perfect for beginners and experienced paddlers. Flatwater and whitewater options available.',
     keywords: 'kayaking Dandeli, Kali river kayaking, water sports Dandeli, kayaking Karnataka, backwater kayaking, Supa reservoir kayaking, adventure kayaking India',
   });
 
-  injectStructuredData('activity', {
-    name: 'Kayaking Adventure',
-    description: 'Paddle through serene Kali River backwaters',
-    image: kayakingImage,
-    url: '/kayaking',
-    price: '150-300',
-  });
+  injectStructuredData('organization');
 
   const { scrollYProgress } = useScroll();
   const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
@@ -115,9 +109,9 @@ export default function KayakingDetail() {
             </Card>
             <Card>
               <CardContent className="p-6 text-center">
-                <IndianRupee className="h-8 w-8 mx-auto mb-2 text-primary" />
-                <h3 className="font-semibold mb-1">Price Range</h3>
-                <p className="text-sm text-muted-foreground" data-testid="text-kayaking-price">₹150-₹300</p>
+                <Shield className="h-8 w-8 mx-auto mb-2 text-primary" />
+                <h3 className="font-semibold mb-1">Safety</h3>
+                <p className="text-sm text-muted-foreground" data-testid="text-kayaking-safety">Expert Instructors</p>
               </CardContent>
             </Card>
             <Card>
@@ -264,12 +258,12 @@ export default function KayakingDetail() {
                       Ready to Paddle?
                     </h3>
                     <p className="mb-6 opacity-90">
-                      Book your kayaking adventure and experience the serenity of Dandeli's waters 
-                      surrounded by pristine Western Ghats forests.
+                      Experience the serenity of Dandeli's waters surrounded by pristine Western Ghats forests. 
+                      Contact us to learn more.
                     </p>
-                    <Link href="/booking">
-                      <Button size="lg" variant="secondary" className="w-full" data-testid="button-book-kayaking">
-                        Book Your Kayaking Trip
+                    <Link href="/about">
+                      <Button size="lg" variant="secondary" className="w-full" data-testid="button-contact-kayaking">
+                        Contact Us
                         <ChevronRight className="ml-2 h-5 w-5" />
                       </Button>
                     </Link>

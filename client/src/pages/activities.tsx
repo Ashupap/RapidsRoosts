@@ -34,9 +34,9 @@ export default function Activities() {
   const heroY = useTransform(scrollYProgress, [0, 1], [prefersReducedMotion ? "0%" : "0%", prefersReducedMotion ? "0%" : "20%"]);
 
   useSEO({
-    title: 'Adventure Activities in Dandeli - White Water Rafting, Safari, Trekking | Best Dandeli Packages',
-    description: 'Discover the best adventure activities in Dandeli, Karnataka. White water rafting on Kali River (Grade 2-3 rapids), wildlife safaris in 834 sq km sanctuary, Western Ghats trekking, kayaking & more. Detailed pricing from ₹600. Book your Dandeli adventure package with Rapids & Roosts - #1 rated adventure tourism operator.',
-    keywords: 'Dandeli activities, adventure activities in Dandeli, things to do in Dandeli, white water rafting Dandeli, jungle safari Dandeli, Dandeli trekking, kayaking Dandeli, adventure sports Karnataka, Dandeli tour packages, Kali river activities, Dandeli wildlife safari, adventure tourism Dandeli, best activities in Dandeli, Dandeli water sports',
+    title: 'Adventure Activities in Dandeli - White Water Rafting, Safari, Trekking | Best Dandeli Experiences',
+    description: 'Discover the best adventure activities in Dandeli, Karnataka. White water rafting on Kali River (Grade 2-3 rapids), wildlife safaris in 834 sq km sanctuary, Western Ghats trekking, kayaking & more. Experience Dandeli with Rapids & Roosts - #1 rated adventure tourism operator.',
+    keywords: 'Dandeli activities, adventure activities in Dandeli, things to do in Dandeli, white water rafting Dandeli, jungle safari Dandeli, Dandeli trekking, kayaking Dandeli, adventure sports Karnataka, Kali river activities, Dandeli wildlife safari, adventure tourism Dandeli, best activities in Dandeli, Dandeli water sports',
   });
 
   injectStructuredData('organization');
@@ -130,15 +130,15 @@ export default function Activities() {
                 expertly curated experiences for every adventurer.
               </p>
               <div className="flex flex-wrap items-center justify-center gap-4">
-                <Link href="/booking">
+                <Link href="#activities">
                   <Button size="lg" className="text-base">
-                    Book Your Adventure
+                    Explore Activities
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>
-                <Link href="#activities">
+                <Link href="/about">
                   <Button size="lg" variant="outline" className="text-base bg-white/10 backdrop-blur-sm border-white/30 text-white hover:bg-white/20">
-                    Explore Activities
+                    About Us
                   </Button>
                 </Link>
               </div>
@@ -233,13 +233,6 @@ export default function Activities() {
                           </div>
                         </div>
 
-                        {/* Price Badge */}
-                        <div className="absolute bottom-6 right-6">
-                          <div className="bg-white/95 backdrop-blur-sm px-4 py-2 rounded-lg">
-                            <div className="text-xs text-muted-foreground mb-1">Starting from</div>
-                            <div className="text-2xl font-bold text-primary">{activity.price}</div>
-                          </div>
-                        </div>
                       </div>
 
                       {/* Content Section */}
@@ -310,15 +303,9 @@ export default function Activities() {
                           {/* CTAs */}
                           <div className="flex flex-wrap gap-3 pt-4">
                             <Link href={`/${activity.slug}`}>
-                              <Button variant="outline" size="lg">
+                              <Button size="lg">
                                 Learn More
                                 <ChevronRight className="ml-2 h-4 w-4" />
-                              </Button>
-                            </Link>
-                            <Link href="/booking">
-                              <Button size="lg">
-                                Book Now
-                                <ArrowRight className="ml-2 h-4 w-4" />
                               </Button>
                             </Link>
                           </div>
@@ -347,13 +334,13 @@ export default function Activities() {
               Ready for Your Adventure?
             </h2>
             <p className="text-base md:text-lg mb-10 text-primary-foreground/90 leading-relaxed">
-              Book your perfect adventure package today and experience the thrill of Dandeli's wilderness. 
+              Explore our adventure activities and experience the thrill of Dandeli's wilderness. 
               Our expert team is ready to make your adventure unforgettable.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4">
-              <Link href="/booking">
+              <Link href="/dandeli-guide">
                 <Button size="lg" variant="secondary" className="text-base">
-                  Book Your Adventure
+                  Dandeli Travel Guide
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>

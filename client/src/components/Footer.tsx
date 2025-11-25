@@ -84,8 +84,8 @@ export default function Footer() {
               {[
                 { href: "/", label: "Home" },
                 { href: "/activities", label: "Our Activities" },
-                { href: "/booking", label: "Book Adventure" },
-                { href: "/status", label: "Track Booking" },
+                { href: "/accommodations", label: "Accommodations" },
+                { href: "/dandeli-guide", label: "Travel Guide" },
               ].map((link, index) => (
                 <motion.li
                   key={link.href}

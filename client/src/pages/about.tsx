@@ -424,17 +424,17 @@ export default function About() {
               Join thousands of adventurers who've discovered the magic of Dandeli with Rapids & Roosts
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4">
-              <Link href="/booking">
-                <Button size="lg" variant="secondary" className="text-lg px-8 shadow-xl hover-elevate" data-testid="button-book-now">
-                  Book Your Adventure
+              <Link href="/activities">
+                <Button size="lg" variant="secondary" className="text-lg px-8 shadow-xl hover-elevate" data-testid="button-view-activities">
+                  View Activities
                   <ChevronRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
-              <Link href="/activities">
-                <Button size="lg" variant="outline" className="text-lg px-8 bg-transparent border-2 border-white text-white hover:bg-white hover:text-primary" data-testid="button-view-activities">
-                  View Activities
+              <a href="tel:+919483940400">
+                <Button size="lg" variant="outline" className="text-lg px-8 bg-transparent border-2 border-white text-white hover:bg-white hover:text-primary" data-testid="button-call-us">
+                  Call Us
                 </Button>
-              </Link>
+              </a>
             </div>
           </motion.div>
         </div>

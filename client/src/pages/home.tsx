@@ -2,7 +2,7 @@ import { Link } from "wouter";
 import { motion, useScroll, useTransform, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ChevronRight, ChevronLeft, Waves, Mountain, Compass, Send, MapPin, Mail, Phone } from "lucide-react";
+import { ChevronRight, ChevronLeft, Waves, Mountain, Compass, Send, MapPin, Mail, Phone, Bed, Building2, Home as HomeIcon } from "lucide-react";
 import { useRef, useState } from "react";
 import { useSEO, injectStructuredData } from "@/lib/seo";
 import Navigation from "@/components/Navigation";

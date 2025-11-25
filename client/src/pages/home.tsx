@@ -3,7 +3,7 @@ import { motion, useScroll, useTransform, AnimatePresence, useReducedMotion } fr
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ChevronRight, ChevronLeft, Waves, Mountain, Compass, Send, MapPin, Mail, Phone, Bed, Building2, Home as HomeIcon, PhoneCall } from "lucide-react";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useSEO, injectStructuredData } from "@/lib/seo";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -78,11 +78,28 @@ const activities = [
   },
 ];
 
+const heroCatchphrases = [
+  "Discover Adventure in",
+  "Experience the Thrill of",
+  "Unleash Your Wild Side in",
+  "Create Memories in",
+  "Explore Nature in",
+  "Find Your Escape in",
+];
+
 export default function Home() {
   const prefersReducedMotion = useReducedMotion();
   const [videoLoaded, setVideoLoaded] = useState(false);
+  const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
   const { openContactModal } = useContactModal();
   const heroRef = useRef<HTMLDivElement>(null);
+  
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentPhraseIndex((prev) => (prev + 1) % heroCatchphrases.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
   
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -185,7 +202,23 @@ export default function Home() {
             className="text-center max-w-5xl mx-auto"
           >
             <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-4 md:mb-6 leading-tight tracking-tight" data-testid="text-hero-title">
-              Discover Your Next Adventure in Dandeli
+              <span className="block h-[1.2em] overflow-hidden relative">
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={currentPhraseIndex}
+                    initial={{ y: 40, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: -40, opacity: 0 }}
+                    transition={{ duration: 0.5, ease: "easeInOut" }}
+                    className="block"
+                  >
+                    {heroCatchphrases[currentPhraseIndex]}
+                  </motion.span>
+                </AnimatePresence>
+              </span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-amber-300 to-orange-500 drop-shadow-[0_0_30px_rgba(251,146,60,0.5)]">
+                Dandeli
+              </span>
             </h1>
             <p className="text-white/90 text-lg sm:text-xl md:text-xl lg:text-2xl font-medium mb-8" data-testid="text-hero-subtitle">
               Karnataka's Premier Adventure Destination - White Water Rafting, Jungle Safaris, Trekking & More
@@ -210,15 +243,6 @@ export default function Home() {
                   Call Us
                 </Button>
               </a>
-              <Button 
-                size="lg" 
-                variant="outline" 
-                className="bg-white/10 backdrop-blur-sm border-white/30 text-white hover:bg-white/20 font-semibold px-8" 
-                onClick={openContactModal}
-                data-testid="button-contact-hero"
-              >
-                Contact Us
-              </Button>
             </motion.div>
             
             {/* Activity Icons Row */}

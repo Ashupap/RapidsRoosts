@@ -1,91 +1,127 @@
-# Development Setup for Windows
-
-This directory contains scripts and configuration files for setting up Rapids & Roosts on Windows for development purposes.
-
-## Files Overview
-
-### Documentation
-- **DEPLOYMENT_GUIDE.md** - Complete development setup guide with step-by-step instructions
-- **PRODUCTION_NOTES.md** - Production deployment guide with SQLite best practices
-- **QUICK_START.md** - Quick reference guide for common tasks
-
-### Configuration Files
-- **ecosystem.config.js** - PM2 configuration for development/production (in project root)
-- **.env.example** - Environment variables template for development
-- **.env.production.example** - Environment variables template for production
-- **web.config** - IIS configuration (for advanced setups only)
-- **web-iisnode.config** - IIS with iisnode configuration (for advanced setups only)
-
-### Setup Scripts
-- **dev-setup.ps1** - Automated development environment setup (Recommended)
-- **deploy.ps1** - Alternative deployment script
-- **setup-pm2-service.ps1** - PM2 Windows service setup (optional)
+# Rapids & Roosts Dandeli - Deployment Guide
 
 ## Quick Start
 
-### Automated Setup (Recommended)
-
-1. Clone the repository to your preferred location:
-   ```powershell
-   cd C:\dev
-   git clone <your-repository-url> rapids-roosts
-   cd rapids-roosts
-   ```
-
-2. Run the automated setup script:
-   ```powershell
-   cd deployment
-   .\dev-setup.ps1
-   ```
-
-3. The script will guide you through the setup process and start the development server.
-
-### Manual Setup
-
-If you prefer manual setup, follow the detailed instructions in **DEPLOYMENT_GUIDE.md**
-
-## Prerequisites
-
-- Windows 10/11 or Windows Server
-- Node.js 20.x or higher ([Download](https://nodejs.org))
-- Git for Windows ([Download](https://git-scm.com))
-
-**Note:** Uses SQLite database - no separate database server required!
-
-## Development Workflow
-
-**Start development server:**
-```powershell
-npm run dev
+### Linux/macOS
+```bash
+chmod +x deploy.sh
+./deploy.sh
 ```
 
-**Access the application:**
-- Open browser to `http://localhost:5000`
-- Server will auto-reload when you make code changes
-
-**Stop development server:**
-- Press `Ctrl+C` in the terminal
-
-## Common Commands
-
+### Windows (PowerShell)
 ```powershell
-npm run dev              # Start development server with hot reload
-npm run db:push          # Update database schema  
-sqlite3 dev.db           # Access SQLite database
-npm install              # Install/update dependencies
-git pull                 # Get latest code changes
+.\deploy.ps1
 ```
 
-## Support
+## Deployment Platforms
 
-For detailed instructions and troubleshooting, see **DEPLOYMENT_GUIDE.md**
+### 1. Replit (Current Platform)
+- Click the **Deploy** button in Replit
+- The app will be deployed automatically with a public URL
 
-## Note on Production
+### 2. Docker
+```bash
+# Build and run
+docker build -t rapids-roosts .
+docker run -p 5000:5000 rapids-roosts
 
-This setup is optimized for **development**. For production deployment:
-- Use different environment variables (NODE_ENV=production)
-- Set up proper security (strong SESSION_SECRET, HTTPS)
-- Configure proper process management (PM2 cluster mode)
-- Set up monitoring and logging
-- Use a production SQLite database file (e.g., `production.db`)
-- Set up regular database backups (copy the .db file)
+# Or use docker-compose
+docker-compose up -d
+```
+
+### 3. VPS/Cloud Server (Ubuntu/Debian)
+
+```bash
+# 1. Copy build to server
+scp -r dist/* user@server:/var/www/rapidsroosts/
+
+# 2. Install dependencies on server
+cd /var/www/rapidsroosts/dist
+npm install --production
+
+# 3. Setup systemd service
+sudo cp /path/to/deployment/systemd/rapidsroosts.service /etc/systemd/system/
+sudo systemctl enable rapidsroosts
+sudo systemctl start rapidsroosts
+
+# 4. Configure Nginx
+sudo cp /path/to/deployment/nginx/nginx.conf /etc/nginx/sites-available/rapidsroosts
+sudo ln -s /etc/nginx/sites-available/rapidsroosts /etc/nginx/sites-enabled/
+sudo nginx -t && sudo systemctl reload nginx
+```
+
+### 4. PM2 (Process Manager)
+```bash
+npm install -g pm2
+pm2 start ecosystem.config.js --env production
+pm2 save
+pm2 startup
+```
+
+### 5. Vercel
+```bash
+npm i -g vercel
+vercel --prod
+```
+
+### 6. Netlify
+```bash
+npm i -g netlify-cli
+netlify deploy --prod
+```
+
+### 7. Cloudflare Pages
+1. Push code to GitHub
+2. Connect repository in Cloudflare Pages dashboard
+3. Build command: `npm run build`
+4. Output directory: `dist/public`
+
+### 8. IIS (Windows Server)
+1. Install [iisnode](https://github.com/Azure/iisnode)
+2. Copy `dist` folder to IIS site root
+3. The `web.config` file is included in the build
+
+### 9. Windows Service (NSSM)
+1. Download [NSSM](https://nssm.cc/)
+2. Run: `deployment\windows\install-service.bat`
+
+## Environment Variables
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `PORT` | Server port | `5000` |
+| `NODE_ENV` | Environment | `production` |
+
+## Health Check
+
+The application exposes a health check endpoint:
+```
+GET /api/health
+```
+
+Response:
+```json
+{
+  "status": "healthy",
+  "timestamp": "2025-01-01T00:00:00.000Z",
+  "service": "Rapids & Roosts Dandeli"
+}
+```
+
+## Contact Information
+
+- **Phone:** +91 94839 40400
+- **Email:** info@rapidsroosts.com
+- **WhatsApp:** https://wa.me/919483940400
+- **Address:** Dandeli, Karnataka, India - 581325
+
+## SEO Keywords
+
+- Dandeli
+- Dandeli tourism
+- Adventure tourism in Karnataka
+- Best adventure tourism in Karnataka
+- White water rafting Dandeli
+- Jungle safari Dandeli
+- Kayaking Dandeli
+- Forest trekking Dandeli

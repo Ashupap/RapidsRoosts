@@ -7,7 +7,7 @@ Rapids Roosts Dandeli is a modern, immersive informational website for adventure
 I prefer detailed explanations and iterative development. Ask before making major changes. Do not make changes to the `attached_assets/` folder. Do not make changes to the `design_guidelines.md` file.
 
 ## System Architecture
-The application follows a client-server architecture. The frontend is built with React, TypeScript, Tailwind CSS, and Framer Motion, focusing on a responsive, animation-rich UI/UX with the vibrant "Adventure Pulse" color palette (Teal Rapids hsl(182, 78%, 38%), Ember Trail hsl(17, 92%, 55%), Jungle Canopy hsl(138, 54%, 32%), Moonlit Mist hsl(210, 40%, 96%)) and Montserrat/Open Sans typography. Key UI components are sourced from shadcn/ui. The backend uses Express.js and Node.js to serve the static frontend assets. The system includes an SEO-optimized structure with dynamic meta tags, structured data, and canonical URLs designed to achieve top Google rankings for Dandeli tourism keywords.
+The application follows a lightweight client-server architecture. The frontend is built with React, TypeScript, Tailwind CSS, and Framer Motion, focusing on a responsive, animation-rich UI/UX with the vibrant "Adventure Pulse" color palette (Teal Rapids hsl(182, 78%, 38%), Ember Trail hsl(17, 92%, 55%), Jungle Canopy hsl(138, 54%, 32%), Moonlit Mist hsl(210, 40%, 96%)) and Montserrat/Open Sans typography. Key UI components are sourced from shadcn/ui. The backend uses Express.js and Node.js to serve the static frontend assets with minimal API endpoints (health check and contact info). **No database is required** - the website is purely informational.
 
 ### Key Features:
 - **Comprehensive SEO Optimization**: Dynamic meta tags, Open Graph, Twitter Cards, JSON-LD schemas (FAQPage, TouristDestination, TravelAgency, Organization, BreadcrumbList), canonical URLs, and geo-location tags targeting top Google rankings for Dandeli tourism keywords.
@@ -22,20 +22,48 @@ The application follows a client-server architecture. The frontend is built with
 - **Video Hero Section**: Fullscreen hero carousel with video playback and parallax scroll effects.
 - **Informational CTAs**: All buttons direct to "Contact Us", "Learn More", or "Explore Activities" instead of booking.
 - **Full Accessibility Compliance**: All continuous animations respect prefers-reduced-motion using framer-motion's SSR-safe hook.
+- **Global Contact Modal**: Context-based contact modal accessible from all pages with phone and email options.
+- **Colorful Social Media Icons**: Brand-colored icons (Facebook blue, Instagram pink, Twitter blue, YouTube red, WhatsApp green) in footer.
 
 ## External Dependencies
 - **Lucide React**: Icon library for UI icons.
+- **React Icons**: Social media brand icons (Facebook, Instagram, Twitter, YouTube, WhatsApp).
 - **Framer Motion**: Animation library for parallax effects and transitions.
 - **Tailwind CSS**: Utility-first CSS framework.
 - **shadcn/ui**: UI component library.
 - **Wouter**: Lightweight routing library.
 
 ## Deployment
-The website is a static informational site with Express backend serving frontend assets. Ready for deployment on Replit.
+
+### Cross-Platform Deployment Scripts
+The project includes comprehensive deployment scripts:
+
+- **`deploy.sh`**: Linux/macOS deployment script
+- **`deploy.ps1`**: Windows PowerShell deployment script
+
+Both scripts support multiple deployment platforms:
+- Replit (recommended - current platform)
+- Docker & Docker Compose
+- VPS/Cloud Server with Nginx + PM2/Systemd
+- Vercel, Netlify, Cloudflare Pages
+- Windows IIS with iisnode
+- Windows Service with NSSM
+
+Run `./deploy.sh --help` or `.\deploy.ps1 -Help` for usage instructions.
+
+### Contact Information
+- **Phone**: +91 94839 40400
+- **Email**: info@rapidsroosts.com
+- **WhatsApp**: https://wa.me/919483940400
+- **Address**: Dandeli, Karnataka, India - 581325
 
 ### Recent Changes (November 2025)
 - Converted from booking application to purely informational website
-- Removed all booking functionality, forms, and modals
+- Removed all booking functionality, forms, and database dependencies
 - Removed all pricing information from activities, accommodations, and packages
 - Updated all CTAs to informational actions ("Contact Us", "Learn More", "Explore Activities")
 - Maintained comprehensive SEO optimization for search engine rankings
+- Added comprehensive cross-platform deployment scripts (Linux, macOS, Windows)
+- Created Docker, Nginx, PM2, Vercel, Netlify, Cloudflare, IIS configurations
+- Updated header branding to "Adventure Dandeli"
+- Added colorful brand-colored social media icons in footer

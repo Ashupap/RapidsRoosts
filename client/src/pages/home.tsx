@@ -1101,24 +1101,28 @@ export default function Home() {
                 review: "The adventurous activities in the Dandeli Forest were fantastic! We really enjoyed Dandeli's natural beauty and wildlife. Must visit place for nature lovers.",
                 rating: 5,
                 initials: "SQ",
+                gradient: "from-[#0891b2] via-[#0e7490] to-[#155e75]",
               },
               {
                 name: "Melvin Costa",
                 review: "Wonderful time spent at the stunning jungle resorts. The personnel really made us feel at home, and the views were breathtaking. Ideal location for unwinding.",
                 rating: 5,
                 initials: "MC",
+                gradient: "from-[#ea580c] via-[#c2410c] to-[#9a3412]",
               },
               {
                 name: "Deeksha Thorwat",
                 review: "Loved our time at one of the resorts with swimming pool. After a day of rafting, relaxing by the pool was exactly what we needed. Highly recommend.",
                 rating: 5,
                 initials: "DT",
+                gradient: "from-[#059669] via-[#047857] to-[#065f46]",
               },
               {
                 name: "Ali Ansari",
                 review: "We had exactly what we needed throughout our stay. Great amenities, serene surroundings, and the ideal balance of luxury and nature.",
                 rating: 5,
                 initials: "AA",
+                gradient: "from-[#7c3aed] via-[#6d28d9] to-[#5b21b6]",
               },
             ].map((testimonial, index) => (
               <motion.div
@@ -1135,7 +1139,7 @@ export default function Home() {
                 whileHover={{ y: -8, transition: { duration: 0.3 } }}
                 data-testid={`card-testimonial-${index}`}
               >
-                <Card className="h-full bg-card/50 backdrop-blur-sm border-2 hover:border-primary/30 transition-all duration-300 hover:shadow-xl overflow-hidden group">
+                <Card className={`h-full bg-gradient-to-br ${testimonial.gradient} border-0 transition-all duration-300 hover:shadow-2xl hover:shadow-black/20 overflow-hidden group`}>
                   <CardContent className="p-8 relative">
                     {/* Large Quote Icon */}
                     <motion.div
@@ -1143,7 +1147,7 @@ export default function Home() {
                       whileInView={{ scale: 1, rotate: 0 }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.6, delay: index * 0.15 + 0.2 }}
-                      className="absolute top-6 right-6 text-primary/10 group-hover:text-primary/20 transition-colors duration-300"
+                      className="absolute top-6 right-6 text-white/20 group-hover:text-white/30 transition-colors duration-300"
                     >
                       <svg className="w-16 h-16" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
@@ -1170,7 +1174,7 @@ export default function Home() {
                             type: "spring",
                             stiffness: 200
                           }}
-                          className="w-5 h-5 text-yellow-400 fill-current"
+                          className="w-5 h-5 text-yellow-300 fill-current drop-shadow-sm"
                           viewBox="0 0 20 20"
                           data-testid={`star-${index}-${i}`}
                         >
@@ -1185,7 +1189,7 @@ export default function Home() {
                       whileInView={{ opacity: 1 }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.5, delay: index * 0.15 + 0.5 }}
-                      className="text-muted-foreground text-base leading-relaxed mb-6 relative z-10"
+                      className="text-white/90 text-base leading-relaxed mb-6 relative z-10"
                       data-testid={`text-review-${index}`}
                     >
                       "{testimonial.review}"
@@ -1200,21 +1204,21 @@ export default function Home() {
                       className="flex items-center gap-4"
                     >
                       {/* Avatar with Initials */}
-                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center text-white font-semibold text-sm shadow-lg group-hover:scale-110 transition-transform duration-300">
+                      <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white font-semibold text-sm shadow-lg group-hover:scale-110 group-hover:bg-white/30 transition-all duration-300 border border-white/30">
                         {testimonial.initials}
                       </div>
                       <div>
-                        <p className="font-semibold text-foreground" data-testid={`text-name-${index}`}>
+                        <p className="font-semibold text-white" data-testid={`text-name-${index}`}>
                           {testimonial.name}
                         </p>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-sm text-white/70">
                           Verified Guest
                         </p>
                       </div>
                     </motion.div>
 
-                    {/* Decorative gradient on hover */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/0 via-primary/0 to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                    {/* Decorative shine effect on hover */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/0 via-white/5 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                   </CardContent>
                 </Card>
               </motion.div>
